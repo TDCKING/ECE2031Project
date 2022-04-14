@@ -1,0 +1,29 @@
+-- Altera Memory Initialization File (MIF)
+
+DEPTH = 2048;
+WIDTH = 16;
+
+ADDRESS_RADIX = HEX;
+DATA_RADIX = HEX;
+
+CONTENT
+  BEGIN
+    [000..7FF] : 0000;  -- Default to NOP
+
+           000 : 4800;  -- 	AND 0
+           001 : 1100;  -- 	STORE &h100
+           002 : 0900;  -- 	LOAD &h100
+           003 : 480D;  -- 	AND One
+           004 : 4009;  -- 	JZERO EVEN
+           005 : 0900;  -- 	LOAD &h100
+           006 : 6011;  -- 	SHIFT -1
+           007 : 6801;  -- 	ADDI 1
+           008 : 280B;  -- 	JUMP End
+           009 : 0900;  -- 	LOAD &h100
+           00A : 6809;  -- 	ADDI 9
+           00B : 1100;  -- 	STORE &h100
+           00C : 2802;  -- 	JUMP LoopStart
+           00D : 0001;  -- One:       DW   1
+           00E : 0002;  -- Two:       DW   2
+           00F : 0003;  -- Three:     DW   3
+  END;

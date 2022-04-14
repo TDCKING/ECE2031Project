@@ -1,0 +1,43 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+-- do not modify this entity statement.
+entity ContestJudge is  
+	port(
+		resetn,
+		clock,
+		CL, CR      : in  std_logic;
+		WL, WR      : out std_logic
+	);
+end ContestJudge;
+
+
+architecture internals of ContestJudge is
+-- do not change anything above this comment.
+
+	type state_type is ( idle ); -- define a type to represent the state
+	signal state : state_type;   -- create a signal to store the state
+	-- you may declare additional signals here if desired.
+
+	begin
+
+	-- process block for the state machine
+	process(clock, resetn) begin
+		if resetn = '0' then
+			state <= idle ;
+		elsif rising_edge(clock) then
+			case state is
+			when idle =>
+
+			when others =>
+				state <= idle;
+			end case;
+		end if;
+	end process;
+
+	-- combinational assignments for the outputs
+	WL <= '0';
+	WR <= '0';
+
+-- do not change anything below this comment.
+end internals;

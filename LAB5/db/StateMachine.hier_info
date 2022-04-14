@@ -1,0 +1,14 @@
+|StateMachine
+clk => state~1.DATAIN
+reset => state~3.DATAIN
+cool => Selector1.IN2
+cool => process_0.IN0
+cool => Selector0.IN1
+xmas => process_0.IN1
+output[0] <= output[0].DB_MAX_OUTPUT_PORT_TYPE
+output[1] <= output[1].DB_MAX_OUTPUT_PORT_TYPE
+r_en <= r_en.DB_MAX_OUTPUT_PORT_TYPE
+g_en <= g_en.DB_MAX_OUTPUT_PORT_TYPE
+b_en <= b_en.DB_MAX_OUTPUT_PORT_TYPE
+
+

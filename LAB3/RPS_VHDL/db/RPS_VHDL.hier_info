@@ -1,0 +1,43 @@
+|RPS_VHDL
+R1 => Mux0.IN64
+R1 => Equal0.IN6
+R1 => Equal1.IN6
+R1 => Equal2.IN6
+R1 => E1.IN0
+R1 => E1.IN0
+P1 => Mux0.IN65
+P1 => Equal0.IN7
+P1 => Equal1.IN7
+P1 => Equal2.IN7
+P1 => E1.IN1
+P1 => E1.IN0
+S1 => Mux0.IN66
+S1 => Equal0.IN8
+S1 => Equal1.IN8
+S1 => Equal2.IN8
+S1 => E1.IN1
+S1 => E1.IN1
+R2 => Mux0.IN67
+R2 => Equal0.IN9
+R2 => Equal1.IN9
+R2 => Equal2.IN9
+R2 => E2.IN0
+R2 => E2.IN0
+P2 => Mux0.IN68
+P2 => Equal0.IN10
+P2 => Equal1.IN10
+P2 => Equal2.IN10
+P2 => E2.IN1
+P2 => E2.IN0
+S2 => Mux0.IN69
+S2 => Equal0.IN11
+S2 => Equal1.IN11
+S2 => Equal2.IN11
+S2 => E2.IN1
+S2 => E2.IN1
+W1 << Mux0.DB_MAX_OUTPUT_PORT_TYPE
+W2 << W2.DB_MAX_OUTPUT_PORT_TYPE
+E1 << E1.DB_MAX_OUTPUT_PORT_TYPE
+E2 << E2.DB_MAX_OUTPUT_PORT_TYPE
+
+

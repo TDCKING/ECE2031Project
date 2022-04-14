@@ -1,0 +1,6 @@
+
+State Machine - |StateMachine|state
+Name state.blue state.green state.red 
+state.red 0 0 0 
+state.green 0 1 1 
+state.blue 1 0 1 

@@ -1,0 +1,1384 @@
+-- Altera Memory Initialization File (MIF)
+
+DEPTH = 2048;
+WIDTH = 16;
+
+ADDRESS_RADIX = HEX;
+DATA_RADIX = HEX;
+
+CONTENT
+  BEGIN
+    [000..7FF] : 0000;  -- Default to NOP
+
+           000 : 2809;  -- JUMP Main
+           001 : 2821;  -- JUMP Int0  ; row end
+           002 : 2825;  -- JUMP Int1  ; screen end
+           003 : 283B;  -- JUMP Int2
+           004 : 283C;  -- JUMP Int3
+           005 : 0008;  -- NumCars:    DW 8  ; number of cars (on each train)
+           006 : 0002;  -- NumTrains:  DW 2  ; number of trains
+           007 : 0004;  -- NumSWs:     DW 4  ; number of track switches
+           008 : 0006;  -- NumSensors: DW 6  ; number of sensors
+           009 : 9008;  -- 	IN     PARAM
+           00A : 6801;  -- 	ADDI   1
+           00B : 1005;  -- 	STORE  NumCars
+           00C : B802;  -- 	LOADI  2
+           00D : 9801;  -- 	OUT    SMC          ; Reset high, clock low
+           00E : B800;  -- 	LOADI  0
+           00F : 9801;  -- 	OUT    SMC          ; Reset low, clock low
+           010 : B800;  -- 	LOADI  0
+           011 : 1554;  -- 	STORE  Crashed
+           012 : 1555;  -- 	STORE  Running
+           013 : BBAB;  -- 	LOADI  TrainATable
+           014 : 13A5;  -- 	STORE  TrainPtr
+           015 : 8087;  -- 	CALL   ResetTrain
+           016 : BBEB;  -- 	LOADI  TrainBTable
+           017 : 13A5;  -- 	STORE  TrainPtr
+           018 : 8087;  -- 	CALL   ResetTrain
+           019 : 8081;  -- 	CALL   EraseFG
+           01A : 8381;  -- 	CALL   Decorate
+           01B : B864;  -- 	LOADI  100          ; Force a train update
+           01C : 1544;  -- 	STORE  TimerA
+           01D : 1545;  -- 	STORE  TimerB
+           01E : 803D;  -- 	CALL   StepSim
+           01F : A803;  -- 	SEI    &B0011
+           020 : 2820;  -- 	JUMP   Here
+           021 : 0D56;  -- 	LOAD   RandPtr
+           022 : 6801;  -- 	ADDI   1
+           023 : 1556;  -- 	STORE  RandPtr
+           024 : B000;  -- 	RETI
+           025 : 9006;  -- 	IN     SW
+           026 : 601F;  -- 	SHIFT  -15
+           027 : 4D48;  -- 	AND    Mask1Bit
+           028 : 4031;  -- 	JZERO  NoPB         ; PB low
+           029 : 5D58;  -- 	XOR    PrevPB
+           02A : 4033;  -- 	JZERO  StillPB      ; PB high from before
+           02B : 1558;  -- 	STORE  PrevPB       ; Fresh high PB
+           02C : 0D55;  -- 	LOAD   Running
+           02D : 6FFF;  -- 	ADDI   -1
+           02E : 83A2;  -- 	CALL   Neg
+           02F : 1555;  -- 	STORE  Running
+           030 : 2833;  -- 	JUMP   StillPB
+           031 : B800;  -- 	LOADI  0
+           032 : 1558;  -- 	STORE  PrevPB
+           033 : 0D55;  -- 	LOAD   Running
+           034 : 600F;  -- 	SHIFT  15
+           035 : 9805;  -- 	OUT    LEDS
+           036 : 403A;  -- 	JZERO  NoStep
+           037 : 0D54;  -- 	LOAD   Crashed
+           038 : 383A;  -- 	JPOS   NoStep
+           039 : 803D;  -- 	CALL   StepSim
+           03A : B000;  -- 	RETI
+           03B : B000;  -- 	RETI
+           03C : B000;  -- 	RETI
+           03D : B801;  -- 	LOADI  1
+           03E : 9801;  -- 	OUT    SMC
+           03F : 82D1;  -- 	CALL   ClearOccupancy
+           040 : 9002;  -- 	IN     SMD          ; Get the switch control values
+           041 : 4D4A;  -- 	AND    Mask4Bits
+           042 : 1503;  -- 	STORE  TSwVals
+           043 : 81C2;  -- 	CALL   SetTSwitches
+           044 : 8201;  -- 	CALL   DrawTSwInd
+           045 : 9002;  -- 	IN     SMD
+           046 : 6018;  -- 	SHIFT  -8
+           047 : 4D49;  -- 	AND    Mask2Bits
+           048 : 80DB;  -- 	CALL   SetADir
+           049 : 9002;  -- 	IN     SMD
+           04A : 601A;  -- 	SHIFT  -10
+           04B : 4D49;  -- 	AND    Mask2Bits
+           04C : 80F0;  -- 	CALL   SetBDir
+           04D : B81F;  -- 	LOADI  31           ; Slowest
+           04E : 1546;  -- 	STORE  ADelay
+           04F : 9006;  -- 	IN     SW
+           050 : 4D4A;  -- 	AND    Mask4Bits    ; A speed
+           051 : 1541;  -- 	STORE  Temp
+           052 : 4059;  -- 	JZERO  SBSpeed
+           053 : 0D46;  -- 	LOAD   ADelay
+           054 : 6011;  -- 	SHIFT  -1           ; Reduce delay
+           055 : 1546;  -- 	STORE  ADelay
+           056 : 0D41;  -- 	LOAD   Temp
+           057 : 6011;  -- 	SHIFT  -1
+           058 : 2851;  -- 	JUMP   SASLoop
+           059 : B81F;  -- 	LOADI  31           ; Slowest
+           05A : 1547;  -- 	STORE  BDelay
+           05B : 9006;  -- 	IN     SW
+           05C : 6014;  -- 	SHIFT  -4
+           05D : 4D4A;  -- 	AND    Mask4Bits    ; B speed
+           05E : 1541;  -- 	STORE  Temp
+           05F : 4066;  -- 	JZERO  SBSD
+           060 : 0D47;  -- 	LOAD   BDelay
+           061 : 6011;  -- 	SHIFT  -1           ; Reduce delay
+           062 : 1547;  -- 	STORE  BDelay
+           063 : 0D41;  -- 	LOAD   Temp
+           064 : 6011;  -- 	SHIFT  -1
+           065 : 285E;  -- 	JUMP   SBSLoop
+           066 : 0D44;  -- 	LOAD   TimerA
+           067 : 6801;  -- 	ADDI   1
+           068 : 1544;  -- 	STORE  TimerA
+           069 : 2546;  -- 	SUB    ADelay
+           06A : 306E;  -- 	JNEG   SkipA
+           06B : B800;  -- 	LOADI  0
+           06C : 1544;  -- 	STORE  TimerA
+           06D : 8099;  -- 	CALL   IterA
+           06E : 0D45;  -- 	LOAD   TimerB
+           06F : 6801;  -- 	ADDI   1
+           070 : 1545;  -- 	STORE  TimerB
+           071 : 2547;  -- 	SUB    BDelay
+           072 : 3076;  -- 	JNEG   SkipB
+           073 : B800;  -- 	LOADI  0
+           074 : 1545;  -- 	STORE  TimerB
+           075 : 80BA;  -- 	CALL   IterB
+           076 : 82A5;  -- 	CALL   BuildMap
+           077 : 8322;  -- 	CALL   ReadSensors
+           078 : 8359;  -- 	CALL   DrawSensors
+           079 : 0D10;  -- 	LOAD   SensorVals
+           07A : 9800;  -- 	OUT    SMS
+           07B : 0D54;  -- 	LOAD   Crashed
+           07C : 407E;  -- 	JZERO  NoCrash
+           07D : 822C;  -- 	CALL   DrawReaper
+           07E : B800;  -- 	LOADI  0
+           07F : 9801;  -- 	OUT    SMC
+           080 : 8800;  -- 	RETURN
+           081 : BAFF;  -- 	LOADI  767          ; Last tile, empty sprite
+           082 : 9807;  -- 	OUT    PPU
+           083 : 6FFF;  -- 	ADDI   -1
+           084 : 3882;  -- 	JPOS   EFGLoop
+           085 : 4082;  -- 	JZERO  EFGLoop
+           086 : 8800;  -- 	RETURN
+           087 : B808;  -- 	LOADI  8            ; Max possible trains
+           088 : 6002;  -- 	SHIFT  2            ; Four data per car
+           089 : 1542;  -- 	STORE  Temp2        ; Counter
+           08A : 1BA5;  -- 	ADD    TrainPtr
+           08B : 1541;  -- 	STORE  Temp         ; Address of originals
+           08C : 7541;  -- 	ILOAD  Temp
+           08D : 7BA5;  -- 	ISTORE TrainPtr
+           08E : 0D41;  -- 	LOAD   Temp
+           08F : 6801;  -- 	ADDI   1
+           090 : 1541;  -- 	STORE  Temp
+           091 : 0BA5;  -- 	LOAD   TrainPtr
+           092 : 6801;  -- 	ADDI   1
+           093 : 13A5;  -- 	STORE  TrainPtr
+           094 : 0D42;  -- 	LOAD   Temp2
+           095 : 6FFF;  -- 	ADDI   -1
+           096 : 1542;  -- 	STORE  Temp2
+           097 : 388C;  -- 	JPOS   RTLoop
+           098 : 8800;  -- 	RETURN
+           099 : BBAB;  -- 	LOADI  TrainATable  ; point to train A
+           09A : 13A5;  -- 	STORE  TrainPtr     ; used as pointer
+           09B : 0805;  -- 	LOAD   NumCars
+           09C : 1543;  -- 	STORE  Counter
+           09D : 80FB;  -- 	CALL   LoadCar
+           09E : 81A8;  -- 	CALL   EraseCar
+           09F : 0BA5;  -- 	LOAD   TrainPtr
+           0A0 : 6804;  -- 	ADDI   4
+           0A1 : 13A5;  -- 	STORE  TrainPtr
+           0A2 : 0D43;  -- 	LOAD   Counter
+           0A3 : 6FFF;  -- 	ADDI   -1
+           0A4 : 1543;  -- 	STORE  Counter
+           0A5 : 389D;  -- 	JPOS   ItAErase     ; keep going
+           0A6 : BBAB;  -- 	LOADI  TrainATable  ; repoint to train
+           0A7 : 13A5;  -- 	STORE  TrainPtr
+           0A8 : B805;  -- 	LOADI  5            ; red train sprite offset
+           0A9 : 13AA;  -- 	STORE  TrainO       ; store in working variable
+           0AA : 0805;  -- 	LOAD   NumCars
+           0AB : 1543;  -- 	STORE  Counter
+           0AC : B800;  -- 	LOADI  0
+           0AD : 155A;  -- 	STORE  TipDrawn
+           0AE : 80FB;  -- 	CALL   LoadCar
+           0AF : 8125;  -- 	CALL   MoveCar
+           0B0 : 8182;  -- 	CALL   DrawCar
+           0B1 : 8110;  -- 	CALL   StoreCar
+           0B2 : 0BA5;  -- 	LOAD   TrainPtr
+           0B3 : 6804;  -- 	ADDI   4
+           0B4 : 13A5;  -- 	STORE  TrainPtr
+           0B5 : 0D43;  -- 	LOAD   Counter
+           0B6 : 6FFF;  -- 	ADDI   -1
+           0B7 : 1543;  -- 	STORE  Counter
+           0B8 : 38AE;  -- 	JPOS   ItALoop      ; keep going
+           0B9 : 8800;  -- 	RETURN              ; Done iterating cars.
+           0BA : BBEB;  -- 	LOADI  TrainBTable  ; point to train A
+           0BB : 13A5;  -- 	STORE  TrainPtr     ; used as pointer
+           0BC : 0805;  -- 	LOAD   NumCars
+           0BD : 1543;  -- 	STORE  Counter
+           0BE : 80FB;  -- 	CALL   LoadCar
+           0BF : 81A8;  -- 	CALL   EraseCar
+           0C0 : 0BA5;  -- 	LOAD   TrainPtr
+           0C1 : 6804;  -- 	ADDI   4
+           0C2 : 13A5;  -- 	STORE  TrainPtr
+           0C3 : 0D43;  -- 	LOAD   Counter
+           0C4 : 6FFF;  -- 	ADDI   -1
+           0C5 : 1543;  -- 	STORE  Counter
+           0C6 : 38BE;  -- 	JPOS   ItBErase     ; keep going
+           0C7 : BBEB;  -- 	LOADI  TrainBTable
+           0C8 : 13A5;  -- 	STORE  TrainPtr     ; used as pointer
+           0C9 : B801;  -- 	LOADI  1            ; green train sprite offset
+           0CA : 13AA;  -- 	STORE  TrainO       ; store in working variable
+           0CB : 0805;  -- 	LOAD   NumCars
+           0CC : 1543;  -- 	STORE  Counter
+           0CD : B800;  -- 	LOADI  0
+           0CE : 155A;  -- 	STORE  TipDrawn
+           0CF : 80FB;  -- 	CALL   LoadCar
+           0D0 : 8125;  -- 	CALL   MoveCar
+           0D1 : 8182;  -- 	CALL   DrawCar
+           0D2 : 8110;  -- 	CALL   StoreCar
+           0D3 : 0BA5;  -- 	LOAD   TrainPtr
+           0D4 : 6804;  -- 	ADDI   4
+           0D5 : 13A5;  -- 	STORE  TrainPtr
+           0D6 : 0D43;  -- 	LOAD   Counter
+           0D7 : 6FFF;  -- 	ADDI   -1
+           0D8 : 1543;  -- 	STORE  Counter
+           0D9 : 38CF;  -- 	JPOS   ItBLoop      ; keep going
+           0DA : 8800;  -- 	RETURN              ; Done iterating cars.
+           0DB : 1541;  -- 	STORE  Temp
+           0DC : 6FFE;  -- 	ADDI   -2           ; Check if value >=2
+           0DD : 30E0;  -- 	JNEG   SADOk
+           0DE : BFFF;  -- 	LOADI  -1           ; If >=2, set to -1
+           0DF : 1541;  -- 	STORE  Temp
+           0E0 : BBAB;  -- 	LOADI  TrainATable
+           0E1 : 6803;  -- 	ADDI   3            ; Point to first dir entry
+           0E2 : 10EF;  -- 	STORE  SADP
+           0E3 : 0805;  -- 	LOAD   NumCars      ; Start a counter for cars
+           0E4 : 1542;  -- 	STORE  Temp2
+           0E5 : 0D41;  -- 	LOAD   Temp
+           0E6 : 78EF;  -- 	ISTORE SADP         ; Store dir value
+           0E7 : 08EF;  -- 	LOAD   SADP
+           0E8 : 6804;  -- 	ADDI   4            ; Move to next dir entry
+           0E9 : 10EF;  -- 	STORE  SADP
+           0EA : 0D42;  -- 	LOAD   Temp2
+           0EB : 6FFF;  -- 	ADDI   -1           ; Decrement counter
+           0EC : 1542;  -- 	STORE  Temp2
+           0ED : 38E5;  -- 	JPOS   SADLoop
+           0EE : 8800;  -- 	RETURN
+           0EF : 0000;  -- SADP: DW 0
+           0F0 : 1541;  -- 	STORE  Temp
+           0F1 : 6FFE;  -- 	ADDI   -2           ; Check if value >=2
+           0F2 : 30F5;  -- 	JNEG   SBDOk
+           0F3 : BFFF;  -- 	LOADI  -1           ; If >=2, set to -1
+           0F4 : 1541;  -- 	STORE  Temp
+           0F5 : BBEB;  -- 	LOADI  TrainBTable
+           0F6 : 6803;  -- 	ADDI   3            ; Point to first dir entry
+           0F7 : 10EF;  -- 	STORE  SADP
+           0F8 : 0805;  -- 	LOAD   NumCars      ; Start a counter for cars
+           0F9 : 1542;  -- 	STORE  Temp2
+           0FA : 28E5;  -- 	JUMP   SADLoop      ; Re-use the train A code.
+           0FB : 73A5;  -- 	ILOAD  TrainPtr     ; get parameter from table
+           0FC : 13A6;  -- 	STORE  TrainX       ; store to working variable
+           0FD : 0BA5;  -- 	LOAD   TrainPtr
+           0FE : 6801;  -- 	ADDI   1            ; increment pointer
+           0FF : 13A5;  -- 	STORE  TrainPtr
+           100 : 73A5;  -- 	ILOAD  TrainPtr
+           101 : 13A7;  -- 	STORE  TrainY       ; Y pos
+           102 : 0BA5;  -- 	LOAD   TrainPtr
+           103 : 6801;  -- 	ADDI   1            ; increment pointer
+           104 : 13A5;  -- 	STORE  TrainPtr
+           105 : 73A5;  -- 	ILOAD  TrainPtr
+           106 : 13A8;  -- 	STORE  TrainF       ; facing direction
+           107 : 0BA5;  -- 	LOAD   TrainPtr
+           108 : 6801;  -- 	ADDI   1            ; increment pointer
+           109 : 13A5;  -- 	STORE  TrainPtr
+           10A : 73A5;  -- 	ILOAD  TrainPtr
+           10B : 13A9;  -- 	STORE  TrainM       ; moving direction
+           10C : 0BA5;  -- 	LOAD   TrainPtr
+           10D : 6FFD;  -- 	ADDI   -3           ; return pointer to beginning
+           10E : 13A5;  -- 	STORE  TrainPtr
+           10F : 8800;  -- 	RETURN
+           110 : 0BA6;  -- 	LOAD   TrainX       ; get working variable
+           111 : 7BA5;  -- 	ISTORE TrainPtr     ; store to table
+           112 : 0BA5;  -- 	LOAD   TrainPtr
+           113 : 6801;  -- 	ADDI   1            ; increment pointer
+           114 : 13A5;  -- 	STORE  TrainPtr
+           115 : 0BA7;  -- 	LOAD   TrainY       ; get working variable
+           116 : 7BA5;  -- 	ISTORE TrainPtr     ; store to table
+           117 : 0BA5;  -- 	LOAD   TrainPtr
+           118 : 6801;  -- 	ADDI   1            ; increment pointer
+           119 : 13A5;  -- 	STORE  TrainPtr
+           11A : 0BA8;  -- 	LOAD   TrainF       ; get working variable
+           11B : 7BA5;  -- 	ISTORE TrainPtr     ; store to table
+           11C : 0BA5;  -- 	LOAD   TrainPtr
+           11D : 6801;  -- 	ADDI   1            ; increment pointer
+           11E : 13A5;  -- 	STORE  TrainPtr
+           11F : 0BA9;  -- 	LOAD   TrainM       ; get working variable
+           120 : 7BA5;  -- 	ISTORE TrainPtr     ; store to table
+           121 : 0BA5;  -- 	LOAD   TrainPtr
+           122 : 6FFD;  -- 	ADDI   -3           ; return pointer
+           123 : 13A5;  -- 	STORE  TrainPtr
+           124 : 8800;  -- 	RETURN
+           125 : 0BA9;  -- 	LOAD   TrainM       ; Get movement direction
+           126 : 4170;  -- 	JZERO  MCR          ; If not moving, skip to end
+           127 : 3929;  -- 	JPOS   MCF          ; If forward, go ahead and move.
+           128 : 8171;  -- 	CALL   FlipCar      ; If reverse, flip the car.
+           129 : 0BA6;  -- 	LOAD   TrainX       ; Set up X and Y
+           12A : 1550;  -- 	STORE  TileX
+           12B : 0BA7;  -- 	LOAD   TrainY
+           12C : 1551;  -- 	STORE  TileY
+           12D : 826A;  -- 	CALL   GetBGTile    ; Get the track type
+           12E : 6002;  -- 	SHIFT  2            ; Place in jump word
+           12F : 53A8;  -- 	OR     TrainF       ; Mix in the train facing direction
+           130 : 6934;  -- 	ADDI   TTT          ; Add translation table base address
+           131 : 554F;  -- 	OR     RawJump      ; Make into a JUMP instruction
+           132 : 1133;  -- 	STORE  MTJR         ; Store new jump instruction
+           133 : 2800;  -- MTJR: JUMP 0            ; Jump to table entry
+           134 : 295C;  -- JUMP MTC ; L
+           135 : 295C;  -- JUMP MTC ; D
+           136 : 295C;  -- JUMP MTC ; R
+           137 : 295C;  -- JUMP MTC ; U
+           138 : 295C;  -- JUMP MTC ; L
+           139 : 2963;  -- JUMP MTN ; D
+           13A : 295C;  -- JUMP MTC ; R
+           13B : 2963;  -- JUMP MTN ; U
+           13C : 2963;  -- JUMP MTN ; L
+           13D : 295C;  -- JUMP MTC ; D
+           13E : 2963;  -- JUMP MTN ; R
+           13F : 295C;  -- JUMP MTC ; U
+           140 : 2958;  -- JUMP MTL ; L
+           141 : 295C;  -- JUMP MTC ; D
+           142 : 295C;  -- JUMP MTC ; R
+           143 : 2954;  -- JUMP MTR ; U
+           144 : 295C;  -- JUMP MTC ; L
+           145 : 295C;  -- JUMP MTC ; D
+           146 : 2954;  -- JUMP MTR ; R
+           147 : 2958;  -- JUMP MTL ; U
+           148 : 295C;  -- JUMP MTC ; L
+           149 : 2954;  -- JUMP MTR ; D
+           14A : 2958;  -- JUMP MTL ; R
+           14B : 295C;  -- JUMP MTC ; U
+           14C : 2954;  -- JUMP MTR ; L
+           14D : 2958;  -- JUMP MTL ; D
+           14E : 295C;  -- JUMP MTC ; R
+           14F : 295C;  -- JUMP MTC ; U
+           150 : 2963;  -- JUMP MTN ; L
+           151 : 2963;  -- JUMP MTN ; D
+           152 : 2963;  -- JUMP MTN ; R
+           153 : 2963;  -- JUMP MTN ; U
+           154 : 0BA8;  -- 	LOAD   TrainF
+           155 : 8236;  -- 	CALL   RotDirCW
+           156 : 13A8;  -- 	STORE  TrainF
+           157 : 2963;  -- 	JUMP   MTN
+           158 : 0BA8;  -- 	LOAD   TrainF
+           159 : 8239;  -- 	CALL   RotDirCCW
+           15A : 13A8;  -- 	STORE  TrainF
+           15B : 2963;  -- 	JUMP   MTN
+           15C : B801;  -- 	LOADI  1
+           15D : 1554;  -- 	STORE  Crashed
+           15E : 0BA6;  -- 	LOAD   TrainX
+           15F : 1552;  -- 	STORE  DeadX
+           160 : 0BA7;  -- 	LOAD   TrainY
+           161 : 1553;  -- 	STORE  DeadY
+           162 : 8800;  -- 	RETURN
+           163 : 0BA8;  -- 	LOAD   TrainF
+           164 : 123D;  -- 	STORE  MDir         ; Set up for movement routine
+           165 : 0BA6;  -- 	LOAD   TrainX
+           166 : 123C;  -- 	STORE  MPos
+           167 : 8254;  -- 	CALL   MovXF        ; Set moved position
+           168 : 13A6;  -- 	STORE  TrainX       ; Save back in working train
+           169 : 0BA7;  -- 	LOAD   TrainY
+           16A : 123C;  -- 	STORE  MPos
+           16B : 825F;  -- 	CALL   MovYF
+           16C : 13A7;  -- 	STORE  TrainY
+           16D : 0BA9;  -- 	LOAD   TrainM       ; Get movement direction
+           16E : 3970;  -- 	JPOS   MCR          ; If forward, end function
+           16F : 8171;  -- 	CALL   FlipCar      ; If reverse, flip the car back around.
+           170 : 8800;  -- 	RETURN              ; Done with train move.
+           171 : 0BA8;  -- 	LOAD   TrainF       ; Get facing direction
+           172 : 8236;  -- 	CALL   RotDirCW     ; Rotate
+           173 : 8236;  -- 	CALL   RotDirCW     ; Rotate to 180
+           174 : 13A8;  -- 	STORE  TrainF       ; Overwrite train direction
+           175 : 0BA7;  -- 	LOAD   TrainY       ; Get Y Pos
+           176 : 123C;  -- 	STORE  MPos         ; Place in movement routine variable
+           177 : 0BA8;  -- 	LOAD   TrainF       ; Get direction
+           178 : 123D;  -- 	STORE  MDir         ; Place in movement routine variable
+           179 : 825F;  -- 	CALL   MovYF        ; Move Y position "forwards".
+           17A : 13A7;  -- 	STORE  TrainY       ; Overwrite train pos
+           17B : 0BA6;  -- 	LOAD   TrainX       ; Get X Pos
+           17C : 123C;  -- 	STORE  MPos         ; Place in movement routine variable
+           17D : 0BA8;  -- 	LOAD   TrainF       ; Get direction
+           17E : 123D;  -- 	STORE  MDir         ; Place in movement routine variable
+           17F : 8254;  -- 	CALL   MovXF        ; Move X position "forwards".
+           180 : 13A6;  -- 	STORE  TrainX       ; Overwrite train pos
+           181 : 8800;  -- 	RETURN
+           182 : 0BAA;  -- 	LOAD   TrainO       ; Get base sprite offset
+           183 : 1BA8;  -- 	ADD    TrainF       ; Add direction to change sprite
+           184 : 1541;  -- 	STORE  Temp
+           185 : 0D5A;  -- 	LOAD   TipDrawn     ; Check if this is the first car
+           186 : 4189;  -- 	JZERO  DCFirst
+           187 : 0D41;  -- 	LOAD   Temp
+           188 : 0D59;  -- 	LOAD   BackOffst
+           189 : 1D41;  -- 	ADD    Temp
+           18A : 6005;  -- 	SHIFT  5            ; Move bits over
+           18B : 53A7;  -- 	OR     TrainY       ; Insert Y Pos
+           18C : 6005;  -- 	SHIFT  5            ; Move bits
+           18D : 53A6;  -- 	OR     TrainX       ; Insert X Pos
+           18E : 9807;  -- 	OUT    PPU          ; Send to PPU
+           18F : 0BA8;  -- 	LOAD   TrainF       ; Get direction
+           190 : 8236;  -- 	CALL   RotDirCW     ; Rotate
+           191 : 8236;  -- 	CALL   RotDirCW     ; Rotate to 180
+           192 : 1BAA;  -- 	ADD    TrainO       ; Add base sprite offset
+           193 : 1D59;  -- 	ADD    BackOffst    ; Convert to a rear-sprite
+           194 : 6005;  -- 	SHIFT  5            ; Move bits over
+           195 : 11C1;  -- 	STORE  ECT1         ; Save momentarily
+           196 : 0BA7;  -- 	LOAD   TrainY       ; Get Y Pos
+           197 : 123C;  -- 	STORE  MPos         ; Place in movement routine variable
+           198 : 0BA8;  -- 	LOAD   TrainF       ; Get direction
+           199 : 123D;  -- 	STORE  MDir         ; Place in movement routine variable
+           19A : 8249;  -- 	CALL   MovYR        ; Move Y position backwards.
+           19B : 51C1;  -- 	OR     ECT1         ; Place in command word
+           19C : 6005;  -- 	SHIFT  5            ; Move bits
+           19D : 11C1;  -- 	STORE  ECT1         ; Save momentarily
+           19E : 0BA6;  -- 	LOAD   TrainX       ; Get X Pos
+           19F : 123C;  -- 	STORE  MPos         ; Place in movement routine variable
+           1A0 : 0BA8;  -- 	LOAD   TrainF       ; Get direction
+           1A1 : 123D;  -- 	STORE  MDir         ; Place in movement routine variable
+           1A2 : 823E;  -- 	CALL   MovXR        ; Move X position backwards.
+           1A3 : 51C1;  -- 	OR     ECT1         ; Place in command word
+           1A4 : 9807;  -- 	OUT    PPU          ; Send to PPU
+           1A5 : B801;  -- 	LOADI  1
+           1A6 : 155A;  -- 	STORE  TipDrawn     ; not the first anymore
+           1A7 : 8800;  -- 	RETURN
+           1A8 : B800;  -- 	LOADI  0            ; Empty tile
+           1A9 : 6005;  -- 	SHIFT  5            ; Move bits over
+           1AA : 53A7;  -- 	OR     TrainY       ; Insert Y Pos
+           1AB : 6005;  -- 	SHIFT  5            ; Move bits
+           1AC : 53A6;  -- 	OR     TrainX       ; Insert X Pos
+           1AD : 9807;  -- 	OUT    PPU          ; Send to PPU
+           1AE : B800;  -- 	LOADI  0            ; Empty tile
+           1AF : 6005;  -- 	SHIFT  5            ; Move bits over
+           1B0 : 11C1;  -- 	STORE  ECT1         ; Save momentarily
+           1B1 : 0BA7;  -- 	LOAD   TrainY       ; Get Y Pos
+           1B2 : 123C;  -- 	STORE  MPos         ; Place in movement routine variable
+           1B3 : 0BA8;  -- 	LOAD   TrainF       ; Get direction
+           1B4 : 123D;  -- 	STORE  MDir         ; Place in movement routine variable
+           1B5 : 8249;  -- 	CALL   MovYR        ; Move Y position backwards.
+           1B6 : 51C1;  -- 	OR     ECT1         ; Place in command word
+           1B7 : 6005;  -- 	SHIFT  5            ; Move bits
+           1B8 : 11C1;  -- 	STORE  ECT1         ; Save momentarily
+           1B9 : 0BA6;  -- 	LOAD   TrainX       ; Get X Pos
+           1BA : 123C;  -- 	STORE  MPos         ; Place in movement routine variable
+           1BB : 0BA8;  -- 	LOAD   TrainF       ; Get direction
+           1BC : 123D;  -- 	STORE  MDir         ; Place in movement routine variable
+           1BD : 823E;  -- 	CALL   MovXR        ; Move X position backwards.
+           1BE : 51C1;  -- 	OR     ECT1         ; Place in command word
+           1BF : 9807;  -- 	OUT    PPU          ; Send to PPU
+           1C0 : 8800;  -- 	RETURN
+           1C1 : 0000;  -- ECT1: DW 0
+           1C2 : B801;  -- 	LOADI  1
+           1C3 : 122B;  -- 	STORE  TileBG       ; Will be drawing to background
+           1C4 : 0D03;  -- 	LOAD   TSwVals
+           1C5 : 11FE;  -- 	STORE  STST
+           1C6 : 0807;  -- 	LOAD   NumSWs       ; Get the number of switches
+           1C7 : 1200;  -- 	STORE  STSC         ; Start a counter
+           1C8 : BCEB;  -- 	LOADI  TSwitches    ; Point to the sw data
+           1C9 : 11FF;  -- 	STORE  STSP
+           1CA : 71FF;  -- 	ILOAD  STSP         ; Get the xpos
+           1CB : 1550;  -- 	STORE  TileX
+           1CC : 09FF;  -- 	LOAD   STSP
+           1CD : 6801;  -- 	ADDI   1            ; increment pointer
+           1CE : 11FF;  -- 	STORE  STSP
+           1CF : 71FF;  -- 	ILOAD  STSP         ; Get the ypos
+           1D0 : 1551;  -- 	STORE  TileY
+           1D1 : 09FF;  -- 	LOAD   STSP
+           1D2 : 6801;  -- 	ADDI   1            ; increment pointer
+           1D3 : 11FF;  -- 	STORE  STSP
+           1D4 : 71FF;  -- 	ILOAD  STSP         ; Get the '0' track type
+           1D5 : 6FFF;  -- 	ADDI   -1
+           1D6 : 6002;  -- 	SHIFT  2            ; Vert/horiz are offset by 4
+           1D7 : 6805;  -- 	ADDI   5            ; Move into switch sprites
+           1D8 : 122A;  -- 	STORE  TileN
+           1D9 : 09FE;  -- 	LOAD   STST         ; Check if input is 1 or 0
+           1DA : 4D48;  -- 	AND    Mask1Bit
+           1DB : 41E2;  -- 	JZERO  STS0
+           1DC : 09FF;  -- 	LOAD   STSP         ; If 1,
+           1DD : 6801;  -- 	ADDI   1            ; increment pointer again
+           1DE : 11FF;  -- 	STORE  STSP
+           1DF : 71FF;  -- 	ILOAD  STSP         ; Get the '1' track type
+           1E0 : 1A2A;  -- 	ADD    TileN
+           1E1 : 122A;  -- 	STORE  TileN
+           1E2 : 71FF;  -- 	ILOAD  STSP         ; Get the desired track type
+           1E3 : 8284;  -- 	CALL   SetBGTile    ; Write to table
+           1E4 : 09FF;  -- 	LOAD   STSP
+           1E5 : 6801;  -- 	ADDI   1            ; increment pointer
+           1E6 : 11FF;  -- 	STORE  STSP
+           1E7 : 09FE;  -- 	LOAD   STST         ; Check if input is 1 or 0
+           1E8 : 4D48;  -- 	AND    Mask1Bit
+           1E9 : 39F0;  -- 	JPOS   STS1
+           1EA : 71FF;  -- 	ILOAD  STSP         ; Get the '1' track type
+           1EB : 1A2A;  -- 	ADD    TileN
+           1EC : 122A;  -- 	STORE  TileN
+           1ED : 09FF;  -- 	LOAD   STSP         ; If 0,
+           1EE : 6801;  -- 	ADDI   1            ; increment pointer again
+           1EF : 11FF;  -- 	STORE  STSP
+           1F0 : 09FE;  -- 	LOAD   STST         ; Check if input is 1 or 0
+           1F1 : 4D48;  -- 	AND    Mask1Bit
+           1F2 : 6003;  -- 	SHIFT  3            ; Stright/turn are offset by 8
+           1F3 : 1A2A;  -- 	ADD    TileN
+           1F4 : 122A;  -- 	STORE  TileN
+           1F5 : 8221;  -- 	CALL   DrawTile
+           1F6 : 09FE;  -- 	LOAD   STST
+           1F7 : 6011;  -- 	SHIFT  -1
+           1F8 : 11FE;  -- 	STORE  STST         ; Move to next bit
+           1F9 : 0A00;  -- 	LOAD   STSC
+           1FA : 6FFF;  -- 	ADDI   -1           ; Decrement counter
+           1FB : 1200;  -- 	STORE  STSC
+           1FC : 39CA;  -- 	JPOS   STSLoop
+           1FD : 8800;  -- 	RETURN
+           1FE : 0000;  -- STST: DW 0 ; temp / tile
+           1FF : 0000;  -- STSP: DW 0 ; pointer
+           200 : 0000;  -- STSC: DW 0 ; counter
+           201 : B800;  -- 	LOADI  0
+           202 : 122B;  -- 	STORE  TileBG       ; Will be drawing to foreground
+           203 : 0D03;  -- 	LOAD   TSwVals
+           204 : 11FE;  -- 	STORE  STST
+           205 : 0807;  -- 	LOAD   NumSWs       ; Get the number of switches
+           206 : 1200;  -- 	STORE  STSC         ; Start a counter
+           207 : BCFB;  -- 	LOADI  TSwIndicator ; Point to the data
+           208 : 11FF;  -- 	STORE  STSP
+           209 : 71FF;  -- 	ILOAD  STSP         ; Get the xpos
+           20A : 1550;  -- 	STORE  TileX
+           20B : 09FF;  -- 	LOAD   STSP
+           20C : 6801;  -- 	ADDI   1            ; increment pointer
+           20D : 11FF;  -- 	STORE  STSP
+           20E : 71FF;  -- 	ILOAD  STSP         ; Get the ypos
+           20F : 1551;  -- 	STORE  TileY
+           210 : 09FF;  -- 	LOAD   STSP
+           211 : 6801;  -- 	ADDI   1            ; increment pointer
+           212 : 11FF;  -- 	STORE  STSP
+           213 : 09FE;  -- 	LOAD   STST         ; Check if input is 1 or 0
+           214 : 4D48;  -- 	AND    Mask1Bit
+           215 : 680B;  -- 	ADDI   11           ; Add base indicator tile
+           216 : 122A;  -- 	STORE  TileN
+           217 : 8221;  -- 	CALL   DrawTile
+           218 : 09FE;  -- 	LOAD   STST
+           219 : 6011;  -- 	SHIFT  -1           ; Next bit
+           21A : 11FE;  -- 	STORE  STST
+           21B : 0A00;  -- 	LOAD   STSC
+           21C : 6FFF;  -- 	ADDI   -1           ; Decrement counter
+           21D : 1200;  -- 	STORE  STSC
+           21E : 1200;  -- 	STORE  STSC
+           21F : 3A09;  -- 	JPOS   DTSILoop
+           220 : 8800;  -- 	RETURN
+           221 : 0A2B;  -- 	LOAD   TileBG
+           222 : 6005;  -- 	SHIFT  5
+           223 : 522A;  -- 	OR     TileN
+           224 : 6005;  -- 	SHIFT  5
+           225 : 5551;  -- 	OR     TileY
+           226 : 6005;  -- 	SHIFT  5
+           227 : 5550;  -- 	OR     TileX
+           228 : 9807;  -- 	OUT    PPU
+           229 : 8800;  -- 	RETURN
+           22A : 0000;  -- TileN: DW 0
+           22B : 0000;  -- TileBG: DW 0
+           22C : B800;  -- 	LOADI  0            ; Foreground
+           22D : 122B;  -- 	STORE  TileBG
+           22E : B817;  -- 	LOADI  23           ; Reaper tile
+           22F : 122A;  -- 	STORE  TileN
+           230 : 0D52;  -- 	LOAD   DeadX
+           231 : 1550;  -- 	STORE  TileX
+           232 : 0D53;  -- 	LOAD   DeadY
+           233 : 1551;  -- 	STORE  TileY
+           234 : 8221;  -- 	CALL   DrawTile
+           235 : 8800;  -- 	RETURN
+           236 : 6FFF;  -- 	ADDI   -1
+           237 : 4D49;  -- 	AND    Mask2Bits
+           238 : 8800;  -- 	RETURN
+           239 : 6801;  -- 	ADDI   1
+           23A : 4D49;  -- 	AND    Mask2Bits
+           23B : 8800;  -- 	RETURN
+           23C : 0000;  -- MPos: DW 0 ; original position
+           23D : 0000;  -- MDir: DW 0 ; original direction
+           23E : 0D4F;  -- 	LOAD   RawJump      ; Get blank jump instruction
+           23F : 6A44;  -- 	ADDI   MXRT         ; Add translation table address
+           240 : 1A3D;  -- 	ADD    Mdir         ; Add index
+           241 : 1243;  -- 	STORE  MXRJR        ; Store new jump instruction
+           242 : 0A3C;  -- 	LOAD   MPos         ; Start with position
+           243 : 2800;  -- MXRJR: JUMP 0           ; address will be replaced
+           244 : 6801;  -- 	ADDI   1            ; results in +1
+           245 : 6801;  -- 	ADDI   1            ; results in 0
+           246 : 6FFF;  -- 	ADDI   -1           ; results in -1
+           247 : 6800;  -- 	ADDI   0            ; results in 0
+           248 : 8800;  -- 	RETURN
+           249 : 0D4F;  -- 	LOAD   RawJump      ; Get blank jump instruction
+           24A : 6A4F;  -- 	ADDI   MYRT         ; Add translation table address
+           24B : 1A3D;  -- 	ADD    Mdir         ; Add index
+           24C : 124E;  -- 	STORE  MYRJR        ; Store new jump instruction
+           24D : 0A3C;  -- 	LOAD   MPos         ; Start with position
+           24E : 2800;  -- MYRJR: JUMP 0           ; address will be replaced
+           24F : 6801;  -- 	ADDI   1            ; results in 0
+           250 : 6FFF;  -- 	ADDI   -1           ; results in -1
+           251 : 6FFF;  -- 	ADDI   -1           ; results in 0
+           252 : 6801;  -- 	ADDI   1            ; results in +1
+           253 : 8800;  -- 	RETURN
+           254 : 0D4F;  -- 	LOAD   RawJump      ; Get blank jump instruction
+           255 : 6A5A;  -- 	ADDI   MXFT         ; Add translation table address
+           256 : 1A3D;  -- 	ADD    Mdir         ; Add index
+           257 : 1259;  -- 	STORE  MXFJR        ; Store new jump instruction
+           258 : 0A3C;  -- 	LOAD   MPos         ; Start with position
+           259 : 2800;  -- MXFJR: JUMP 0           ; address will be replaced
+           25A : 6FFF;  -- 	ADDI   -1            ; results in -1
+           25B : 6FFF;  -- 	ADDI   -1            ; results in 0
+           25C : 6801;  -- 	ADDI   1           ; results in +1
+           25D : 6800;  -- 	ADDI   0            ; results in 0
+           25E : 8800;  -- 	RETURN
+           25F : 0D4F;  -- 	LOAD   RawJump      ; Get blank jump instruction
+           260 : 6A65;  -- 	ADDI   MYFT         ; Add translation table address
+           261 : 1A3D;  -- 	ADD    Mdir         ; Add index
+           262 : 1264;  -- 	STORE  MYFJR        ; Store new jump instruction
+           263 : 0A3C;  -- 	LOAD   MPos         ; Start with position
+           264 : 2800;  -- MYFJR: JUMP 0           ; address will be replaced
+           265 : 6FFF;  -- 	ADDI   -1            ; results in 0
+           266 : 6801;  -- 	ADDI   1           ; results in +1
+           267 : 6801;  -- 	ADDI   1           ; results in 0
+           268 : 6FFF;  -- 	ADDI   -1            ; results in -1
+           269 : 8800;  -- 	RETURN
+           26A : 0D51;  -- 	LOAD   TileY
+           26B : 6005;  -- 	SHIFT  5
+           26C : 5550;  -- 	OR     TileX        ; YYYYYXXXXX
+           26D : 1282;  -- 	STORE  BGT1         ; Tile "address"
+           26E : 6012;  -- 	SHIFT  -2           ; 4 tiles per word
+           26F : 6C2B;  -- 	ADDI   BGMap        ; Add base index into table
+           270 : 1283;  -- 	STORE  BGT2
+           271 : 0A82;  -- 	LOAD   BGT1
+           272 : 4D49;  -- 	AND    Mask2Bits    ; address mod 4
+           273 : 1282;  -- 	STORE  BGT1
+           274 : 7283;  -- 	ILOAD  BGT2         ; get word containing tile
+           275 : 1283;  -- 	STORE  BGT2         ; BGT1 storage
+           276 : 0A82;  -- 	LOAD   BGT1         ; check place within word
+           277 : 427F;  -- 	JZERO  GBGTdone     ; if in 0th position, done
+           278 : 0A83;  -- 	LOAD   BGT2
+           279 : 6014;  -- 	SHIFT  -4
+           27A : 1283;  -- 	STORE  BGT2
+           27B : 0A82;  -- 	LOAD   BGT1
+           27C : 6FFF;  -- 	ADDI   -1
+           27D : 1282;  -- 	STORE  BGT1
+           27E : 2A77;  -- 	JUMP   GBGTshift
+           27F : 0A83;  -- 	LOAD   BGT2
+           280 : 4D4A;  -- 	AND    Mask4Bits    ; get rid of any extra bits
+           281 : 8800;  -- 	RETURN
+           282 : 0000;  -- BGT1: DW 0
+           283 : 0000;  -- BGT2: DW 0
+           284 : 12A3;  -- 	STORE  SBGTT        ; store input
+           285 : B80F;  -- 	LOADI  &B1111
+           286 : 12A4;  -- 	STORE  SBGTM        ; set up the mask
+           287 : 0D50;  -- 	LOAD   TileX
+           288 : 4D49;  -- 	AND    Mask2Bits    ; address mod 4
+           289 : 1282;  -- 	STORE  BGT1
+           28A : 4295;  -- 	JZERO  SBGTdone     ; if in 0th position, done
+           28B : 0AA3;  -- 	LOAD   SBGTT
+           28C : 6004;  -- 	SHIFT  4            ; move tile to next position
+           28D : 12A3;  -- 	STORE  SBGTT
+           28E : 0AA4;  -- 	LOAD   SBGTM
+           28F : 6004;  -- 	SHIFT  4            ; move mask to next position
+           290 : 12A4;  -- 	STORE  SBGTM
+           291 : 0A82;  -- 	LOAD   BGT1
+           292 : 6FFF;  -- 	ADDI   -1
+           293 : 1282;  -- 	STORE  BGT1
+           294 : 2A8A;  -- 	JUMP   SBGTshift
+           295 : 0AA4;  -- 	LOAD   SBGTM
+           296 : 5D4E;  -- 	XOR    Neg1         ; invert the mask
+           297 : 12A4;  -- 	STORE  SBGTM
+           298 : 0D51;  -- 	LOAD   TileY
+           299 : 6005;  -- 	SHIFT  5
+           29A : 5550;  -- 	OR     TileX        ; YYYYYXXXXX
+           29B : 6012;  -- 	SHIFT  -2           ; 4 tiles per word
+           29C : 6C2B;  -- 	ADDI   BGMap        ; Add base index into table
+           29D : 1283;  -- 	STORE  BGT2
+           29E : 7283;  -- 	ILOAD  BGT2         ; get word containing tile
+           29F : 4AA4;  -- 	AND    SBGTM        ; mask off the previous tile
+           2A0 : 52A3;  -- 	OR     SBGTT        ; insert the new tile
+           2A1 : 7A83;  -- 	ISTORE BGT2         ; write to memory
+           2A2 : 8800;  -- 	RETURN
+           2A3 : 0000;  -- SBGTT: DW 0
+           2A4 : 0000;  -- SBGTM: DW 0  ; mask for entry
+           2A5 : 0805;  -- 	LOAD   NumCars
+           2A6 : 12CF;  -- 	STORE  BMC1         ; Inside loop counter
+           2A7 : 0806;  -- 	LOAD   NumTrains
+           2A8 : 12D0;  -- 	STORE  BMC2         ; Outside loop counter
+           2A9 : BBAB;  -- 	LOADI  TrainsTable
+           2AA : 13A5;  -- 	STORE  TrainPtr     ; Start at the beginning...
+           2AB : 80FB;  -- 	CALL   LoadCar
+           2AC : 0BA6;  -- 	LOAD   TrainX
+           2AD : 1550;  -- 	STORE  TileX
+           2AE : 0BA7;  -- 	LOAD   TrainY
+           2AF : 1551;  -- 	STORE  TileY
+           2B0 : 82DF;  -- 	CALL   SetOccupancy
+           2B1 : 0BA8;  -- 	LOAD   TrainF       ; Get facing direction
+           2B2 : 123D;  -- 	STORE  MDir         ; Place in movement routine variable
+           2B3 : 0BA6;  -- 	LOAD   TrainX
+           2B4 : 123C;  -- 	STORE  MPos
+           2B5 : 823E;  -- 	CALL   MovXR        ; Move X position backwards.
+           2B6 : 1550;  -- 	STORE  TileX
+           2B7 : 0BA7;  -- 	LOAD   TrainY
+           2B8 : 123C;  -- 	STORE  MPos
+           2B9 : 8249;  -- 	CALL   MovYR        ; Move position backwards.
+           2BA : 1551;  -- 	STORE  TileY
+           2BB : 82DF;  -- 	CALL   SetOccupancy
+           2BC : 0BA5;  -- 	LOAD   TrainPtr
+           2BD : 6804;  -- 	ADDI   4            ; Next car
+           2BE : 13A5;  -- 	STORE  TrainPtr
+           2BF : 0ACF;  -- 	LOAD   BMC1
+           2C0 : 6FFF;  -- 	ADDI   -1           ; Count for cars in train
+           2C1 : 12CF;  -- 	STORE  BMC1
+           2C2 : 3AAB;  -- 	JPOS   BMLoop
+           2C3 : 0805;  -- 	LOAD   NumCars
+           2C4 : 12CF;  -- 	STORE  BMC1         ; Reset car counter
+           2C5 : B808;  -- 	LOADI  8            ; Max number of cars
+           2C6 : 6002;  -- 	SHIFT  2            ; Four words per car
+           2C7 : 6001;  -- 	SHIFT  1            ; Skip working and OG data
+           2C8 : 6BAB;  -- 	ADDI   TrainsTable  ; Get table offset
+           2C9 : 13A5;  -- 	STORE  TrainPtr
+           2CA : 0AD0;  -- 	LOAD   BMC2
+           2CB : 6FFF;  -- 	ADDI   -1           ; Counter for number of trains
+           2CC : 12D0;  -- 	STORE  BMC2
+           2CD : 3AAB;  -- 	JPOS   BMLoop
+           2CE : 8800;  -- 	RETURN
+           2CF : 0000;  -- BMC1: DW 0
+           2D0 : 0000;  -- BMC2: DW 0
+           2D1 : BD11;  -- 	LOADI  Occupancy
+           2D2 : 1541;  -- 	STORE  Temp
+           2D3 : B830;  -- 	LOADI  48           ; Number of entries in the table
+           2D4 : 1542;  -- 	STORE  Temp2
+           2D5 : B800;  -- 	LOADI  0
+           2D6 : 7D41;  -- 	ISTORE Temp         ; Clear table entry
+           2D7 : 0D41;  -- 	LOAD   Temp
+           2D8 : 6801;  -- 	ADDI   1            ; Increment pointer
+           2D9 : 1541;  -- 	STORE  Temp
+           2DA : 0D42;  -- 	LOAD   Temp2
+           2DB : 6FFF;  -- 	ADDI   -1           ; Decrement counter
+           2DC : 1542;  -- 	STORE  Temp2
+           2DD : 3AD5;  -- 	JPOS   COLoop
+           2DE : 8800;  -- 	RETURN
+           2DF : 0D51;  -- 	LOAD   TileY
+           2E0 : 6001;  -- 	SHIFT  1
+           2E1 : 1307;  -- 	STORE  OTY
+           2E2 : 0D50;  -- 	LOAD   TileX
+           2E3 : 6014;  -- 	SHIFT  -4
+           2E4 : 5307;  -- 	OR     OTY
+           2E5 : 1307;  -- 	STORE  OTY
+           2E6 : 0D50;  -- 	LOAD   TileX
+           2E7 : 4D4A;  -- 	AND    Mask4Bits
+           2E8 : 1306;  -- 	STORE  OTX
+           2E9 : B801;  -- 	LOADI  1
+           2EA : 1305;  -- 	STORE  OMask
+           2EB : 0B06;  -- 	LOAD   OTX
+           2EC : 42F3;  -- 	JZERO  SOMDone
+           2ED : 6FFF;  -- 	ADDI   -1
+           2EE : 1306;  -- 	STORE  OTX
+           2EF : 0B05;  -- 	LOAD   OMask
+           2F0 : 6001;  -- 	SHIFT  1            ; Shift mask until in right place
+           2F1 : 1305;  -- 	STORE  OMask
+           2F2 : 2AEB;  -- 	JUMP   SOMLoop
+           2F3 : BD11;  -- 	LOADI  Occupancy    ; Table base
+           2F4 : 1B07;  -- 	ADD    OTY          ; Table entry address
+           2F5 : 1307;  -- 	STORE  OTY          ; Repurposing register
+           2F6 : 7307;  -- 	ILOAD  OTY
+           2F7 : 1306;  -- 	STORE  OTX          ; Repurposing register
+           2F8 : 5305;  -- 	OR     OMask        ; Insert current bit
+           2F9 : 5B06;  -- 	XOR    OTX          ; Check against original
+           2FA : 42FE;  -- 	JZERO  Collide      ; If nothing changed, there was a collision
+           2FB : 5B06;  -- 	XOR    OTX          ; Restore
+           2FC : 7B07;  -- 	ISTORE OTY          ; Commit to table
+           2FD : 8800;  -- 	RETURN
+           2FE : B801;  -- 	LOADI  1
+           2FF : 1554;  -- 	STORE  Crashed
+           300 : 0D50;  -- 	LOAD   TileX
+           301 : 1552;  -- 	STORE  DeadX
+           302 : 0D51;  -- 	LOAD   TileY
+           303 : 1553;  -- 	STORE  DeadY
+           304 : 8800;  -- 	RETURN
+           305 : 0000;  -- OMask: DW 0
+           306 : 0000;  -- OTX: DW 0
+           307 : 0000;  -- OTY: DW 0
+           308 : 0D51;  -- 	LOAD   TileY
+           309 : 6001;  -- 	SHIFT  1
+           30A : 1307;  -- 	STORE  OTY
+           30B : 0D50;  -- 	LOAD   TileX
+           30C : 6014;  -- 	SHIFT  -4
+           30D : 5307;  -- 	OR     OTY
+           30E : 1307;  -- 	STORE  OTY
+           30F : 0D50;  -- 	LOAD   TileX
+           310 : 4D4A;  -- 	AND    Mask4Bits
+           311 : 1306;  -- 	STORE  OTX
+           312 : BD11;  -- 	LOADI  Occupancy    ; Table base
+           313 : 1B07;  -- 	ADD    OTY          ; Table entry address
+           314 : 1541;  -- 	STORE  Temp
+           315 : 7541;  -- 	ILOAD  Temp
+           316 : 1541;  -- 	STORE  Temp         ; Raw word
+           317 : 0B06;  -- 	LOAD   OTX
+           318 : 431F;  -- 	JZERO  GOMDone
+           319 : 6FFF;  -- 	ADDI   -1
+           31A : 1306;  -- 	STORE  OTX
+           31B : 0D41;  -- 	LOAD   Temp
+           31C : 6011;  -- 	SHIFT  -1           ; Shift bit until in 0th place
+           31D : 1541;  -- 	STORE  Temp
+           31E : 2B17;  -- 	JUMP   GOMLoop
+           31F : 0D41;  -- 	LOAD   Temp
+           320 : 4D48;  -- 	AND    Mask1Bit
+           321 : 8800;  -- 	RETURN
+           322 : 0808;  -- 	LOAD   NumSensors
+           323 : 1356;  -- 	STORE  RSC          ; Start a counter for sensors
+           324 : BD04;  -- 	LOADI  Sensors      ; Get sensor pos table base
+           325 : 1357;  -- 	STORE  RSP
+           326 : B800;  -- 	LOADI  0
+           327 : 1510;  -- 	STORE  SensorVals   ; Clear global sensor values
+           328 : B800;  -- 	LOADI  0
+           329 : 1358;  -- 	STORE  RSV          ; Clear local sensor values
+           32A : 7357;  -- 	ILOAD  RSP          ; Get xpos
+           32B : 6801;  -- 	ADDI   1            ; Move right one tile
+           32C : 1550;  -- 	STORE  TileX
+           32D : 0B57;  -- 	LOAD   RSP
+           32E : 6801;  -- 	ADDI   1            ; Increment pointer
+           32F : 1357;  -- 	STORE  RSP
+           330 : 7357;  -- 	ILOAD  RSP          ; Get ypos
+           331 : 1551;  -- 	STORE  TileY
+           332 : 0B57;  -- 	LOAD   RSP
+           333 : 6801;  -- 	ADDI   1            ; Increment pointer
+           334 : 1357;  -- 	STORE  RSP
+           335 : 8308;  -- 	CALL   GetOccupancy ; Check tile occupancy
+           336 : 5358;  -- 	OR     RSV          ; Mix with local value
+           337 : 1358;  -- 	STORE  RSV
+           338 : 0D50;  -- 	LOAD   TileX
+           339 : 6FFE;  -- 	ADDI   -2           ; Move to left
+           33A : 1550;  -- 	STORE  TileX
+           33B : 8308;  -- 	CALL   GetOccupancy ; Check tile occupancy
+           33C : 5358;  -- 	OR     RSV          ; Mix with local value
+           33D : 1358;  -- 	STORE  RSV
+           33E : 0D50;  -- 	LOAD   TileX
+           33F : 6801;  -- 	ADDI   1            ; Move to center
+           340 : 1550;  -- 	STORE  TileX
+           341 : 0D51;  -- 	LOAD   TileY
+           342 : 6801;  -- 	ADDI   1            ; Move up one
+           343 : 1551;  -- 	STORE  TileY
+           344 : 8308;  -- 	CALL   GetOccupancy ; Check tile occupancy
+           345 : 5358;  -- 	OR     RSV          ; Mix with local value
+           346 : 1358;  -- 	STORE  RSV
+           347 : 0D51;  -- 	LOAD   TileY
+           348 : 6FFE;  -- 	ADDI   -2           ; Move to bottom
+           349 : 1551;  -- 	STORE  TileY
+           34A : 8308;  -- 	CALL   GetOccupancy ; Check tile occupancy
+           34B : 5358;  -- 	OR     RSV          ; Mix with local value
+           34C : 1358;  -- 	STORE  RSV
+           34D : 0D10;  -- 	LOAD   SensorVals
+           34E : 6001;  -- 	SHIFT  1            ; Move old sensors over
+           34F : 5358;  -- 	OR     RSV          ; Mix with current sensor
+           350 : 1510;  -- 	STORE  SensorVals
+           351 : 0B56;  -- 	LOAD   RSC
+           352 : 6FFF;  -- 	ADDI   -1           ; Decrement sensor counter
+           353 : 1356;  -- 	STORE  RSC
+           354 : 3B28;  -- 	JPOS   RSLoop
+           355 : 8800;  -- 	RETURN
+           356 : 0000;  -- RSC: DW 0
+           357 : 0000;  -- RSP: DW 0
+           358 : 0000;  -- RSV: DW 0
+           359 : 0808;  -- 	LOAD   NumSensors
+           35A : 1356;  -- 	STORE  RSC          ; Start a counter
+           35B : 6001;  -- 	SHIFT  1            ; Two words per sensor
+           35C : 6D04;  -- 	ADDI   Sensors      ; Add table base address
+           35D : 6FFF;  -- 	ADDI   -1           ; Move to final entry
+           35E : 1357;  -- 	STORE  RSP
+           35F : 0D10;  -- 	LOAD   SensorVals
+           360 : 1358;  -- 	STORE  RSV          ; Store values in a temp
+           361 : B809;  -- 	LOADI  9            ; Sprite base offset
+           362 : 1541;  -- 	STORE  Temp         ; Will hold PPU command
+           363 : 0B58;  -- 	LOAD   RSV
+           364 : 4D48;  -- 	AND    Mask1Bit     ; Retrieve current sensor value
+           365 : 1D41;  -- 	ADD    Temp         ; Switch sprite if needed
+           366 : 1541;  -- 	STORE  Temp
+           367 : 7357;  -- 	ILOAD  RSP          ; Get Ypos
+           368 : 1542;  -- 	STORE  Temp2
+           369 : 0D41;  -- 	LOAD   Temp
+           36A : 6005;  -- 	SHIFT  5            ; Move bits over
+           36B : 5542;  -- 	OR     Temp2
+           36C : 1541;  -- 	STORE  Temp         ; Insert Y into PPU command
+           36D : 0B57;  -- 	LOAD   RSP
+           36E : 6FFF;  -- 	ADDI   -1           ; Move pointer
+           36F : 1357;  -- 	STORE  RSP
+           370 : 7357;  -- 	ILOAD  RSP          ; Get Xpos
+           371 : 1542;  -- 	STORE  Temp2
+           372 : 0D41;  -- 	LOAD   Temp
+           373 : 6005;  -- 	SHIFT  5
+           374 : 5542;  -- 	OR     Temp2        ; Insert Xpos
+           375 : 9807;  -- 	OUT    PPU          ; Send to PPU
+           376 : 0B58;  -- 	LOAD   RSV
+           377 : 6011;  -- 	SHIFT  -1            ; Move to next sensor value
+           378 : 1358;  -- 	STORE  RSV
+           379 : 0B57;  -- 	LOAD   RSP
+           37A : 6FFF;  -- 	ADDI   -1           ; Move pointer to next sensor
+           37B : 1357;  -- 	STORE  RSP
+           37C : 0B56;  -- 	LOAD   RSC
+           37D : 6FFF;  -- 	ADDI   -1           ; Decrement sensor counter
+           37E : 1356;  -- 	STORE  RSC
+           37F : 3B61;  -- 	JPOS   DSLoop
+           380 : 8800;  -- 	RETURN
+           381 : BAFF;  -- 	LOADI  767           ; all tiles
+           382 : 1543;  -- 	STORE  Counter
+           383 : 903C;  -- 	IN     60 ; empty IO
+           384 : 1557;  -- 	STORE  RandTemp
+           385 : 7556;  -- 	ILOAD  RandPtr
+           386 : 6FF3;  -- 	ADDI   -13
+           387 : 4397;  -- 	JZERO  Dec13
+           388 : 6FFF;  -- 	ADDI   -1
+           389 : 439C;  -- 	JZERO  Dec14
+           38A : 6014;  -- 	SHIFT  -4
+           38B : 6FF3;  -- 	ADDI   -13
+           38C : 4397;  -- 	JZERO  Dec13
+           38D : 6FFF;  -- 	ADDI   -1
+           38E : 439C;  -- 	JZERO  Dec14
+           38F : 0D56;  -- 	LOAD   RandPtr
+           390 : 6FE9;  -- 	ADDI   -23 ; random
+           391 : 1556;  -- 	STORE  RandPtr
+           392 : 0D43;  -- 	LOAD   Counter
+           393 : 6FFF;  -- 	ADDI   -1
+           394 : 33A1;  -- 	JNEG   DecDone
+           395 : 1543;  -- 	STORE  Counter
+           396 : 2B85;  -- 	JUMP   DecLoop
+           397 : B80D;  -- 	LOADI  13
+           398 : 600A;  -- 	SHIFT  10
+           399 : 5543;  -- 	OR     Counter
+           39A : 9807;  -- 	OUT    PPU
+           39B : 2B8F;  -- 	JUMP   DecNext
+           39C : B80E;  -- 	LOADI  14
+           39D : 600A;  -- 	SHIFT  10
+           39E : 5543;  -- 	OR     Counter
+           39F : 9807;  -- 	OUT    PPU
+           3A0 : 2B8F;  -- 	JUMP   DecNext
+           3A1 : 8800;  -- 	RETURN
+           3A2 : 5D4E;  -- 	XOR    Neg1
+           3A3 : 6801;  -- 	ADDI   1
+           3A4 : 8800;  -- 	RETURN
+           3A5 : 0000;  -- TrainPtr: DW 0 ; current train number
+           3A6 : 0000;  -- TrainX: DW 0 ; xpos
+           3A7 : 0000;  -- TrainY: DW 0 ; ypos
+           3A8 : 0000;  -- TrainF: DW 0 ; facing direction
+           3A9 : 0000;  -- TrainM: DW 0 ; movement direction (1 / -1)
+           3AA : 0000;  -- TrainO: DW 0 ; sprite offset
+           3AB : 0000;  -- DW 0 ; xpos
+           3AC : 0000;  -- DW 0 ; ypos
+           3AD : 0000;  -- DW 0 ; facing direction
+           3AE : 0000;  -- DW 0 ; movement direction (1 / -1)
+           3AF : 0000;  -- DW 0 ; xpos
+           3B0 : 0000;  -- DW 0 ; ypos
+           3B1 : 0000;  -- DW 0 ; facing direction
+           3B2 : 0000;  -- DW 0 ; movement direction (1 / -1)
+           3B3 : 0000;  -- DW 0 ; xpos
+           3B4 : 0000;  -- DW 0 ; ypos
+           3B5 : 0000;  -- DW 0 ; facing direction
+           3B6 : 0000;  -- DW 0 ; movement direction (1 / -1)
+           3B7 : 0000;  -- DW 0 ; xpos
+           3B8 : 0000;  -- DW 0 ; ypos
+           3B9 : 0000;  -- DW 0 ; facing direction
+           3BA : 0000;  -- DW 0 ; movement direction (1 / -1)
+           3BB : 0000;  -- DW 0 ; xpos
+           3BC : 0000;  -- DW 0 ; ypos
+           3BD : 0000;  -- DW 0 ; facing direction
+           3BE : 0000;  -- DW 0 ; movement direction (1 / -1)
+           3BF : 0000;  -- DW 0 ; xpos
+           3C0 : 0000;  -- DW 0 ; ypos
+           3C1 : 0000;  -- DW 0 ; facing direction
+           3C2 : 0000;  -- DW 0 ; movement direction (1 / -1)
+           3C3 : 0000;  -- DW 0 ; xpos
+           3C4 : 0000;  -- DW 0 ; ypos
+           3C5 : 0000;  -- DW 0 ; facing direction
+           3C6 : 0000;  -- DW 0 ; movement direction (1 / -1)
+           3C7 : 0000;  -- DW 0 ; xpos
+           3C8 : 0000;  -- DW 0 ; ypos
+           3C9 : 0000;  -- DW 0 ; facing direction
+           3CA : 0000;  -- DW 0 ; movement direction (1 / -1)
+           3CB : 0004;  -- DW 4 ; xpos
+           3CC : 0002;  -- DW 2 ; ypos
+           3CD : 0000;  -- DW 0 ; facing direction
+           3CE : 0001;  -- DW 1 ; movement direction (1 / -1)
+           3CF : 0006;  -- DW 6 ; xpos
+           3D0 : 0002;  -- DW 2 ; ypos
+           3D1 : 0000;  -- DW 0 ; facing direction
+           3D2 : 0001;  -- DW 1 ; movement direction (1 / -1)
+           3D3 : 0008;  -- DW 8 ; xpos
+           3D4 : 0002;  -- DW 2 ; ypos
+           3D5 : 0000;  -- DW 0 ; facing direction
+           3D6 : 0001;  -- DW 1 ; movement direction (1 / -1)
+           3D7 : 000A;  -- DW 10 ; xpos
+           3D8 : 0002;  -- DW 2 ; ypos
+           3D9 : 0000;  -- DW 0 ; facing direction
+           3DA : 0001;  -- DW 1 ; movement direction (1 / -1)
+           3DB : 000C;  -- DW 12 ; xpos
+           3DC : 0002;  -- DW 2 ; ypos
+           3DD : 0000;  -- DW 0 ; facing direction
+           3DE : 0001;  -- DW 1 ; movement direction (1 / -1)
+           3DF : 000E;  -- DW 14 ; xpos
+           3E0 : 0002;  -- DW 2 ; ypos
+           3E1 : 0000;  -- DW 0 ; facing direction
+           3E2 : 0001;  -- DW 1 ; movement direction (1 / -1)
+           3E3 : 0010;  -- DW 16 ; xpos
+           3E4 : 0002;  -- DW 2 ; ypos
+           3E5 : 0000;  -- DW 0 ; facing direction
+           3E6 : 0001;  -- DW 1 ; movement direction (1 / -1)
+           3E7 : 0012;  -- DW 18 ; xpos
+           3E8 : 0002;  -- DW 2 ; ypos
+           3E9 : 0000;  -- DW 0 ; facing direction
+           3EA : 0001;  -- DW 1 ; movement direction (1 / -1)
+           3EB : 0000;  -- DW 0 ; xpos
+           3EC : 0000;  -- DW 0 ; ypos
+           3ED : 0000;  -- DW 0 ; facing direction
+           3EE : 0000;  -- DW 0 ; movement direction ( 1 / -1)
+           3EF : 0000;  -- DW 0 ; xpos
+           3F0 : 0000;  -- DW 0 ; ypos
+           3F1 : 0000;  -- DW 0 ; facing direction
+           3F2 : 0000;  -- DW 0 ; movement direction ( 1 / -1)
+           3F3 : 0000;  -- DW 0 ; xpos
+           3F4 : 0000;  -- DW 0 ; ypos
+           3F5 : 0000;  -- DW 0 ; facing direction
+           3F6 : 0000;  -- DW 0 ; movement direction ( 1 / -1)
+           3F7 : 0000;  -- DW 0 ; xpos
+           3F8 : 0000;  -- DW 0 ; ypos
+           3F9 : 0000;  -- DW 0 ; facing direction
+           3FA : 0000;  -- DW 0 ; movement direction ( 1 / -1)
+           3FB : 0000;  -- DW 0 ; xpos
+           3FC : 0000;  -- DW 0 ; ypos
+           3FD : 0000;  -- DW 0 ; facing direction
+           3FE : 0000;  -- DW 0 ; movement direction ( 1 / -1)
+           3FF : 0000;  -- DW 0 ; xpos
+           400 : 0000;  -- DW 0 ; ypos
+           401 : 0000;  -- DW 0 ; facing direction
+           402 : 0000;  -- DW 0 ; movement direction ( 1 / -1)
+           403 : 0000;  -- DW 0 ; xpos
+           404 : 0000;  -- DW 0 ; ypos
+           405 : 0000;  -- DW 0 ; facing direction
+           406 : 0000;  -- DW 0 ; movement direction ( 1 / -1)
+           407 : 0000;  -- DW 0 ; xpos
+           408 : 0000;  -- DW 0 ; ypos
+           409 : 0000;  -- DW 0 ; facing direction
+           40A : 0000;  -- DW 0 ; movement direction ( 1 / -1)
+           40B : 0008;  -- DW 8 ; xpos
+           40C : 0008;  -- DW 8 ; ypos
+           40D : 0000;  -- DW 0 ; facing direction
+           40E : FFFF;  -- DW -1 ; movement direction ( 1 / -1)
+           40F : 000A;  -- DW 10 ; xpos
+           410 : 0008;  -- DW 8 ; ypos
+           411 : 0000;  -- DW 0 ; facing direction
+           412 : FFFF;  -- DW -1 ; movement direction ( 1 / -1)
+           413 : 000C;  -- DW 12 ; xpos
+           414 : 0008;  -- DW 8 ; ypos
+           415 : 0000;  -- DW 0 ; facing direction
+           416 : FFFF;  -- DW -1 ; movement direction ( 1 / -1)
+           417 : 000E;  -- DW 14 ; xpos
+           418 : 0008;  -- DW 8 ; ypos
+           419 : 0000;  -- DW 0 ; facing direction
+           41A : FFFF;  -- DW -1 ; movement direction ( 1 / -1)
+           41B : 0010;  -- DW 16 ; xpos
+           41C : 0008;  -- DW 8 ; ypos
+           41D : 0000;  -- DW 0 ; facing direction
+           41E : FFFF;  -- DW -1 ; movement direction ( 1 / -1)
+           41F : 0012;  -- DW 18 ; xpos
+           420 : 0008;  -- DW 8 ; ypos
+           421 : 0000;  -- DW 0 ; facing direction
+           422 : FFFF;  -- DW -1 ; movement direction ( 1 / -1)
+           423 : 0014;  -- DW 20 ; xpos
+           424 : 0008;  -- DW 8 ; ypos
+           425 : 0000;  -- DW 0 ; facing direction
+           426 : FFFF;  -- DW -1 ; movement direction ( 1 / -1)
+           427 : 0016;  -- DW 22 ; xpos
+           428 : 0008;  -- DW 8 ; ypos
+           429 : 0000;  -- DW 0 ; facing direction
+           42A : FFFF;  -- DW -1 ; movement direction ( 1 / -1)
+           42B : 0000;  -- DW 0;
+           42C : 0000;  -- DW 0;
+           42D : 0000;  -- DW 0;
+           42E : 0000;  -- DW 0;
+           42F : 0000;  -- DW 0;
+           430 : 0000;  -- DW 0;
+           431 : 0000;  -- DW 0;
+           432 : 0000;  -- DW 0;
+           433 : 0000;  -- DW 0;
+           434 : 0000;  -- DW 0;
+           435 : 0000;  -- DW 0;
+           436 : 0000;  -- DW 0;
+           437 : 0000;  -- DW 0;
+           438 : 0000;  -- DW 0;
+           439 : 0000;  -- DW 0;
+           43A : 0000;  -- DW 0;
+           43B : 2300;  -- DW 8960;
+           43C : 2222;  -- DW 8738;
+           43D : 2222;  -- DW 8738;
+           43E : 2224;  -- DW 8740;
+           43F : 2222;  -- DW 8738;
+           440 : 2222;  -- DW 8738;
+           441 : 2222;  -- DW 8738;
+           442 : 0042;  -- DW 66;
+           443 : 0100;  -- DW 256;
+           444 : 0000;  -- DW 0;
+           445 : 0000;  -- DW 0;
+           446 : 0001;  -- DW 1;
+           447 : 0000;  -- DW 0;
+           448 : 0000;  -- DW 0;
+           449 : 0000;  -- DW 0;
+           44A : 0010;  -- DW 16;
+           44B : 0100;  -- DW 256;
+           44C : 0000;  -- DW 0;
+           44D : 0000;  -- DW 0;
+           44E : 0001;  -- DW 1;
+           44F : 0000;  -- DW 0;
+           450 : 0000;  -- DW 0;
+           451 : 0000;  -- DW 0;
+           452 : 0010;  -- DW 16;
+           453 : 0100;  -- DW 256;
+           454 : 0000;  -- DW 0;
+           455 : 0000;  -- DW 0;
+           456 : 0001;  -- DW 1;
+           457 : 0000;  -- DW 0;
+           458 : 0000;  -- DW 0;
+           459 : 0000;  -- DW 0;
+           45A : 0010;  -- DW 16;
+           45B : 0100;  -- DW 256;
+           45C : 0000;  -- DW 0;
+           45D : 0000;  -- DW 0;
+           45E : 0001;  -- DW 1;
+           45F : 0000;  -- DW 0;
+           460 : 0000;  -- DW 0;
+           461 : 0000;  -- DW 0;
+           462 : 0010;  -- DW 16;
+           463 : 0100;  -- DW 256;
+           464 : 0000;  -- DW 0;
+           465 : 0000;  -- DW 0;
+           466 : 0001;  -- DW 1;
+           467 : 0000;  -- DW 0;
+           468 : 0000;  -- DW 0;
+           469 : 0000;  -- DW 0;
+           46A : 0010;  -- DW 16;
+           46B : 0100;  -- DW 256;
+           46C : 2300;  -- DW 8960;
+           46D : 2222;  -- DW 8738;
+           46E : 2227;  -- DW 8743;
+           46F : 2222;  -- DW 8738;
+           470 : 2222;  -- DW 8738;
+           471 : 0042;  -- DW 66;
+           472 : 0010;  -- DW 16;
+           473 : 0100;  -- DW 256;
+           474 : 0100;  -- DW 256;
+           475 : 0000;  -- DW 0;
+           476 : 0001;  -- DW 1;
+           477 : 0000;  -- DW 0;
+           478 : 0000;  -- DW 0;
+           479 : 0010;  -- DW 16;
+           47A : 0010;  -- DW 16;
+           47B : 0100;  -- DW 256;
+           47C : 0100;  -- DW 256;
+           47D : 0000;  -- DW 0;
+           47E : 0001;  -- DW 1;
+           47F : 0000;  -- DW 0;
+           480 : 0000;  -- DW 0;
+           481 : 0010;  -- DW 16;
+           482 : 0010;  -- DW 16;
+           483 : 0100;  -- DW 256;
+           484 : 0100;  -- DW 256;
+           485 : 0000;  -- DW 0;
+           486 : 0001;  -- DW 1;
+           487 : 0000;  -- DW 0;
+           488 : 0000;  -- DW 0;
+           489 : 0010;  -- DW 16;
+           48A : 0010;  -- DW 16;
+           48B : 0100;  -- DW 256;
+           48C : 0100;  -- DW 256;
+           48D : 0000;  -- DW 0;
+           48E : 0001;  -- DW 1;
+           48F : 0000;  -- DW 0;
+           490 : 0000;  -- DW 0;
+           491 : 0010;  -- DW 16;
+           492 : 0010;  -- DW 16;
+           493 : 0100;  -- DW 256;
+           494 : 0100;  -- DW 256;
+           495 : 0000;  -- DW 0;
+           496 : 0001;  -- DW 1;
+           497 : 0000;  -- DW 0;
+           498 : 0000;  -- DW 0;
+           499 : 0010;  -- DW 16;
+           49A : 0010;  -- DW 16;
+           49B : 0100;  -- DW 256;
+           49C : 0100;  -- DW 256;
+           49D : 0000;  -- DW 0;
+           49E : 0001;  -- DW 1;
+           49F : 0000;  -- DW 0;
+           4A0 : 0000;  -- DW 0;
+           4A1 : 0010;  -- DW 16;
+           4A2 : 0010;  -- DW 16;
+           4A3 : 0100;  -- DW 256;
+           4A4 : 0100;  -- DW 256;
+           4A5 : 0000;  -- DW 0;
+           4A6 : 0001;  -- DW 1;
+           4A7 : 0000;  -- DW 0;
+           4A8 : 0000;  -- DW 0;
+           4A9 : 0010;  -- DW 16;
+           4AA : 0010;  -- DW 16;
+           4AB : 0100;  -- DW 256;
+           4AC : 0100;  -- DW 256;
+           4AD : 0000;  -- DW 0;
+           4AE : 2226;  -- DW 8742;
+           4AF : 2222;  -- DW 8738;
+           4B0 : 2222;  -- DW 8738;
+           4B1 : 2272;  -- DW 8818;
+           4B2 : 0082;  -- DW 130;
+           4B3 : 0100;  -- DW 256;
+           4B4 : 0100;  -- DW 256;
+           4B5 : 0000;  -- DW 0;
+           4B6 : 0000;  -- DW 0;
+           4B7 : 0000;  -- DW 0;
+           4B8 : 0000;  -- DW 0;
+           4B9 : 0010;  -- DW 16;
+           4BA : 0010;  -- DW 16;
+           4BB : 0100;  -- DW 256;
+           4BC : 0100;  -- DW 256;
+           4BD : 0000;  -- DW 0;
+           4BE : 0000;  -- DW 0;
+           4BF : 0000;  -- DW 0;
+           4C0 : 0000;  -- DW 0;
+           4C1 : 0010;  -- DW 16;
+           4C2 : 0010;  -- DW 16;
+           4C3 : 0100;  -- DW 256;
+           4C4 : 0100;  -- DW 256;
+           4C5 : 0000;  -- DW 0;
+           4C6 : 0000;  -- DW 0;
+           4C7 : 0000;  -- DW 0;
+           4C8 : 0000;  -- DW 0;
+           4C9 : 0010;  -- DW 16;
+           4CA : 0010;  -- DW 16;
+           4CB : 0100;  -- DW 256;
+           4CC : 0100;  -- DW 256;
+           4CD : 0000;  -- DW 0;
+           4CE : 0000;  -- DW 0;
+           4CF : 0000;  -- DW 0;
+           4D0 : 0000;  -- DW 0;
+           4D1 : 0010;  -- DW 16;
+           4D2 : 0010;  -- DW 16;
+           4D3 : 2600;  -- DW 9728;
+           4D4 : 2622;  -- DW 9762;
+           4D5 : 2222;  -- DW 8738;
+           4D6 : 2222;  -- DW 8738;
+           4D7 : 2222;  -- DW 8738;
+           4D8 : 2222;  -- DW 8738;
+           4D9 : 2252;  -- DW 8786;
+           4DA : 0052;  -- DW 82;
+           4DB : 0000;  -- DW 0;
+           4DC : 0000;  -- DW 0;
+           4DD : 0000;  -- DW 0;
+           4DE : 0000;  -- DW 0;
+           4DF : 0000;  -- DW 0;
+           4E0 : 0000;  -- DW 0;
+           4E1 : 0000;  -- DW 0;
+           4E2 : 0000;  -- DW 0;
+           4E3 : 0000;  -- DW 0;
+           4E4 : 0000;  -- DW 0;
+           4E5 : 0000;  -- DW 0;
+           4E6 : 0000;  -- DW 0;
+           4E7 : 0000;  -- DW 0;
+           4E8 : 0000;  -- DW 0;
+           4E9 : 0000;  -- DW 0;
+           4EA : 0000;  -- DW 0;
+           4EB : 0006;  -- DW 6  ; x1
+           4EC : 0015;  -- DW 21 ; y1
+           4ED : 0002;  -- DW 2  ; track type when 0
+           4EE : 0006;  -- DW 6  ; type when 1
+           4EF : 0019;  -- DW 25 ; x2
+           4F0 : 0015;  -- DW 21 ; ...
+           4F1 : 0002;  -- DW 2
+           4F2 : 0005;  -- DW 5
+           4F3 : 000C;  -- DW 12 ; x3
+           4F4 : 0002;  -- DW 2
+           4F5 : 0002;  -- DW 2
+           4F6 : 0004;  -- DW 4
+           4F7 : 001D;  -- DW 29 ; x4
+           4F8 : 0010;  -- DW 16
+           4F9 : 0001;  -- DW 1
+           4FA : 0004;  -- DW 4
+           4FB : 0006;  -- DW 6  ; x1
+           4FC : 0016;  -- DW 22 ; y1
+           4FD : 0019;  -- DW 25 ; x2
+           4FE : 0016;  -- DW 22 ; ...
+           4FF : 000C;  -- DW 12
+           500 : 0001;  -- DW 1
+           501 : 001E;  -- DW 30
+           502 : 0010;  -- DW 16
+           503 : 0000;  -- TSwVals: DW 0
+           504 : 000A;  -- DW 10 ; x6
+           505 : 0003;  -- DW 3  ; y6
+           506 : 000B;  -- DW 11 ; x5
+           507 : 000A;  -- DW 10 ; y5
+           508 : 001C;  -- DW 28 ; x4
+           509 : 0013;  -- DW 19 ; y4
+           50A : 0018;  -- DW 24 ; x3
+           50B : 0013;  -- DW 19 ; y3
+           50C : 0007;  -- DW 7  ; x2
+           50D : 0013;  -- DW 19 ; y2
+           50E : 0003;  -- DW 3  ; x1
+           50F : 0013;  -- DW 19 ; y1
+           510 : 0000;  -- SensorVals: DW 0
+           511 : 0000;  -- DW 0
+           512 : 0000;  -- DW 0
+           513 : 0000;  -- DW 0
+           514 : 0000;  -- DW 0
+           515 : 0000;  -- DW 0
+           516 : 0000;  -- DW 0
+           517 : 0000;  -- DW 0
+           518 : 0000;  -- DW 0
+           519 : 0000;  -- DW 0
+           51A : 0000;  -- DW 0
+           51B : 0000;  -- DW 0
+           51C : 0000;  -- DW 0
+           51D : 0000;  -- DW 0
+           51E : 0000;  -- DW 0
+           51F : 0000;  -- DW 0
+           520 : 0000;  -- DW 0
+           521 : 0000;  -- DW 0
+           522 : 0000;  -- DW 0
+           523 : 0000;  -- DW 0
+           524 : 0000;  -- DW 0
+           525 : 0000;  -- DW 0
+           526 : 0000;  -- DW 0
+           527 : 0000;  -- DW 0
+           528 : 0000;  -- DW 0
+           529 : 0000;  -- DW 0
+           52A : 0000;  -- DW 0
+           52B : 0000;  -- DW 0
+           52C : 0000;  -- DW 0
+           52D : 0000;  -- DW 0
+           52E : 0000;  -- DW 0
+           52F : 0000;  -- DW 0
+           530 : 0000;  -- DW 0
+           531 : 0000;  -- DW 0
+           532 : 0000;  -- DW 0
+           533 : 0000;  -- DW 0
+           534 : 0000;  -- DW 0
+           535 : 0000;  -- DW 0
+           536 : 0000;  -- DW 0
+           537 : 0000;  -- DW 0
+           538 : 0000;  -- DW 0
+           539 : 0000;  -- DW 0
+           53A : 0000;  -- DW 0
+           53B : 0000;  -- DW 0
+           53C : 0000;  -- DW 0
+           53D : 0000;  -- DW 0
+           53E : 0000;  -- DW 0
+           53F : 0000;  -- DW 0
+           540 : 0000;  -- DW 0
+           541 : 0000;  -- Temp:      DW 0
+           542 : 0000;  -- Temp2:     DW 0
+           543 : 0000;  -- Counter:   DW 0
+           544 : 0000;  -- TimerA:    DW 0
+           545 : 0000;  -- TimerB:    DW 0
+           546 : 0000;  -- ADelay:    DW 0
+           547 : 0000;  -- BDelay:    DW 0
+           548 : 0001;  -- Mask1Bit:  DW &B1
+           549 : 0003;  -- Mask2Bits: DW &B11
+           54A : 000F;  -- Mask4Bits: DW &B1111
+           54B : 001F;  -- Mask5Bits: DW &B11111
+           54C : 003F;  -- Mask6Bits: DW &B111111
+           54D : 03FF;  -- Mask10Bits: DW &B1111111111
+           54E : FFFF;  -- Neg1:      DW -1
+           54F : 2800;  -- RawJump:   JUMP 0     ; A blank jump instruction
+           550 : 0000;  -- TileX:     DW 0 ; general working register for X
+           551 : 0000;  -- TileY:     DW 0 ; and Y
+           552 : 0000;  -- DeadX:     DW 0 ; reaper position X
+           553 : 0000;  -- DeadY:     DW 0 ; and Y
+           554 : 0000;  -- Crashed:   DW 0 ; crashed flag
+           555 : 0000;  -- Running:   DW 0 ; running flag
+           556 : 0000;  -- RandPtr:   DW 0 ; pointer to a random memory location
+           557 : 0000;  -- RandTemp:  DW 0 ; value used in random number generator.
+           558 : 0000;  -- PrevPB:    DW 0 ; previous PB state
+           559 : 000E;  -- BackOffst: DW 14 ; distance from front-sprite to back-sprite
+           55A : 0000;  -- TipDrawn:  DW 0 ; whether or not the front of the train is drawn.
+  END;

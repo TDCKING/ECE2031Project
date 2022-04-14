@@ -1,0 +1,55 @@
+-- Altera Memory Initialization File (MIF)
+
+DEPTH = 2048;
+WIDTH = 16;
+
+ADDRESS_RADIX = HEX;
+DATA_RADIX = HEX;
+
+CONTENT
+  BEGIN
+    [000..7FF] : 0000;  -- Default to NOP
+
+           000 : 081E;  -- 	LOAD   One
+           001 : 181F;  -- 	ADD    Two
+           002 : 1822;  -- 	ADD    NegTwo
+           003 : 6805;  -- 	ADDI   5
+           004 : 6FFB;  -- 	ADDI   -5
+           005 : 2020;  -- 	SUB    Three
+           006 : 2023;  -- 	SUB    NegThree
+           007 : B800;  -- 	LOADI  0
+           008 : 5028;  -- 	OR     LowByte
+           009 : 4826;  -- 	AND    Bit2
+           00A : 5828;  -- 	XOR    LowByte
+           00B : 6004;  -- 	SHIFT  4
+           00C : 6014;  -- 	SHIFT  -4
+           00D : B800;  -- 	LOADI  0
+           00E : 3811;  -- 	JPOS   WrongJump
+           00F : 3011;  -- 	JNEG   WrongJump
+           010 : 4013;  -- 	JZERO  CheckJPOS
+           011 : B8EE;  -- 	LOADI  &HEE         ; 0xEE would indicate an error
+           012 : 2811;  -- 	JUMP   WrongJump
+           013 : BFF8;  -- 	LOADI  -8
+           014 : 3811;  -- 	JPOS   WrongJump
+           015 : B800;  -- 	LOADI  0
+           016 : 3811;  -- 	JPOS   WrongJump
+           017 : B808;  -- 	LOADI  8
+           018 : 381A;  -- 	JPOS   Questions
+           019 : 2811;  -- 	JUMP   WrongJump
+           01A : BB37;  -- 	LOADI  &H1337       ; Why doesn't AC get 0x1337 in it?
+           01B : 50FF;  -- 	OR     255          ; Why doesn't AC get OR'd with 255 (0xFF)?
+           01C : 0829;  -- 	LOAD   Buzz
+           01D : 281C;  -- 	JUMP   Finish       ; Infinite loop
+           01E : 0001;  -- One:       DW   1
+           01F : 0002;  -- Two:       DW   2
+           020 : 0003;  -- Three:     DW   3
+           021 : FFFF;  -- NegOne:    DW  -1
+           022 : FFFE;  -- NegTwo:    DW  -2
+           023 : FFFD;  -- NegThree:  DW  -3
+           024 : 0001;  -- Bit0:      DW  &B0001
+           025 : 0002;  -- Bit1:      DW  &B0010
+           026 : 0004;  -- Bit2:      DW  &B0100
+           027 : 0008;  -- Bit3:      DW  &B1000
+           028 : 00FF;  -- LowByte:   DW  &H00FF
+           029 : ABEE;  -- Buzz:      DW  &HABEE
+  END;

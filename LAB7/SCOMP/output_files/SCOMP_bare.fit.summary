@@ -1,0 +1,20 @@
+Fitter Status : Successful - Thu Mar 03 12:48:42 2022
+Quartus Prime Version : 19.1.0 Build 670 09/22/2019 SJ Lite Edition
+Revision Name : SCOMP_bare
+Top-level Entity Name : SCOMP
+Family : Cyclone V
+Device : 5CSXFC6D6F31C6
+Timing Models : Final
+Logic utilization (in ALMs) : 202 / 41,910 ( < 1 % )
+Total registers : 188
+Total pins : 102 / 499 ( 20 % )
+Total virtual pins : 0
+Total block memory bits : 32,768 / 5,662,720 ( < 1 % )
+Total RAM Blocks : 4 / 553 ( < 1 % )
+Total DSP Blocks : 0 / 112 ( 0 % )
+Total HSSI RX PCSs : 0 / 9 ( 0 % )
+Total HSSI PMA RX Deserializers : 0 / 9 ( 0 % )
+Total HSSI TX PCSs : 0 / 9 ( 0 % )
+Total HSSI PMA TX Serializers : 0 / 9 ( 0 % )
+Total PLLs : 0 / 15 ( 0 % )
+Total DLLs : 0 / 4 ( 0 % )

@@ -1,0 +1,45 @@
+{
+	"partitions" : [
+		{
+			"name" : "Top",
+			"pins" : [
+				{
+					"name" : "output[0]",
+					"strict" : false
+				},
+				{
+					"name" : "output[1]",
+					"strict" : false
+				},
+				{
+					"name" : "r_en",
+					"strict" : false
+				},
+				{
+					"name" : "g_en",
+					"strict" : false
+				},
+				{
+					"name" : "b_en",
+					"strict" : false
+				},
+				{
+					"name" : "clk",
+					"strict" : false
+				},
+				{
+					"name" : "reset",
+					"strict" : false
+				},
+				{
+					"name" : "xmas",
+					"strict" : false
+				},
+				{
+					"name" : "cool",
+					"strict" : false
+				}
+			]
+		}
+	]
+}

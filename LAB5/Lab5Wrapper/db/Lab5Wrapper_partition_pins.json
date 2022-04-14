@@ -1,0 +1,37 @@
+{
+	"partitions" : [
+		{
+			"name" : "Top",
+			"pins" : [
+				{
+					"name" : "r_out",
+					"strict" : false
+				},
+				{
+					"name" : "b_out",
+					"strict" : false
+				},
+				{
+					"name" : "resetn_out",
+					"strict" : false
+				},
+				{
+					"name" : "g_out",
+					"strict" : false
+				},
+				{
+					"name" : "KEY0",
+					"strict" : false
+				},
+				{
+					"name" : "cool_in",
+					"strict" : false
+				},
+				{
+					"name" : "xmas_in",
+					"strict" : false
+				}
+			]
+		}
+	]
+}

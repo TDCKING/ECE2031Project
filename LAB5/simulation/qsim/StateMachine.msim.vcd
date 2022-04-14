@@ -1,0 +1,578 @@
+$comment
+	File created using the following command:
+		vcd file StateMachine.msim.vcd -direction
+$end
+$date
+	Thu Feb 17 11:50:45 2022
+$end
+$version
+	ModelSim Version 10.5b
+$end
+$timescale
+	1ps
+$end
+
+$scope module statemachine_vhd_vec_tst $end
+$var wire 1 ! b_en $end
+$var wire 1 " clk $end
+$var wire 1 # cool $end
+$var wire 1 $ g_en $end
+$var wire 1 % output [1] $end
+$var wire 1 & output [0] $end
+$var wire 1 ' r_en $end
+$var wire 1 ( reset $end
+$var wire 1 ) xmas $end
+
+$scope module i1 $end
+$var wire 1 * gnd $end
+$var wire 1 + vcc $end
+$var wire 1 , unknown $end
+$var wire 1 - devoe $end
+$var wire 1 . devclrn $end
+$var wire 1 / devpor $end
+$var wire 1 0 ww_devoe $end
+$var wire 1 1 ww_devclrn $end
+$var wire 1 2 ww_devpor $end
+$var wire 1 3 ww_clk $end
+$var wire 1 4 ww_reset $end
+$var wire 1 5 ww_cool $end
+$var wire 1 6 ww_xmas $end
+$var wire 1 7 ww_output [1] $end
+$var wire 1 8 ww_output [0] $end
+$var wire 1 9 ww_r_en $end
+$var wire 1 : ww_g_en $end
+$var wire 1 ; ww_b_en $end
+$var wire 1 < \output[0]~output_o\ $end
+$var wire 1 = \output[1]~output_o\ $end
+$var wire 1 > \r_en~output_o\ $end
+$var wire 1 ? \g_en~output_o\ $end
+$var wire 1 @ \b_en~output_o\ $end
+$var wire 1 A \clk~input_o\ $end
+$var wire 1 B \xmas~input_o\ $end
+$var wire 1 C \cool~input_o\ $end
+$var wire 1 D \Selector1~0_combout\ $end
+$var wire 1 E \reset~input_o\ $end
+$var wire 1 F \state.blue~q\ $end
+$var wire 1 G \Selector0~0_combout\ $end
+$var wire 1 H \state.red~q\ $end
+$var wire 1 I \state.green~0_combout\ $end
+$var wire 1 J \state.green~q\ $end
+$var wire 1 K \ALT_INV_cool~input_o\ $end
+$var wire 1 L \ALT_INV_xmas~input_o\ $end
+$var wire 1 M \ALT_INV_reset~input_o\ $end
+$var wire 1 N \ALT_INV_state.red~q\ $end
+$var wire 1 O \ALT_INV_state.blue~q\ $end
+$var wire 1 P \ALT_INV_state.green~q\ $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+0!
+0"
+0#
+0$
+1'
+1(
+0)
+0*
+1+
+x,
+1-
+1.
+1/
+10
+11
+12
+03
+14
+05
+06
+19
+0:
+0;
+0<
+0=
+1>
+0?
+0@
+0A
+0B
+0C
+0D
+1E
+0F
+1G
+0H
+1I
+0J
+1K
+1L
+0M
+1N
+1O
+1P
+07
+08
+0%
+0&
+$end
+#10000
+0(
+04
+0E
+1M
+#25000
+1"
+13
+1A
+1H
+1J
+0P
+0N
+0I
+1D
+1<
+1?
+0>
+18
+1:
+09
+1&
+1$
+0'
+#50000
+0"
+03
+0A
+#75000
+1"
+13
+1A
+1F
+0J
+1P
+0O
+0D
+0G
+0<
+0?
+1=
+1@
+08
+0:
+17
+1;
+0&
+1%
+0$
+1!
+#100000
+0"
+03
+0A
+#125000
+1"
+13
+1A
+0F
+0H
+1N
+1O
+1G
+1I
+0=
+0@
+1>
+07
+0;
+19
+0%
+0!
+1'
+#150000
+0"
+03
+0A
+#175000
+1"
+13
+1A
+1H
+1J
+0P
+0N
+0I
+1D
+1<
+1?
+0>
+18
+1:
+09
+1&
+1$
+0'
+#200000
+0"
+03
+0A
+#225000
+1"
+13
+1A
+1F
+0J
+1P
+0O
+0D
+0G
+0<
+0?
+1=
+1@
+08
+0:
+17
+1;
+0&
+1%
+0$
+1!
+#250000
+0"
+03
+0A
+#275000
+1"
+13
+1A
+0F
+0H
+1N
+1O
+1G
+1I
+0=
+0@
+1>
+07
+0;
+19
+0%
+0!
+1'
+#300000
+0"
+03
+0A
+#325000
+1"
+13
+1A
+1H
+1J
+0P
+0N
+0I
+1D
+1<
+1?
+0>
+18
+1:
+09
+1&
+1$
+0'
+#350000
+0"
+03
+0A
+#375000
+1"
+13
+1A
+1F
+0J
+1P
+0O
+0D
+0G
+0<
+0?
+1=
+1@
+08
+0:
+17
+1;
+0&
+1%
+0$
+1!
+#400000
+0"
+03
+0A
+#410000
+1)
+16
+1B
+0L
+#425000
+1"
+13
+1A
+0F
+0H
+1N
+1O
+1G
+1I
+0=
+0@
+1>
+07
+0;
+19
+0%
+0!
+1'
+#450000
+0"
+03
+0A
+#475000
+1"
+13
+1A
+1H
+1J
+0P
+0N
+0I
+0G
+1<
+1?
+0>
+18
+1:
+09
+1&
+1$
+0'
+#500000
+0"
+03
+0A
+#525000
+1"
+13
+1A
+0H
+0J
+1P
+1N
+1I
+1G
+0<
+0?
+1>
+08
+0:
+19
+0&
+0$
+1'
+#550000
+0"
+03
+0A
+#575000
+1"
+13
+1A
+1H
+1J
+0P
+0N
+0I
+0G
+1<
+1?
+0>
+18
+1:
+09
+1&
+1$
+0'
+#600000
+0"
+03
+0A
+#610000
+1#
+15
+1C
+0K
+1D
+1G
+#625000
+1"
+13
+1A
+1F
+0J
+1P
+0O
+0<
+0?
+1=
+1@
+08
+0:
+17
+1;
+0&
+1%
+0$
+1!
+#650000
+0"
+03
+0A
+#675000
+1"
+13
+1A
+#680000
+0)
+06
+0B
+1L
+#700000
+0"
+03
+0A
+#725000
+1"
+13
+1A
+#750000
+0"
+03
+0A
+#775000
+1"
+13
+1A
+#800000
+0"
+03
+0A
+#810000
+0#
+05
+0C
+1K
+0D
+0G
+#825000
+1"
+13
+1A
+0F
+0H
+1N
+1O
+1G
+1I
+0=
+0@
+1>
+07
+0;
+19
+0%
+0!
+1'
+#850000
+0"
+03
+0A
+#875000
+1"
+13
+1A
+1H
+1J
+0P
+0N
+0I
+1D
+1<
+1?
+0>
+18
+1:
+09
+1&
+1$
+0'
+#900000
+0"
+03
+0A
+#925000
+1"
+13
+1A
+1F
+0J
+1P
+0O
+0D
+0G
+0<
+0?
+1=
+1@
+08
+0:
+17
+1;
+0&
+1%
+0$
+1!
+#950000
+0"
+03
+0A
+#975000
+1"
+13
+1A
+0F
+0H
+1N
+1O
+1G
+1I
+0=
+0@
+1>
+07
+0;
+19
+0%
+0!
+1'
+#990000
+1(
+14
+1E
+0M
+#1000000

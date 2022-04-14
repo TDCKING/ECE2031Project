@@ -1,0 +1,194 @@
+# -------------------------------------------------------------------------- #
+#
+# Copyright (C) 2019  Intel Corporation. All rights reserved.
+# Your use of Intel Corporation's design tools, logic functions 
+# and other software and tools, and any partner logic 
+# functions, and any output files from any of the foregoing 
+# (including device programming or simulation files), and any 
+# associated documentation or information are expressly subject 
+# to the terms and conditions of the Intel Program License 
+# Subscription Agreement, the Intel Quartus Prime License Agreement,
+# the Intel FPGA IP License Agreement, or other applicable license
+# agreement, including, without limitation, that your use is for
+# the sole purpose of programming logic devices manufactured by
+# Intel and sold by Intel or its authorized distributors.  Please
+# refer to the applicable agreement for further details, at
+# https://fpgasoftware.intel.com/eula.
+#
+# -------------------------------------------------------------------------- #
+#
+# Quartus Prime
+# Version 19.1.0 Build 670 09/22/2019 SJ Lite Edition
+# Date created = 20:10:45  February 11, 2022
+#
+# -------------------------------------------------------------------------- #
+#
+# Notes:
+#
+# 1) The default values for assignments are stored in the file:
+#		TrainSim_assignment_defaults.qdf
+#    If this file doesn't exist, see file:
+#		assignment_defaults.qdf
+#
+# 2) Altera recommends that you do not modify this file. This
+#    file is updated automatically by the Quartus Prime software
+#    and any changes you make may be lost or overwritten.
+#
+# -------------------------------------------------------------------------- #
+
+
+set_global_assignment -name FAMILY "Cyclone V"
+set_global_assignment -name DEVICE 5CSXFC6D6F31C6
+set_global_assignment -name TOP_LEVEL_ENTITY TrainTop
+set_global_assignment -name ORIGINAL_QUARTUS_VERSION 19.1.0
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "20:10:45  FEBRUARY 11, 2022"
+set_global_assignment -name LAST_QUARTUS_VERSION "19.1.0 Lite Edition"
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
+set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR 256
+set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim-Altera (VHDL)"
+set_global_assignment -name EDA_TIME_SCALE "1 ps" -section_id eda_simulation
+set_global_assignment -name EDA_OUTPUT_DATA_FORMAT VHDL -section_id eda_simulation
+set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST OFF -section_id eda_board_design_timing
+set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST OFF -section_id eda_board_design_symbol
+set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST OFF -section_id eda_board_design_signal_integrity
+set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST OFF -section_id eda_board_design_boundary_scan
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_global_assignment -name ENABLE_OCT_DONE OFF
+set_global_assignment -name STRATIXV_CONFIGURATION_SCHEME "PASSIVE SERIAL"
+set_global_assignment -name USE_CONFIGURATION_DEVICE ON
+set_global_assignment -name CRC_ERROR_OPEN_DRAIN ON
+set_global_assignment -name RESERVE_ALL_UNUSED_PINS_WEAK_PULLUP "AS INPUT TRI-STATED"
+set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "3.3-V LVTTL"
+set_global_assignment -name OUTPUT_IO_TIMING_NEAR_END_VMEAS "HALF VCCIO" -rise
+set_global_assignment -name OUTPUT_IO_TIMING_NEAR_END_VMEAS "HALF VCCIO" -fall
+set_global_assignment -name OUTPUT_IO_TIMING_FAR_END_VMEAS "HALF SIGNAL SWING" -rise
+set_global_assignment -name OUTPUT_IO_TIMING_FAR_END_VMEAS "HALF SIGNAL SWING" -fall
+set_global_assignment -name ACTIVE_SERIAL_CLOCK FREQ_100MHZ
+set_location_assignment PIN_AK21 -to vga_data[27]
+set_location_assignment PIN_AK22 -to vga_data[26]
+set_location_assignment PIN_AK18 -to vga_data[25]
+set_location_assignment PIN_AK19 -to vga_data[24]
+set_location_assignment PIN_AJ26 -to vga_data[23]
+set_location_assignment PIN_AG26 -to vga_data[22]
+set_location_assignment PIN_AF26 -to vga_data[21]
+set_location_assignment PIN_AH27 -to vga_data[20]
+set_location_assignment PIN_AJ27 -to vga_data[19]
+set_location_assignment PIN_AK27 -to vga_data[18]
+set_location_assignment PIN_AK28 -to vga_data[17]
+set_location_assignment PIN_AK29 -to vga_data[16]
+set_location_assignment PIN_AH23 -to vga_data[15]
+set_location_assignment PIN_AK23 -to vga_data[14]
+set_location_assignment PIN_AH24 -to vga_data[13]
+set_location_assignment PIN_AJ24 -to vga_data[12]
+set_location_assignment PIN_AK24 -to vga_data[11]
+set_location_assignment PIN_AH25 -to vga_data[10]
+set_location_assignment PIN_AJ25 -to vga_data[9]
+set_location_assignment PIN_AK26 -to vga_data[8]
+set_location_assignment PIN_AK16 -to vga_data[7]
+set_location_assignment PIN_AJ16 -to vga_data[6]
+set_location_assignment PIN_AJ17 -to vga_data[5]
+set_location_assignment PIN_AH19 -to vga_data[4]
+set_location_assignment PIN_AJ19 -to vga_data[3]
+set_location_assignment PIN_AH20 -to vga_data[2]
+set_location_assignment PIN_AJ20 -to vga_data[1]
+set_location_assignment PIN_AJ21 -to vga_data[0]
+set_location_assignment PIN_AF14 -to CLK_50
+set_location_assignment PIN_AJ22 -to vga_data[28]
+set_location_assignment PIN_AA15 -to KEY[3]
+set_location_assignment PIN_AA14 -to KEY[2]
+set_location_assignment PIN_AK4 -to KEY[1]
+set_location_assignment PIN_AJ4 -to KEY[0]
+set_location_assignment PIN_AA30 -to SW[9]
+set_location_assignment PIN_AC29 -to SW[8]
+set_location_assignment PIN_AD30 -to SW[7]
+set_location_assignment PIN_AC28 -to SW[6]
+set_location_assignment PIN_V25 -to SW[5]
+set_location_assignment PIN_W25 -to SW[4]
+set_location_assignment PIN_AC30 -to SW[3]
+set_location_assignment PIN_AB28 -to SW[2]
+set_location_assignment PIN_Y27 -to SW[1]
+set_location_assignment PIN_AB30 -to SW[0]
+set_location_assignment PIN_AC22 -to lights[51]
+set_location_assignment PIN_AB22 -to lights[50]
+set_location_assignment PIN_AF24 -to lights[49]
+set_location_assignment PIN_AE24 -to lights[48]
+set_location_assignment PIN_AF25 -to lights[47]
+set_location_assignment PIN_AG25 -to lights[46]
+set_location_assignment PIN_AD24 -to lights[45]
+set_location_assignment PIN_AC23 -to lights[44]
+set_location_assignment PIN_AB23 -to lights[43]
+set_location_assignment PIN_AA24 -to lights[42]
+set_location_assignment PIN_AB21 -to lights[41]
+set_location_assignment PIN_AF19 -to lights[40]
+set_location_assignment PIN_AE19 -to lights[39]
+set_location_assignment PIN_AG20 -to lights[38]
+set_location_assignment PIN_AF20 -to lights[37]
+set_location_assignment PIN_AG21 -to lights[36]
+set_location_assignment PIN_AF21 -to lights[35]
+set_location_assignment PIN_AH22 -to lights[34]
+set_location_assignment PIN_AF23 -to lights[33]
+set_location_assignment PIN_AG23 -to lights[32]
+set_location_assignment PIN_AE23 -to lights[31]
+set_location_assignment PIN_AE22 -to lights[30]
+set_location_assignment PIN_AG22 -to lights[29]
+set_location_assignment PIN_AD21 -to lights[28]
+set_location_assignment PIN_AD20 -to lights[27]
+set_location_assignment PIN_AA19 -to lights[26]
+set_location_assignment PIN_AC20 -to lights[25]
+set_location_assignment PIN_AA20 -to lights[24]
+set_location_assignment PIN_AD19 -to lights[23]
+set_location_assignment PIN_W19 -to lights[22]
+set_location_assignment PIN_Y19 -to lights[21]
+set_location_assignment PIN_W16 -to lights[20]
+set_location_assignment PIN_AF18 -to lights[19]
+set_location_assignment PIN_Y18 -to lights[18]
+set_location_assignment PIN_Y17 -to lights[17]
+set_location_assignment PIN_AA18 -to lights[16]
+set_location_assignment PIN_AB17 -to lights[15]
+set_location_assignment PIN_AA21 -to lights[14]
+set_location_assignment PIN_V17 -to lights[13]
+set_location_assignment PIN_AE17 -to lights[12]
+set_location_assignment PIN_AE18 -to lights[11]
+set_location_assignment PIN_AD17 -to lights[10]
+set_location_assignment PIN_AE16 -to lights[9]
+set_location_assignment PIN_V16 -to lights[8]
+set_location_assignment PIN_AF16 -to lights[7]
+set_location_assignment PIN_AH18 -to lights[6]
+set_location_assignment PIN_AG18 -to lights[5]
+set_location_assignment PIN_AH17 -to lights[4]
+set_location_assignment PIN_AG16 -to lights[3]
+set_location_assignment PIN_AG17 -to lights[2]
+set_location_assignment PIN_V18 -to lights[1]
+set_location_assignment PIN_W17 -to lights[0]
+
+set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
+set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
+set_global_assignment -name VHDL_FILE TrainSimFiles/VGA_PPU.vhd
+set_global_assignment -name BDF_FILE TrainSimFiles/TrainSetSimulator.bdf
+set_global_assignment -name VHDL_FILE TrainSimFiles/TrainPLL.vhd -library TrainPLL
+set_global_assignment -name QIP_FILE TrainSimFiles/TrainPLL.qip
+set_global_assignment -name SOURCE_FILE TrainSimFiles/TrainPLL.cmp
+set_global_assignment -name VHDL_FILE TrainSimFiles/scomp.vhd
+set_global_assignment -name VHDL_FILE TrainSimFiles/IO_DECODER.vhd
+set_global_assignment -name VHDL_FILE TrainSimFiles/DIG_OUT.vhd
+set_global_assignment -name VHDL_FILE TrainSimFiles/DIG_IN.vhd
+set_global_assignment -name VHDL_FILE TrainSimFiles/choo.vhd
+set_global_assignment -name QIP_FILE TrainSimFiles/choo.qip
+set_global_assignment -name SOURCE_FILE TrainSimFiles/choo.cmp
+set_global_assignment -name VHDL_FILE TrainController.vhd
+set_global_assignment -name BDF_FILE TrainTop.bdf
+set_global_assignment -name NUM_PARALLEL_PROCESSORS 16
+set_global_assignment -name SDC_FILE TrainSim.sdc
+set_global_assignment -name TIMING_ANALYZER_MULTICORNER_ANALYSIS ON
+set_global_assignment -name SMART_RECOMPILE ON
+set_global_assignment -name OPTIMIZE_POWER_DURING_FITTING OFF
+set_global_assignment -name IO_PLACEMENT_OPTIMIZATION OFF
+set_global_assignment -name FITTER_EFFORT "AUTO FIT"
+set_global_assignment -name PHYSICAL_SYNTHESIS_EFFORT FAST
+set_global_assignment -name ADVANCED_PHYSICAL_OPTIMIZATION OFF
+set_global_assignment -name TIMING_ANALYZER_REPORT_SCRIPT_INCLUDE_DEFAULT_ANALYSIS OFF
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
