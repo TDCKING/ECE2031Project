@@ -1,7 +1,0 @@
-
-State Machine - |ContestJudge|state
-Name state.winL state.winR state.gameOn state.idle 
-state.idle 0 0 0 0 
-state.gameOn 0 0 1 1 
-state.winR 0 1 0 1 
-state.winL 1 0 0 1 
