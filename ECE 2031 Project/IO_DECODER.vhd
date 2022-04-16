@@ -22,7 +22,10 @@ ENTITY IO_DECODER IS
 	 PXL_CA_EN		: OUT STD_LOGIC;
 	 PXL_R_EN		: OUT STD_LOGIC;
 	 PXL_S_EN		: OUT STD_LOGIC;
-	 PXL_L_EN		: OUT STD_LOGIC
+	 PXL_L_EN		: OUT STD_LOGIC;
+	 PXL_Red_EN		: OUT STD_LOGIC;
+	 PXL_Gre_EN		: OUT STD_LOGIC;
+	 PXL_Blu_EN		: OUT STD_LOGIC
   );
 
 END ENTITY;
@@ -46,5 +49,8 @@ begin
   PXL_R_EN		<= '1' WHEN (ADDR_INT = 16#0B3#) and (IO_CYCLE = '1') ELSE '0';
   PXL_S_EN		<= '1' WHEN (ADDR_INT = 16#0B4#) and (IO_CYCLE = '1') ELSE '0';
   PXL_L_EN     <= '1' WHEN (ADDR_INT = 16#0B5#) and (IO_CYCLE = '1') ELSE '0';
+  PXL_Red_EN	<= '1' WHEN (ADDR_INT = 16#0B6#) and (IO_CYCLE = '1') ELSE '0';
+  PXL_Gre_EN	<= '1' WHEN (ADDR_INT = 16#0B7#) and (IO_CYCLE = '1') ELSE '0';
+  PXL_Blu_EN	<= '1' WHEN (ADDR_INT = 16#0B8#) and (IO_CYCLE = '1') ELSE '0';
       
 END a;

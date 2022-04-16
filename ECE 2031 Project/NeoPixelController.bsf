@@ -21,9 +21,9 @@ https://fpgasoftware.intel.com/eula.
 */
 (header "symbol" (version "1.1"))
 (symbol
-	(rect 16 16 184 224)
+	(rect 16 16 216 256)
 	(text "NeoPixelController" (rect 5 0 76 12)(font "Arial" ))
-	(text "inst" (rect 8 192 20 204)(font "Arial" ))
+	(text "inst" (rect 8 224 20 236)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -90,18 +90,39 @@ https://fpgasoftware.intel.com/eula.
 	(port
 		(pt 0 176)
 		(input)
-		(text "data_in[15..0]" (rect 0 0 51 12)(font "Arial" ))
-		(text "data_in[15..0]" (rect 21 171 72 183)(font "Arial" ))
-		(line (pt 0 176)(pt 16 176)(line_width 3))
+		(text "red_data" (rect 0 0 35 12)(font "Arial" ))
+		(text "red_data" (rect 21 171 56 183)(font "Arial" ))
+		(line (pt 0 176)(pt 16 176)(line_width 1))
 	)
 	(port
-		(pt 168 32)
+		(pt 0 192)
+		(input)
+		(text "green_data" (rect 0 0 44 12)(font "Arial" ))
+		(text "green_data" (rect 21 187 65 199)(font "Arial" ))
+		(line (pt 0 192)(pt 16 192)(line_width 1))
+	)
+	(port
+		(pt 0 208)
+		(input)
+		(text "blue_data" (rect 0 0 37 12)(font "Arial" ))
+		(text "blue_data" (rect 21 203 58 215)(font "Arial" ))
+		(line (pt 0 208)(pt 16 208)(line_width 1))
+	)
+	(port
+		(pt 200 48)
 		(output)
 		(text "sda" (rect 0 0 14 12)(font "Arial" ))
-		(text "sda" (rect 133 27 147 39)(font "Arial" ))
-		(line (pt 168 32)(pt 152 32)(line_width 1))
+		(text "sda" (rect 165 43 179 55)(font "Arial" ))
+		(line (pt 200 48)(pt 184 48)(line_width 1))
+	)
+	(port
+		(pt 200 32)
+		(bidir)
+		(text "data_in[15..0]" (rect 0 0 51 12)(font "Arial" ))
+		(text "data_in[15..0]" (rect 128 27 179 39)(font "Arial" ))
+		(line (pt 200 32)(pt 184 32)(line_width 3))
 	)
 	(drawing
-		(rectangle (rect 16 16 152 192)(line_width 1))
+		(rectangle (rect 16 16 184 224)(line_width 1))
 	)
 )

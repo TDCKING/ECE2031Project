@@ -10,6 +10,9 @@ use ieee.std_logic_arith.all;
 library altera_mf;
 use altera_mf.altera_mf_components.all;
 
+library lpm;
+use lpm.lpm_components.all;
+
 entity NeoPixelController is
 
 	port(
@@ -22,7 +25,10 @@ entity NeoPixelController is
 		cr_data	 : in   std_logic ;
 		save_data : in   std_logic ;
 		load_data : in   std_logic ;
-		data_in   : in   std_logic_vector(15 downto 0);
+		red_data	 : in	  std_logic ;
+		green_data  : in   std_logic ;
+		blue_data : in   std_logic ;
+		data_in   : inout   std_logic_vector(15 downto 0);
 		sda       : out  std_logic
 	); 
 
@@ -36,9 +42,13 @@ architecture internals of NeoPixelController is
 	signal write_addr : std_logic_vector(7 downto 0);
 	-- RAM write enable
 	signal ram_we : std_logic;
+	
+	signal ram_re : std_logic;
+	
+	signal reading_buffer : std_logic_vector(15 downto 0);
 
 	-- Signals for data coming out of memory
-	signal ram_read_data : std_logic_vector(23 downto 0);
+	signal ram_read_data, ram_write_data : std_logic_vector(23 downto 0);
 	-- Signal to store the current output pixel's color data
 	signal pixel_buffer : std_logic_vector(23 downto 0);
 
@@ -49,7 +59,7 @@ architecture internals of NeoPixelController is
 	signal write_port : std_logic_vector(1 downto 0);
 
 	-- RAM interface state machine signals
-	type write_states is (idle, change_all, storing);
+	type write_states is (idle, change_all, storing, reading);
 	signal wstate: write_states;
 
 	
@@ -96,9 +106,19 @@ begin
 		data_b => x"000000",
 		wren_a => ram_we,
 		wren_b => '0',
+		q_a => ram_write_data,
 		q_b => ram_read_data
 	);
 	
+	io_bus: lpm_bustri
+	generic map (
+		lpm_width => 16
+	)
+	port map (
+		data     => reading_buffer,
+		enabledt => ram_re,
+		tridata  => data_in
+	);
 
 
 	-- This process implements the NeoPixel protocol by
@@ -236,7 +256,7 @@ begin
 		end if;
 	end process;
 	
-	
+	ram_re <= (cs_data AND NOT (io_write));
 	
 	process(clk_10M, resetn, cs_addr)
 	
@@ -313,6 +333,8 @@ begin
 					ram_write_buffer <= data_in(10 downto 5) & "00" & data_in(15 downto 11) & "000" & data_in(4 downto 0) & "000";
 					ram_we <= '1';
 					wstate <= change_all;
+				else
+					reading_buffer <= ram_write_data(15 downto 11) & ram_write_data(23 downto 18) & ram_write_data(7 downto 3);
 				end if;
 			when change_all =>
 				if pixels = numpix-2 then

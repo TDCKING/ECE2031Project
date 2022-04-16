@@ -1,30 +1,20 @@
 ; Simple test for the NeoPixel peripheral
 
 ORG 0
-	LOADI 255
+	LOADI 1
 	OUT PXL_A
 	LOAD RedTest
 	OUT PXL_D
 	
-	LOAD BlueTest
-	OUT PXL_D
-	
 	LOADI 1
-	OUT PXL_S
+	OUT PXL_A
+	IN PXL_D
+	STORE ReadData
 	
 	LOADI 2
 	OUT PXL_A
-	LOAD RedTest
+	LOAD ReadData
 	OUT PXL_D
-	
-	
-	OUT Timer
-Loop2: IN Timer
-	AND TimerMask
-	JZERO Loop2
-	
-	LOADI 1
-	OUT PXL_L
 	
 	
 
@@ -37,10 +27,12 @@ Dead: Jump Dead
 	
 
 GreenTest: DW &B0000011111100000
-RedTest:   DW &B1111100000000000
+RedTest:   DW &B1111111111111111
 BlueTest:  DW &B0000000000011111
 
 TimerMask: DW &B0000000000010000
+
+ReadData:  DW &B1111100000000000
 
 ; IO address constants
 Switches:  EQU 000
