@@ -1,6 +1,6 @@
 -- Altera Memory Initialization File (MIF)
 
-DEPTH = 4;
+DEPTH = 1024;
 WIDTH = 24;
 
 ADDRESS_RADIX = HEX;

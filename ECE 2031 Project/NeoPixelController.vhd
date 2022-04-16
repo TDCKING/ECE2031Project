@@ -18,6 +18,10 @@ entity NeoPixelController is
 		io_write  : in   std_logic ;
 		cs_addr   : in   std_logic ;
 		cs_data   : in   std_logic ;
+		ca_data	 : in   std_logic ;
+		cr_data	 : in   std_logic ;
+		save_data : in   std_logic ;
+		load_data : in   std_logic ;
 		data_in   : in   std_logic_vector(15 downto 0);
 		sda       : out  std_logic
 	); 
@@ -27,7 +31,9 @@ end entity;
 architecture internals of NeoPixelController is
 	
 	-- Signals for the RAM read and write addresses
-	signal ram_read_addr, ram_write_addr : std_logic_vector(7 downto 0);
+	signal ram_read_addr, ram_write_addr : std_logic_vector(9 downto 0);
+	
+	signal write_addr : std_logic_vector(7 downto 0);
 	-- RAM write enable
 	signal ram_we : std_logic;
 
@@ -38,9 +44,12 @@ architecture internals of NeoPixelController is
 
 	-- Signal SCOMP will write to before it gets stored into memory
 	signal ram_write_buffer : std_logic_vector(23 downto 0);
+	
+	signal read_port : std_logic_vector(1 downto 0);
+	signal write_port : std_logic_vector(1 downto 0);
 
 	-- RAM interface state machine signals
-	type write_states is (idle, storing);
+	type write_states is (idle, change_all, storing);
 	signal wstate: write_states;
 
 	
@@ -60,8 +69,8 @@ begin
 		init_file => "pixeldata.mif",
 		intended_device_family => "Cyclone V",
 		lpm_type => "altsyncram",
-		numwords_a => 4,
-		numwords_b => 4,
+		numwords_a => 1024,
+		numwords_b => 1024,
 		operation_mode => "BIDIR_DUAL_PORT",
 		outdata_aclr_a => "NONE",
 		outdata_aclr_b => "NONE",
@@ -71,8 +80,8 @@ begin
 		read_during_write_mode_mixed_ports => "OLD_DATA",
 		read_during_write_mode_port_a => "NEW_DATA_NO_NBE_READ",
 		read_during_write_mode_port_b => "NEW_DATA_NO_NBE_READ",
-		widthad_a => 8,
-		widthad_b => 8,
+		widthad_a => 10,
+		widthad_b => 10,
 		width_a => 24,
 		width_b => 24,
 		width_byteena_a => 1,
@@ -102,7 +111,7 @@ begin
 		constant t0h : integer := 3; -- high time for '0'
 		constant ttot : integer := 12; -- total bit time
 		
-		constant npix : integer := 4;
+		constant npix : integer := 256;
 
 		-- which bit in the 24 bits is being sent
 		variable bit_count   : integer range 0 to 31;
@@ -111,7 +120,10 @@ begin
 		-- counter for the reset pulse
 		variable reset_count : integer range 0 to 1000;
 		-- Counter for the current pixel
-		variable pixel_count : integer range 0 to 3;
+		variable pixel_count : integer range 0 to 255;
+		
+		variable refresh_mode : integer range 0 to 3;
+		
 		
 		
 	begin
@@ -121,10 +133,37 @@ begin
 			bit_count := 23;
 			enc_count := 0;
 			reset_count := 1000;
+			refresh_mode := 0;
 			-- set sda inactive
 			sda <= '0';
 
 		elsif (rising_edge(clk_10M)) then
+			
+			if (cr_data = '1' and io_write = '1') then 
+				if (refresh_mode = 0) then 
+					if (data_in = "0000000000000001") then
+						refresh_mode := 1;
+					end if;
+				elsif (refresh_mode = 1) then
+					if (data_in = "0000000000000000") then
+						refresh_mode := 0;
+					elsif (data_in = "0000000000000001") then
+						refresh_mode := 2;
+					end if;
+				end if;
+			end if;
+			
+			if (load_data = '1' and io_write = '1') then
+				if (data_in(1 downto 0) = "0000000000000000") then 
+					read_port <= "00";
+				elsif (data_in = "0000000000000001") then
+					read_port <= "01";
+				elsif (data_in = "0000000000000010") then
+					read_port <= "10";
+				elsif (data_in = "0000000000000011") then
+					read_port <= "11";
+				end if;
+			end if;
 
 			-- This IF block controls the various counters
 			if reset_count /= 0 then -- in reset/end-of-frame period
@@ -133,12 +172,18 @@ begin
 				bit_count := 23;
 				enc_count := 0;
 				-- decrement the reset count
-				reset_count := reset_count - 1;
+				if (refresh_mode = 0 or refresh_mode = 2) then
+					reset_count := reset_count - 1;
+				end if;
 				-- load data from memory
 				pixel_buffer <= ram_read_data;
 				
+				
 			else -- not in reset period (i.e. currently sending data)
 				-- handle reaching end of a bit
+				if (refresh_mode = 2) then
+					refresh_mode := 1;
+				end if;
 				if enc_count = (ttot-1) then -- is end of this bit?
 					enc_count := 0;
 					-- shift to next bit
@@ -163,9 +208,10 @@ begin
 			end if;
 			
 			
+			
 			-- This IF block controls the RAM read address to step through pixels
 			if reset_count /= 0 then
-				ram_read_addr <= x"00";
+				ram_read_addr <= read_port & x"00";
 			elsif (bit_count = 1) AND (enc_count = 0) then
 				-- increment the RAM address as each pixel ends
 				ram_read_addr <= ram_read_addr + 1;
@@ -193,16 +239,29 @@ begin
 	
 	
 	process(clk_10M, resetn, cs_addr)
+	
+		constant numpix	:	integer	:= 256;
+		
+		variable pixels	:	integer range 0 to 255;
+		
 	begin
 		-- For this implementation, saving the memory address
 		-- doesn't require anything special.  Just latch it when
 		-- SCOMP sends it.
 		if resetn = '0' then
-			ram_write_addr <= x"00";
+			ram_write_addr <= write_port & x"00";
 		elsif rising_edge(clk_10M) then
 			-- If SCOMP is writing to the address register...
 			if (io_write = '1') and (cs_addr='1') then
-				ram_write_addr <= data_in(7 downto 0);
+				ram_write_addr <= write_port & data_in(7 downto 0);
+			elsif (io_write = '1') and (ca_data='1') then
+				ram_write_addr <= write_port & x"00";
+			elsif (wstate = change_all) then
+				ram_write_addr <= ram_write_addr + 1;
+			elsif (wstate = storing) then
+				if (ram_write_addr(7 downto 0) /= "11111111") then
+					ram_write_addr <= ram_write_addr + 1;
+				end if;
 			end if;
 		end if;
 	
@@ -226,8 +285,20 @@ begin
 			-- Clearing memory would require cycling through each address
 			-- and setting them all to 0.
 		elsif rising_edge(clk_10M) then
+			if (save_data = '1' and io_write = '1') then
+				if (data_in(1 downto 0) = "0000000000000000") then 
+					write_port <= "00";
+				elsif (data_in = "0000000000000001") then
+					write_port <= "01";
+				elsif (data_in = "0000000000000010") then
+					write_port <= "10";
+				elsif (data_in = "0000000000000011") then
+					write_port <= "11";
+				end if;
+			end if;
 			case wstate is
 			when idle =>
+				pixels := 0;
 				if (io_write = '1') and (cs_data='1') then
 					-- latch the current data into the temporary storage register,
 					-- because this is the only time it'll be available.
@@ -238,6 +309,16 @@ begin
 					ram_we <= '1';
 					-- Change state
 					wstate <= storing;
+				elsif (io_write = '1') and (ca_data='1') then
+					ram_write_buffer <= data_in(10 downto 5) & "00" & data_in(15 downto 11) & "000" & data_in(4 downto 0) & "000";
+					ram_we <= '1';
+					wstate <= change_all;
+				end if;
+			when change_all =>
+				if pixels = numpix-2 then
+					wstate <= storing;
+				else 
+					pixels := pixels + 1;
 				end if;
 			when storing =>
 				-- All that's needed here is to lower ram_we.  The RAM will be
