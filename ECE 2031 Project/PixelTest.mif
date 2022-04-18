@@ -12,104 +12,142 @@ CONTENT
 
            000 : B801;  -- 	LOADI 1
            001 : 98B0;  -- 	OUT PXL_A
-           002 : 085B;  -- 	LOAD RedTest
+           002 : 0881;  -- 	LOAD RedTest
            003 : 98B6;  -- 	OUT PXL_Red
            004 : B801;  -- 	LOADI 1
            005 : 98B0;  -- 	OUT PXL_A
            006 : 90B6;  -- 	IN PXL_Red
-           007 : 1062;  -- 	STORE ReadDataR
+           007 : 1088;  -- 	STORE ReadDataR
            008 : B802;  -- 	LOADI 2
            009 : 98B0;  -- 	OUT PXL_A
-           00A : 0862;  -- 	LOAD ReadDataR
+           00A : 0888;  -- 	LOAD ReadDataR
            00B : 98B6;  -- 	OUT PXL_Red
            00C : B803;  -- 	LOADI 3
            00D : 98B0;  -- 	OUT PXL_A
-           00E : 085A;  -- 	LOAD GreenTest
+           00E : 0880;  -- 	LOAD GreenTest
            00F : 98B7;  -- 	OUT PXL_Green
            010 : B803;  -- 	LOADI 3
            011 : 98B0;  -- 	OUT PXL_A
            012 : 90B7;  -- 	IN PXL_Green
-           013 : 1063;  -- 	STORE ReadDataG
+           013 : 1089;  -- 	STORE ReadDataG
            014 : B804;  -- 	LOADI 4
            015 : 98B0;  -- 	OUT PXL_A
-           016 : 0863;  -- 	LOAD ReadDataG
+           016 : 0889;  -- 	LOAD ReadDataG
            017 : 98B7;  -- 	OUT PXL_Green
            018 : B805;  -- 	LOADI 5
            019 : 98B0;  -- 	OUT PXL_A
-           01A : 085C;  -- 	LOAD BlueTest
+           01A : 0882;  -- 	LOAD BlueTest
            01B : 98B8;  -- 	OUT PXL_Blue
            01C : B805;  -- 	LOADI 5
            01D : 98B0;  -- 	OUT PXL_A
            01E : 90B8;  -- 	IN PXL_Blue
-           01F : 1064;  -- 	STORE ReadDataB
+           01F : 108A;  -- 	STORE ReadDataB
            020 : B806;  -- 	LOADI 6
            021 : 98B0;  -- 	OUT PXL_A
-           022 : 0864;  -- 	LOAD ReadDataB
+           022 : 088A;  -- 	LOAD ReadDataB
            023 : 98B8;  -- 	OUT PXL_Blue
            024 : B807;  -- 	LOADI 7
            025 : 98B0;  -- 	OUT PXL_A
-           026 : 085C;  -- 	LOAD BlueTest
+           026 : 0882;  -- 	LOAD BlueTest
            027 : 98B1;  -- 	OUT PXL_D
-           028 : 9802;  -- 	OUT Timer
-           029 : 9002;  -- Loop: IN Timer
-           02A : 4860;  -- 	AND TimerMask
-           02B : 4029;  -- 	JZERO Loop
+           028 : B807;  -- 	LOADI 7
+           029 : 98B0;  -- 	OUT PXL_A
+           02A : 90B1;  -- 	IN PXL_D
+           02B : 108B;  -- 	STORE ReadData
            02C : B800;  -- 	LOADI 0
            02D : 98B0;  -- 	OUT PXL_A
-           02E : 9000;  -- P1:	IN Switches
-           02F : 4861;  -- 	AND SwitchMask
-           030 : 402E;  -- 	JZERO P1
-           031 : B801;  -- 	LOADI 1
-           032 : 98B3;  -- 	OUT PXL_R
-           033 : 9802;  -- 	OUT Timer
-           034 : 085B;  -- 	LOAD RedTest
-           035 : 98B6;  -- 	OUT PXL_Red
-           036 : 085A;  -- 	LOAD GreenTest
-           037 : 98B7;  -- 	OUT PXL_Green
-           038 : 085C;  -- 	LOAD BlueTest
-           039 : 98B8;  -- 	OUT PXL_Blue
-           03A : 9002;  -- 	IN Timer
-           03B : 4860;  -- 	AND TimerMask
-           03C : 4034;  -- 	JZERO Loop1
-           03D : 9000;  -- P2:	IN Switches
-           03E : 4861;  -- 	AND SwitchMask
-           03F : 383D;  -- 	JPOS P2
-           040 : 9802;  -- 	OUT Timer
-           041 : 9002;  -- Loop3: IN Timer
-           042 : 4860;  -- 	AND TimerMask
-           043 : 4041;  -- 	JZERO Loop3
-           044 : 085E;  -- 	LOAD AllTest2
-           045 : 98B2;  -- 	OUT PXL_CA
-           046 : B801;  -- 	LOADI 1
-           047 : 98B3;  -- 	OUT PXL_R
-           048 : 9802;  -- 	OUT Timer
-           049 : 9002;  -- Loop2: IN Timer
-           04A : 4860;  -- 	AND TimerMask
-           04B : 4049;  -- 	JZERO Loop2
-           04C : B800;  -- 	LOADI 0
-           04D : 98B3;  -- 	OUT PXL_R
-           04E : B801;  -- 	LOADI 1
-           04F : 98B4;  -- 	OUT PXL_S
-           050 : 085D;  -- 	LOAD AllTest
-           051 : 98B2;  -- 	OUT PXL_CA
-           052 : B801;  -- 	LOADI 1
-           053 : 98B5;  -- 	OUT PXL_L
-           054 : 9000;  -- P3: IN Switches
-           055 : 4861;  -- 	AND SwitchMask
-           056 : 4054;  -- 	JZERO P3
-           057 : B802;  -- 	LOADI 2
-           058 : 98B5;  -- 	OUT PXL_L
-           059 : 2859;  -- Dead: Jump Dead
-           05A : 0001;  -- GreenTest: DW &B0000000000000001
-           05B : 0001;  -- RedTest:   DW &B0000000000000001
-           05C : 0001;  -- BlueTest:  DW &B0000000000000001
-           05D : 07FF;  -- AllTest:   DW &B0000011111111111
-           05E : FFE0;  -- AllTest2:  DW &B1111111111100000
-           05F : 07E0;  -- AllTest3:  DW &B0000011111100000
-           060 : 0010;  -- TimerMask: DW &B0000000000010000
-           061 : 0001;  -- SwitchMask: DW &B0000000000000001
-           062 : 0000;  -- ReadDataR:  DW &B0000000000000000
-           063 : 0000;  -- ReadDataG: DW &B0000000000000000
-           064 : 0000;  -- ReadDataB: DW &B0000000000000000
-           065 : 0000;  -- ReadData:  DW &B0000000000000000
+           02E : 088B;  -- 	LOAD ReadData
+           02F : 98B1;  -- 	OUT PXL_D
+           030 : 9802;  -- 	OUT Timer
+           031 : 9002;  -- Loop: IN Timer
+           032 : 4886;  -- 	AND TimerMask
+           033 : 4031;  -- 	JZERO Loop
+           034 : B800;  -- 	LOADI 0
+           035 : 98B0;  -- 	OUT PXL_A
+           036 : 9000;  -- P1:	IN Switches
+           037 : 4887;  -- 	AND SwitchMask
+           038 : 4036;  -- 	JZERO P1
+           039 : B801;  -- 	LOADI 1
+           03A : 98B3;  -- 	OUT PXL_R
+           03B : 9802;  -- 	OUT Timer
+           03C : 0881;  -- 	LOAD RedTest
+           03D : 98B6;  -- 	OUT PXL_Red
+           03E : 0880;  -- 	LOAD GreenTest
+           03F : 98B7;  -- 	OUT PXL_Green
+           040 : 0882;  -- 	LOAD BlueTest
+           041 : 98B8;  -- 	OUT PXL_Blue
+           042 : 9002;  -- 	IN Timer
+           043 : 4886;  -- 	AND TimerMask
+           044 : 403C;  -- 	JZERO Loop1
+           045 : B801;  -- 	LOADI 1
+           046 : 98B3;  -- 	OUT PXL_R
+           047 : 9000;  -- P2:	IN Switches
+           048 : 4887;  -- 	AND SwitchMask
+           049 : 3847;  -- 	JPOS P2
+           04A : 9802;  -- 	OUT Timer
+           04B : 9002;  -- Loop3: IN Timer
+           04C : 4886;  -- 	AND TimerMask
+           04D : 404B;  -- 	JZERO Loop3
+           04E : 0884;  -- 	LOAD AllTest2
+           04F : 98B2;  -- 	OUT PXL_CA
+           050 : B801;  -- 	LOADI 1
+           051 : 98B3;  -- 	OUT PXL_R
+           052 : 9802;  -- 	OUT Timer
+           053 : 9002;  -- Loop2: IN Timer
+           054 : 4886;  -- 	AND TimerMask
+           055 : 4053;  -- 	JZERO Loop2
+           056 : B800;  -- 	LOADI 0
+           057 : 98B3;  -- 	OUT PXL_R
+           058 : B801;  -- 	LOADI 1
+           059 : 98B4;  -- 	OUT PXL_S
+           05A : B800;  -- 	LOADI 0
+           05B : 98B0;  -- 	OUT PXL_A
+           05C : 0883;  -- 	LOAD AllTest
+           05D : 98B1;  -- 	OUT PXL_D
+           05E : 0883;  -- 	LOAD AllTest
+           05F : 98B2;  -- 	OUT PXL_CA
+           060 : B801;  -- 	LOADI 1
+           061 : 98B5;  -- 	OUT PXL_L
+           062 : 9802;  -- 	OUT Timer
+           063 : 9002;  -- Loop4: IN Timer
+           064 : 4886;  -- 	AND TimerMask
+           065 : 4063;  -- 	JZERO Loop4
+           066 : B800;  -- 	LOADI 0
+           067 : 98B0;  -- 	OUT PXL_A
+           068 : 0885;  -- 	LOAD AllTest3
+           069 : 98B1;  -- 	OUT PXL_D
+           06A : B800;  -- 	LOADI 0
+           06B : 98B0;  -- 	OUT PXL_A
+           06C : 90B6;  -- 	IN PXL_Red
+           06D : 1088;  -- 	STORE ReadDataR
+           06E : 90B8;  -- 	IN PXL_Blue
+           06F : 108A;  -- 	STORE ReadDataB
+           070 : 90B7;  -- 	IN PXL_Green
+           071 : 1089;  -- 	STORE ReadDataG
+           072 : B801;  -- 	LOADI 1
+           073 : 98B0;  -- 	OUT PXL_A
+           074 : 0888;  -- 	LOAD ReadDataR
+           075 : 98B6;  -- 	OUT PXL_Red
+           076 : 0889;  -- 	LOAD ReadDataG
+           077 : 98B7;  -- 	OUT PXL_Green
+           078 : 088A;  -- 	LOAD ReadDataB
+           079 : 98B8;  -- 	OUT PXL_Blue
+           07A : 9000;  -- P4: IN Switches
+           07B : 4887;  -- 	AND SwitchMask
+           07C : 407A;  -- 	JZERO P4
+           07D : B802;  -- 	LOADI 2
+           07E : 98B5;  -- 	OUT PXL_L
+           07F : 287F;  -- Dead: Jump Dead
+           080 : 0080;  -- GreenTest: DW &B0000000010000000
+           081 : 0080;  -- RedTest:   DW &B0000000010000000
+           082 : 0080;  -- BlueTest:  DW &B0000000010000000
+           083 : 07FF;  -- AllTest:   DW &B0000011111111111
+           084 : FFE0;  -- AllTest2:  DW &B1111111111100000
+           085 : 07E0;  -- AllTest3:  DW &B0000011111100000
+           086 : 0010;  -- TimerMask: DW &B0000000000010000
+           087 : 0001;  -- SwitchMask: DW &B0000000000000001
+           088 : 0000;  -- ReadDataR:  DW &B0000000000000000
+           089 : 0000;  -- ReadDataG: DW &B0000000000000000
+           08A : 0000;  -- ReadDataB: DW &B0000000000000000
+           08B : 0000;  -- ReadData:  DW &B0000000000000000
   END;

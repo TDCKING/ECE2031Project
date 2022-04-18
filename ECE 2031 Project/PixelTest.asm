@@ -54,6 +54,17 @@ ORG 0
 	LOAD BlueTest
 	OUT PXL_D
 	
+	LOADI 7
+	OUT PXL_A
+	
+	IN PXL_D
+	STORE ReadData
+	
+	LOADI 0
+	OUT PXL_A
+	LOAD ReadData
+	OUT PXL_D
+	
 	
 	
 	
@@ -88,8 +99,8 @@ Loop1:
 	AND TimerMask
 	JZERO Loop1
 	
-;	LOADI 1
-;	OUT PXL_R
+	LOADI 1
+	OUT PXL_R
 	
 P2:	IN Switches
 	AND SwitchMask
@@ -117,15 +128,56 @@ Loop2: IN Timer
 	LOADI 1
 	OUT PXL_S
 	
+	LOADI 0
+	OUT PXL_A
+	LOAD AllTest
+	OUT PXL_D
+	
 	LOAD AllTest
 	OUT PXL_CA
 	
 	LOADI 1
 	OUT PXL_L
 	
-P3: IN Switches
+	OUT Timer
+Loop4: IN Timer
+	AND TimerMask
+	JZERO Loop4
+	
+;P3: IN Switches
+;	AND SwitchMask
+;	JZERO P3
+	
+	LOADI 0
+	OUT PXL_A
+	LOAD AllTest3
+	OUT PXL_D
+	
+	LOADI 0
+	OUT PXL_A
+	
+	IN PXL_Red
+	STORE ReadDataR
+	IN PXL_Blue
+	STORE ReadDataB
+	IN PXL_Green
+	STORE ReadDataG
+	
+	LOADI 1
+	OUT PXL_A
+	
+	LOAD ReadDataR
+	OUT PXL_Red
+	
+	LOAD ReadDataG
+	OUT PXL_Green
+	
+	LOAD ReadDataB
+	OUT PXL_Blue
+	
+P4: IN Switches
 	AND SwitchMask
-	JZERO P3
+	JZERO P4
 	
 	LOADI 2
 	OUT PXL_L
@@ -137,9 +189,9 @@ Dead: Jump Dead
 	
 	
 
-GreenTest: DW &B0000000000000001
-RedTest:   DW &B0000000000000001
-BlueTest:  DW &B0000000000000001
+GreenTest: DW &B0000000010000000
+RedTest:   DW &B0000000010000000
+BlueTest:  DW &B0000000010000000
 
 AllTest:   DW &B0000011111111111
 AllTest2:  DW &B1111111111100000

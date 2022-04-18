@@ -1,5 +1,5 @@
 Timing Analyzer report for SCOMP
-Sun Apr 17 15:20:55 2022
+Mon Apr 18 12:52:49 2022
 Quartus Prime Version 19.1.0 Build 670 09/22/2019 SJ Lite Edition
 
 
@@ -103,26 +103,26 @@ https://fpgasoftware.intel.com/eula.
 ; Number detected on machine ; 16          ;
 ; Maximum allowed            ; 16          ;
 ;                            ;             ;
-; Average used               ; 2.17        ;
+; Average used               ; 1.96        ;
 ; Maximum used               ; 16          ;
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processor 2            ;   8.5%      ;
-;     Processor 3            ;   8.3%      ;
-;     Processor 4            ;   8.3%      ;
-;     Processor 5            ;   7.8%      ;
-;     Processor 6            ;   7.8%      ;
-;     Processor 7            ;   7.8%      ;
-;     Processor 8            ;   7.8%      ;
-;     Processor 9            ;   7.7%      ;
-;     Processor 10           ;   7.5%      ;
-;     Processor 11           ;   7.5%      ;
-;     Processor 12           ;   7.5%      ;
-;     Processor 13           ;   7.5%      ;
-;     Processor 14           ;   7.5%      ;
-;     Processor 15           ;   7.5%      ;
-;     Processor 16           ;   7.5%      ;
+;     Processor 2            ;   7.0%      ;
+;     Processor 3            ;   6.9%      ;
+;     Processor 4            ;   6.8%      ;
+;     Processor 5            ;   6.3%      ;
+;     Processor 6            ;   6.3%      ;
+;     Processor 7            ;   6.3%      ;
+;     Processor 8            ;   6.3%      ;
+;     Processor 9            ;   6.3%      ;
+;     Processor 10           ;   6.3%      ;
+;     Processor 11           ;   6.3%      ;
+;     Processor 12           ;   6.2%      ;
+;     Processor 13           ;   6.2%      ;
+;     Processor 14           ;   6.2%      ;
+;     Processor 15           ;   6.2%      ;
+;     Processor 16           ;   6.2%      ;
 +----------------------------+-------------+
 
 
@@ -131,7 +131,7 @@ https://fpgasoftware.intel.com/eula.
 +---------------+--------+--------------------------+
 ; SDC File Path ; Status ; Read at                  ;
 +---------------+--------+--------------------------+
-; SCOMP.sdc     ; OK     ; Sun Apr 17 15:20:40 2022 ;
+; SCOMP.sdc     ; OK     ; Mon Apr 18 12:52:44 2022 ;
 +---------------+--------+--------------------------+
 
 
@@ -1019,7 +1019,7 @@ No non-DPA dedicated SERDES Receiver circuitry present in device or used in desi
 Info: *******************************************************************
 Info: Running Quartus Prime Timing Analyzer
     Info: Version 19.1.0 Build 670 09/22/2019 SJ Lite Edition
-    Info: Processing started: Sun Apr 17 15:20:36 2022
+    Info: Processing started: Mon Apr 18 12:52:42 2022
 Info: Command: quartus_sta SCOMP -c SCOMP
 Info: qsta_default_script.tcl version: #1
 Info (20030): Parallel compilation is enabled and will use 16 of the 16 processors detected
@@ -1197,9 +1197,9 @@ Info (332146): Worst-case minimum pulse width slack is -0.176
 Info (332102): Design is not fully constrained for setup requirements
 Info (332102): Design is not fully constrained for hold requirements
 Info: Quartus Prime Timing Analyzer was successful. 0 errors, 5 warnings
-    Info: Peak virtual memory: 5351 megabytes
-    Info: Processing ended: Sun Apr 17 15:20:55 2022
-    Info: Elapsed time: 00:00:19
-    Info: Total CPU time (on all processors): 00:00:28
+    Info: Peak virtual memory: 5356 megabytes
+    Info: Processing ended: Mon Apr 18 12:52:49 2022
+    Info: Elapsed time: 00:00:07
+    Info: Total CPU time (on all processors): 00:00:11
 
 
