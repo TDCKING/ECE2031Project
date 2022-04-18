@@ -1,5 +1,5 @@
 Flow report for SCOMP
-Sun Apr 17 16:14:51 2022
+Mon Apr 18 13:53:59 2022
 Quartus Prime Version 19.1.0 Build 670 09/22/2019 SJ Lite Edition
 
 
@@ -41,7 +41,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------------------------------------------------------------------+
 ; Flow Summary                                                                  ;
 +---------------------------------+---------------------------------------------+
-; Flow Status                     ; Successful - Sun Apr 17 16:14:51 2022       ;
+; Flow Status                     ; Successful - Mon Apr 18 13:53:59 2022       ;
 ; Quartus Prime Version           ; 19.1.0 Build 670 09/22/2019 SJ Lite Edition ;
 ; Revision Name                   ; SCOMP                                       ;
 ; Top-level Entity Name           ; SCOMP_System                                ;
@@ -68,7 +68,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 04/17/2022 15:15:15 ;
+; Start date & time ; 04/18/2022 12:50:44 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; SCOMP               ;
 +-------------------+---------------------+
@@ -80,7 +80,7 @@ https://fpgasoftware.intel.com/eula.
 ; Assignment Name                     ; Value                                  ; Default Value ; Entity Name  ; Section Id                        ;
 +-------------------------------------+----------------------------------------+---------------+--------------+-----------------------------------+
 ; ADVANCED_PHYSICAL_OPTIMIZATION      ; Off                                    ; On            ; --           ; --                                ;
-; COMPILER_SIGNATURE_ID               ; 273661959256764.165022291428448        ; --            ; --           ; --                                ;
+; COMPILER_SIGNATURE_ID               ; 273661959256764.165030064315988        ; --            ; --           ; --                                ;
 ; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                    ; --            ; --           ; eda_board_design_timing           ;
 ; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                    ; --            ; --           ; eda_board_design_boundary_scan    ;
 ; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                    ; --            ; --           ; eda_board_design_signal_integrity ;
@@ -114,46 +114,46 @@ https://fpgasoftware.intel.com/eula.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:00:28     ; 1.0                     ; 4943 MB             ; 00:01:03                           ;
-; Fitter               ; 00:04:28     ; 1.1                     ; 7441 MB             ; 00:05:58                           ;
-; Assembler            ; 00:00:18     ; 1.0                     ; 4850 MB             ; 00:00:17                           ;
-; Timing Analyzer      ; 00:00:19     ; 2.2                     ; 5351 MB             ; 00:00:28                           ;
-; EDA Netlist Writer   ; 00:00:04     ; 1.0                     ; 4836 MB             ; 00:00:05                           ;
-; MIF/HEX Update       ; 00:00:10     ; 1.0                     ; 4879 MB             ; 00:00:09                           ;
-; Assembler            ; 00:00:17     ; 1.0                     ; 4846 MB             ; 00:00:18                           ;
-; MIF/HEX Update       ; 00:00:09     ; 1.0                     ; 4882 MB             ; 00:00:09                           ;
-; Assembler            ; 00:00:18     ; 1.0                     ; 4853 MB             ; 00:00:18                           ;
-; MIF/HEX Update       ; 00:00:09     ; 1.0                     ; 4883 MB             ; 00:00:09                           ;
-; Assembler            ; 00:00:18     ; 1.0                     ; 4855 MB             ; 00:00:18                           ;
-; MIF/HEX Update       ; 00:00:09     ; 1.0                     ; 4887 MB             ; 00:00:10                           ;
-; Assembler            ; 00:00:19     ; 1.0                     ; 4857 MB             ; 00:00:18                           ;
-; MIF/HEX Update       ; 00:00:09     ; 1.0                     ; 4887 MB             ; 00:00:09                           ;
-; Assembler            ; 00:00:18     ; 1.0                     ; 4867 MB             ; 00:00:18                           ;
-; MIF/HEX Update       ; 00:00:10     ; 1.0                     ; 4891 MB             ; 00:00:10                           ;
-; Assembler            ; 00:00:19     ; 1.0                     ; 4861 MB             ; 00:00:18                           ;
-; MIF/HEX Update       ; 00:00:09     ; 1.0                     ; 4895 MB             ; 00:00:10                           ;
-; Assembler            ; 00:00:19     ; 1.0                     ; 4869 MB             ; 00:00:19                           ;
-; MIF/HEX Update       ; 00:00:10     ; 1.0                     ; 4898 MB             ; 00:00:10                           ;
-; Assembler            ; 00:00:19     ; 1.0                     ; 4870 MB             ; 00:00:19                           ;
-; MIF/HEX Update       ; 00:00:09     ; 1.0                     ; 4901 MB             ; 00:00:10                           ;
-; Assembler            ; 00:00:19     ; 1.0                     ; 4869 MB             ; 00:00:19                           ;
-; MIF/HEX Update       ; 00:00:10     ; 1.0                     ; 4904 MB             ; 00:00:10                           ;
-; Assembler            ; 00:00:19     ; 1.0                     ; 4867 MB             ; 00:00:19                           ;
-; MIF/HEX Update       ; 00:00:10     ; 1.0                     ; 4903 MB             ; 00:00:10                           ;
-; Assembler            ; 00:00:19     ; 1.0                     ; 4876 MB             ; 00:00:19                           ;
-; MIF/HEX Update       ; 00:00:10     ; 1.0                     ; 4909 MB             ; 00:00:10                           ;
-; Assembler            ; 00:00:19     ; 1.0                     ; 4878 MB             ; 00:00:19                           ;
-; MIF/HEX Update       ; 00:00:10     ; 1.0                     ; 4912 MB             ; 00:00:10                           ;
-; Assembler            ; 00:00:20     ; 1.0                     ; 4876 MB             ; 00:00:19                           ;
-; MIF/HEX Update       ; 00:00:10     ; 1.0                     ; 4915 MB             ; 00:00:10                           ;
-; Assembler            ; 00:00:20     ; 1.0                     ; 4879 MB             ; 00:00:19                           ;
-; MIF/HEX Update       ; 00:00:10     ; 1.0                     ; 4916 MB             ; 00:00:10                           ;
-; Assembler            ; 00:00:20     ; 1.0                     ; 4889 MB             ; 00:00:19                           ;
-; MIF/HEX Update       ; 00:00:10     ; 1.0                     ; 4920 MB             ; 00:00:10                           ;
-; Assembler            ; 00:00:20     ; 1.0                     ; 4890 MB             ; 00:00:20                           ;
-; MIF/HEX Update       ; 00:00:10     ; 1.0                     ; 4921 MB             ; 00:00:10                           ;
-; Assembler            ; 00:00:20     ; 1.0                     ; 4892 MB             ; 00:00:20                           ;
-; Total                ; 00:13:44     ; --                      ; --                  ; 00:15:56                           ;
+; Analysis & Synthesis ; 00:00:11     ; 1.0                     ; 4941 MB             ; 00:00:22                           ;
+; Fitter               ; 00:01:38     ; 1.1                     ; 7388 MB             ; 00:02:41                           ;
+; Assembler            ; 00:00:06     ; 1.0                     ; 4850 MB             ; 00:00:06                           ;
+; Timing Analyzer      ; 00:00:07     ; 2.0                     ; 5356 MB             ; 00:00:11                           ;
+; EDA Netlist Writer   ; 00:00:01     ; 1.0                     ; 4836 MB             ; 00:00:02                           ;
+; MIF/HEX Update       ; 00:00:03     ; 1.0                     ; 4880 MB             ; 00:00:03                           ;
+; Assembler            ; 00:00:05     ; 1.0                     ; 4846 MB             ; 00:00:06                           ;
+; MIF/HEX Update       ; 00:00:03     ; 1.0                     ; 4882 MB             ; 00:00:03                           ;
+; Assembler            ; 00:00:06     ; 1.0                     ; 4853 MB             ; 00:00:06                           ;
+; MIF/HEX Update       ; 00:00:02     ; 1.0                     ; 4883 MB             ; 00:00:03                           ;
+; Assembler            ; 00:00:06     ; 1.0                     ; 4855 MB             ; 00:00:06                           ;
+; MIF/HEX Update       ; 00:00:03     ; 1.0                     ; 4887 MB             ; 00:00:03                           ;
+; Assembler            ; 00:00:06     ; 1.0                     ; 4857 MB             ; 00:00:06                           ;
+; MIF/HEX Update       ; 00:00:03     ; 1.0                     ; 4891 MB             ; 00:00:03                           ;
+; Assembler            ; 00:00:06     ; 1.0                     ; 4867 MB             ; 00:00:06                           ;
+; MIF/HEX Update       ; 00:00:03     ; 1.0                     ; 4891 MB             ; 00:00:03                           ;
+; Assembler            ; 00:00:06     ; 1.0                     ; 4861 MB             ; 00:00:06                           ;
+; MIF/HEX Update       ; 00:00:04     ; 1.0                     ; 4891 MB             ; 00:00:03                           ;
+; Assembler            ; 00:00:06     ; 1.0                     ; 4865 MB             ; 00:00:06                           ;
+; MIF/HEX Update       ; 00:00:03     ; 1.0                     ; 4898 MB             ; 00:00:03                           ;
+; Assembler            ; 00:00:06     ; 1.0                     ; 4870 MB             ; 00:00:06                           ;
+; MIF/HEX Update       ; 00:00:03     ; 1.0                     ; 4901 MB             ; 00:00:03                           ;
+; Assembler            ; 00:00:07     ; 1.0                     ; 4869 MB             ; 00:00:06                           ;
+; MIF/HEX Update       ; 00:00:03     ; 1.0                     ; 4904 MB             ; 00:00:03                           ;
+; Assembler            ; 00:00:07     ; 1.0                     ; 4867 MB             ; 00:00:06                           ;
+; MIF/HEX Update       ; 00:00:03     ; 1.0                     ; 4903 MB             ; 00:00:03                           ;
+; Assembler            ; 00:00:07     ; 1.0                     ; 4876 MB             ; 00:00:06                           ;
+; MIF/HEX Update       ; 00:00:04     ; 1.0                     ; 4909 MB             ; 00:00:03                           ;
+; Assembler            ; 00:00:07     ; 1.0                     ; 4876 MB             ; 00:00:07                           ;
+; MIF/HEX Update       ; 00:00:04     ; 1.0                     ; 4909 MB             ; 00:00:03                           ;
+; Assembler            ; 00:00:06     ; 1.0                     ; 4878 MB             ; 00:00:07                           ;
+; MIF/HEX Update       ; 00:00:03     ; 1.0                     ; 4915 MB             ; 00:00:03                           ;
+; Assembler            ; 00:00:07     ; 1.0                     ; 4879 MB             ; 00:00:07                           ;
+; MIF/HEX Update       ; 00:00:03     ; 1.0                     ; 4916 MB             ; 00:00:03                           ;
+; Assembler            ; 00:00:07     ; 1.0                     ; 4887 MB             ; 00:00:07                           ;
+; MIF/HEX Update       ; 00:00:03     ; 1.0                     ; 4917 MB             ; 00:00:03                           ;
+; Assembler            ; 00:00:06     ; 1.0                     ; 4890 MB             ; 00:00:07                           ;
+; MIF/HEX Update       ; 00:00:04     ; 1.0                     ; 4921 MB             ; 00:00:03                           ;
+; Assembler            ; 00:00:07     ; 1.0                     ; 4892 MB             ; 00:00:07                           ;
+; Total                ; 00:04:45     ; --                      ; --                  ; 00:06:01                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
