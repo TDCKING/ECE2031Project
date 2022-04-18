@@ -45,6 +45,10 @@ architecture internals of NeoPixelController is
 	
 	signal ram_re : std_logic;
 	
+	signal reading_buffer_all : std_logic_vector(23 downto 0);
+	
+	signal reading_buffer_red, reading_buffer_green, reading_buffer_blue : std_logic_vector(7 downto 0);
+	
 	signal reading_buffer : std_logic_vector(15 downto 0);
 
 	-- Signals for data coming out of memory
@@ -256,13 +260,14 @@ begin
 		end if;
 	end process;
 	
-	ram_re <= (cs_data AND NOT (io_write));
 	
 	process(clk_10M, resetn, cs_addr)
 	
 		constant numpix	:	integer	:= 256;
 		
 		variable pixels	:	integer range 0 to 255;
+		
+		variable increment_en	:  integer range 0 to 1;
 		
 	begin
 		-- For this implementation, saving the memory address
@@ -278,7 +283,7 @@ begin
 				ram_write_addr <= write_port & x"00";
 			elsif (wstate = change_all) then
 				ram_write_addr <= ram_write_addr + 1;
-			elsif (wstate = storing) then
+			elsif ((wstate = storing) and (increment_en = 1)) then
 				if (ram_write_addr(7 downto 0) /= "11111111") then
 					ram_write_addr <= ram_write_addr + 1;
 				end if;
@@ -316,6 +321,7 @@ begin
 					write_port <= "11";
 				end if;
 			end if;
+			
 			case wstate is
 			when idle =>
 				pixels := 0;
@@ -333,8 +339,23 @@ begin
 					ram_write_buffer <= data_in(10 downto 5) & "00" & data_in(15 downto 11) & "000" & data_in(4 downto 0) & "000";
 					ram_we <= '1';
 					wstate <= change_all;
+				elsif (io_write = '1') and (red_data = '1') then
+					ram_write_buffer <= reading_buffer_all(23 downto 16) & data_in(7 downto 0) & reading_buffer_all(7 downto 0);
+					ram_we <= '1';
+					increment_en := 0;
+					wstate <= storing;
+				elsif (io_write = '1') and (green_data = '1') then
+					ram_write_buffer <= data_in(7 downto 0) & reading_buffer_all(15 downto 8) & reading_buffer_all(7 downto 0);
+					ram_we <= '1';
+					increment_en := 0;
+					wstate <= storing;
+				elsif (io_write = '1') and (blue_data = '1') then
+					ram_write_buffer <= reading_buffer_all(23 downto 16) & reading_buffer_all(15 downto 8) & data_in(7 downto 0);
+					ram_we <= '1';
+					increment_en := 1;
+					wstate <= storing;
 				else
-					reading_buffer <= ram_write_data(15 downto 11) & ram_write_data(23 downto 18) & ram_write_data(7 downto 3);
+					reading_buffer_all <= ram_write_data;
 				end if;
 			when change_all =>
 				if pixels = numpix-2 then
@@ -353,6 +374,26 @@ begin
 			end case;
 		end if;
 	end process;
+	
+	process (reading_buffer_all, red_data, green_data, blue_data, cs_data, io_write, reading_buffer)
+
+	
+	begin
+	
+		if (red_data = '1' and io_write = '0') then
+			reading_buffer <= x"00" & reading_buffer_all(15 downto 8);
+		elsif (green_data = '1' and io_write = '0') then
+			reading_buffer <= x"00" & reading_buffer_all(23 downto 16);
+		elsif (blue_data = '1' and io_write = '0') then
+			reading_buffer <= x"00" & reading_buffer_all(7 downto 0);
+		elsif (cs_data ='1' and io_write = '0') then
+			reading_buffer <= reading_buffer_all(15 downto 11) & reading_buffer_all(23 downto 18) & reading_buffer_all(7 downto 3);
+		end if;
+	
+		ram_re <= ((red_data AND NOT (io_write)) OR (green_data AND NOT (io_write)) OR (blue_data AND NOT (io_write)));
+	
+	end process;
+			
 
 	
 	

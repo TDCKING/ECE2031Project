@@ -3,44 +3,52 @@ Timing Analyzer Summary
 ------------------------------------------------------------
 
 Type  : Slow 1100mV 85C Model Setup 'SCOMP:inst|IO_CYCLE'
-Slack : -11.913
-TNS   : -406.525
+Slack : -12.315
+TNS   : -594.372
 
 Type  : Slow 1100mV 85C Model Setup 'inst1|pll_main_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : -8.168
-TNS   : -517.264
+Slack : -10.900
+TNS   : -741.460
 
 Type  : Slow 1100mV 85C Model Setup 'clk_div:inst5|clock_10Hz'
-Slack : -1.444
-TNS   : -31.388
-
-Type  : Slow 1100mV 85C Model Hold 'inst1|pll_main_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : -4.531
-TNS   : -61.729
+Slack : -1.704
+TNS   : -33.054
 
 Type  : Slow 1100mV 85C Model Hold 'SCOMP:inst|IO_CYCLE'
-Slack : -2.111
-TNS   : -10.881
-
-Type  : Slow 1100mV 85C Model Hold 'clk_div:inst5|clock_10Hz'
-Slack : 0.313
+Slack : 0.101
 TNS   : 0.000
 
+Type  : Slow 1100mV 85C Model Hold 'inst1|pll_main_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk'
+Slack : 0.282
+TNS   : 0.000
+
+Type  : Slow 1100mV 85C Model Hold 'clk_div:inst5|clock_10Hz'
+Slack : 0.387
+TNS   : 0.000
+
+Type  : Slow 1100mV 85C Model Recovery 'SCOMP:inst|IO_CYCLE'
+Slack : -11.542
+TNS   : -89.193
+
 Type  : Slow 1100mV 85C Model Recovery 'clk_div:inst5|clock_10Hz'
-Slack : -8.537
-TNS   : -238.966
+Slack : -9.202
+TNS   : -211.605
+
+Type  : Slow 1100mV 85C Model Removal 'SCOMP:inst|IO_CYCLE'
+Slack : 0.430
+TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Removal 'clk_div:inst5|clock_10Hz'
-Slack : 0.852
+Slack : 1.002
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Minimum Pulse Width 'SCOMP:inst|IO_CYCLE'
-Slack : -0.394
-TNS   : -25.766
+Slack : -0.430
+TNS   : -28.837
 
 Type  : Slow 1100mV 85C Model Minimum Pulse Width 'clk_div:inst5|clock_10Hz'
 Slack : -0.394
-TNS   : -14.285
+TNS   : -11.723
 
 Type  : Slow 1100mV 85C Model Minimum Pulse Width 'inst1|pll_main_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL|vcoph[0]'
 Slack : 1.666
@@ -55,44 +63,52 @@ Slack : 48.779
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Setup 'SCOMP:inst|IO_CYCLE'
-Slack : -11.847
-TNS   : -404.102
+Slack : -12.223
+TNS   : -588.289
 
 Type  : Slow 1100mV 0C Model Setup 'inst1|pll_main_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : -7.512
-TNS   : -470.139
+Slack : -9.987
+TNS   : -691.732
 
 Type  : Slow 1100mV 0C Model Setup 'clk_div:inst5|clock_10Hz'
-Slack : -1.565
-TNS   : -33.799
+Slack : -1.805
+TNS   : -34.775
 
 Type  : Slow 1100mV 0C Model Hold 'inst1|pll_main_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : -4.642
-TNS   : -82.951
-
-Type  : Slow 1100mV 0C Model Hold 'SCOMP:inst|IO_CYCLE'
-Slack : -2.113
-TNS   : -11.184
-
-Type  : Slow 1100mV 0C Model Hold 'clk_div:inst5|clock_10Hz'
-Slack : 0.309
+Slack : 0.046
 TNS   : 0.000
 
+Type  : Slow 1100mV 0C Model Hold 'SCOMP:inst|IO_CYCLE'
+Slack : 0.066
+TNS   : 0.000
+
+Type  : Slow 1100mV 0C Model Hold 'clk_div:inst5|clock_10Hz'
+Slack : 0.365
+TNS   : 0.000
+
+Type  : Slow 1100mV 0C Model Recovery 'SCOMP:inst|IO_CYCLE'
+Slack : -11.322
+TNS   : -87.628
+
 Type  : Slow 1100mV 0C Model Recovery 'clk_div:inst5|clock_10Hz'
-Slack : -8.527
-TNS   : -238.681
+Slack : -9.149
+TNS   : -210.400
+
+Type  : Slow 1100mV 0C Model Removal 'SCOMP:inst|IO_CYCLE'
+Slack : 0.284
+TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Removal 'clk_div:inst5|clock_10Hz'
-Slack : 0.833
+Slack : 0.981
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Minimum Pulse Width 'SCOMP:inst|IO_CYCLE'
-Slack : -0.394
-TNS   : -25.861
+Slack : -0.448
+TNS   : -29.173
 
 Type  : Slow 1100mV 0C Model Minimum Pulse Width 'clk_div:inst5|clock_10Hz'
 Slack : -0.394
-TNS   : -14.341
+TNS   : -11.805
 
 Type  : Slow 1100mV 0C Model Minimum Pulse Width 'inst1|pll_main_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL|vcoph[0]'
 Slack : 1.666
@@ -106,44 +122,52 @@ Type  : Slow 1100mV 0C Model Minimum Pulse Width 'inst1|pll_main_inst|altera_pll
 Slack : 48.760
 TNS   : 0.000
 
-Type  : Fast 1100mV 85C Model Setup 'SCOMP:inst|IO_CYCLE'
-Slack : -6.881
-TNS   : -226.675
-
 Type  : Fast 1100mV 85C Model Setup 'inst1|pll_main_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : -5.735
-TNS   : -388.211
+Slack : -8.018
+TNS   : -532.434
+
+Type  : Fast 1100mV 85C Model Setup 'SCOMP:inst|IO_CYCLE'
+Slack : -7.015
+TNS   : -333.062
 
 Type  : Fast 1100mV 85C Model Setup 'clk_div:inst5|clock_10Hz'
-Slack : -0.397
-TNS   : -7.193
-
-Type  : Fast 1100mV 85C Model Hold 'inst1|pll_main_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : -2.480
-TNS   : -23.664
+Slack : -0.555
+TNS   : -10.283
 
 Type  : Fast 1100mV 85C Model Hold 'SCOMP:inst|IO_CYCLE'
-Slack : -1.522
-TNS   : -7.558
-
-Type  : Fast 1100mV 85C Model Hold 'clk_div:inst5|clock_10Hz'
-Slack : 0.120
+Slack : 0.107
 TNS   : 0.000
 
+Type  : Fast 1100mV 85C Model Hold 'clk_div:inst5|clock_10Hz'
+Slack : 0.154
+TNS   : 0.000
+
+Type  : Fast 1100mV 85C Model Hold 'inst1|pll_main_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk'
+Slack : 0.165
+TNS   : 0.000
+
+Type  : Fast 1100mV 85C Model Recovery 'SCOMP:inst|IO_CYCLE'
+Slack : -6.696
+TNS   : -51.292
+
 Type  : Fast 1100mV 85C Model Recovery 'clk_div:inst5|clock_10Hz'
-Slack : -4.374
-TNS   : -122.453
+Slack : -4.812
+TNS   : -110.649
 
 Type  : Fast 1100mV 85C Model Removal 'clk_div:inst5|clock_10Hz'
-Slack : 0.290
+Slack : 0.407
+TNS   : 0.000
+
+Type  : Fast 1100mV 85C Model Removal 'SCOMP:inst|IO_CYCLE'
+Slack : 0.421
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Minimum Pulse Width 'SCOMP:inst|IO_CYCLE'
-Slack : -0.150
-TNS   : -1.105
+Slack : -0.229
+TNS   : -3.396
 
 Type  : Fast 1100mV 85C Model Minimum Pulse Width 'clk_div:inst5|clock_10Hz'
-Slack : 0.150
+Slack : 0.145
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Minimum Pulse Width 'inst1|pll_main_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL|vcoph[0]'
@@ -158,44 +182,52 @@ Type  : Fast 1100mV 85C Model Minimum Pulse Width 'inst1|pll_main_inst|altera_pl
 Slack : 48.894
 TNS   : 0.000
 
-Type  : Fast 1100mV 0C Model Setup 'SCOMP:inst|IO_CYCLE'
-Slack : -6.347
-TNS   : -209.689
-
 Type  : Fast 1100mV 0C Model Setup 'inst1|pll_main_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : -4.770
-TNS   : -311.581
+Slack : -6.620
+TNS   : -440.949
+
+Type  : Fast 1100mV 0C Model Setup 'SCOMP:inst|IO_CYCLE'
+Slack : -6.432
+TNS   : -308.247
 
 Type  : Fast 1100mV 0C Model Setup 'clk_div:inst5|clock_10Hz'
-Slack : -0.380
-TNS   : -6.531
-
-Type  : Fast 1100mV 0C Model Hold 'inst1|pll_main_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : -2.540
-TNS   : -35.933
+Slack : -0.512
+TNS   : -9.247
 
 Type  : Fast 1100mV 0C Model Hold 'SCOMP:inst|IO_CYCLE'
-Slack : -1.402
-TNS   : -7.182
-
-Type  : Fast 1100mV 0C Model Hold 'clk_div:inst5|clock_10Hz'
-Slack : 0.102
+Slack : 0.093
 TNS   : 0.000
 
+Type  : Fast 1100mV 0C Model Hold 'clk_div:inst5|clock_10Hz'
+Slack : 0.127
+TNS   : 0.000
+
+Type  : Fast 1100mV 0C Model Hold 'inst1|pll_main_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk'
+Slack : 0.152
+TNS   : 0.000
+
+Type  : Fast 1100mV 0C Model Recovery 'SCOMP:inst|IO_CYCLE'
+Slack : -6.222
+TNS   : -47.800
+
 Type  : Fast 1100mV 0C Model Recovery 'clk_div:inst5|clock_10Hz'
-Slack : -4.174
-TNS   : -116.853
+Slack : -4.556
+TNS   : -104.754
 
 Type  : Fast 1100mV 0C Model Removal 'clk_div:inst5|clock_10Hz'
-Slack : 0.242
+Slack : 0.352
+TNS   : 0.000
+
+Type  : Fast 1100mV 0C Model Removal 'SCOMP:inst|IO_CYCLE'
+Slack : 0.390
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Minimum Pulse Width 'SCOMP:inst|IO_CYCLE'
-Slack : -0.097
-TNS   : -0.461
+Slack : -0.176
+TNS   : -2.171
 
 Type  : Fast 1100mV 0C Model Minimum Pulse Width 'clk_div:inst5|clock_10Hz'
-Slack : 0.147
+Slack : 0.143
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Minimum Pulse Width 'inst1|pll_main_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL|vcoph[0]'

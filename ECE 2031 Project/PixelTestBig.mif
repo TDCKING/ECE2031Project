@@ -1,0 +1,44 @@
+-- Altera Memory Initialization File (MIF)
+
+DEPTH = 2048;
+WIDTH = 16;
+
+ADDRESS_RADIX = HEX;
+DATA_RADIX = HEX;
+
+CONTENT
+  BEGIN
+    [000..7FF] : 0000;  -- Default to NOP
+
+           000 : B801;  -- 	LOADI 1
+           001 : 98B3;  -- 	OUT PXL_R
+           002 : 9802;  -- 	OUT Timer
+           003 : 081A;  -- 	LOAD GreenTest
+           004 : 98B1;  -- 	OUT PXL_D
+           005 : 9002;  -- 	IN Timer
+           006 : 481D;  -- 	AND TimerMask
+           007 : 4003;  -- 	JZERO Loop1
+           008 : B801;  -- 	LOADI 1
+           009 : 98B3;  -- 	OUT PXL_R
+           00A : 081B;  -- 	LOAD RedTest
+           00B : 98B2;  -- 	OUT PXL_CA
+           00C : 9002;  -- Loop2: IN Timer
+           00D : 481D;  -- 	AND TimerMask
+           00E : 400C;  -- 	JZERO Loop2
+           00F : B800;  -- 	LOADI 0
+           010 : 98B3;  -- 	OUT PXL_R
+           011 : B801;  -- 	LOADI 1
+           012 : 98B4;  -- 	OUT PXL_S
+           013 : 9802;  -- 	OUT Timer
+           014 : 9002;  -- Loop: IN Timer
+           015 : 481D;  -- 	AND TimerMask
+           016 : 4014;  -- 	JZERO Loop
+           017 : 081E;  -- 	LOAD ReadData
+           018 : 98B2;  -- 	OUT PXL_CA
+           019 : 2819;  -- Dead: Jump Dead
+           01A : F800;  -- GreenTest: DW &B1111100000000000
+           01B : 07E0;  -- RedTest:   DW &B0000011111100000
+           01C : 00FF;  -- BlueTest:  DW &B0000000011111111
+           01D : 0010;  -- TimerMask: DW &B0000000000010000
+           01E : 0000;  -- ReadData:  DW &B0000000000000000
+  END;
