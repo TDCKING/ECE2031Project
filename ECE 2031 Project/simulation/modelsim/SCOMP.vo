@@ -17,7 +17,7 @@
 // PROGRAM "Quartus Prime"
 // VERSION "Version 19.1.0 Build 670 09/22/2019 SJ Lite Edition"
 
-// DATE "04/17/2022 15:21:00"
+// DATE "04/18/2022 12:52:51"
 
 // 
 // Device: Altera 5CSXFC6D6F31C6 Package FBGA896
@@ -433,7 +433,7 @@ wire \inst3|Equal13~1_combout ;
 wire \inst13|wstate~10_combout ;
 wire \inst3|Equal6~0_combout ;
 wire \inst3|Equal6~1_combout ;
-wire \inst13|reading_buffer[7]~3_combout ;
+wire \inst13|ram_re~0_combout ;
 wire \inst13|process_1~1_combout ;
 wire \inst3|Equal7~0_combout ;
 wire \inst13|process_1~3_combout ;
@@ -518,7 +518,7 @@ wire \inst13|Add5~26 ;
 wire \inst13|Add5~29_sumout ;
 wire \SW[7]~input_o ;
 wire \inst13|process_2~0_combout ;
-wire \inst13|ram_re~0_combout ;
+wire \inst13|reading_buffer[8]~5_combout ;
 wire \inst4|COUNT[13]~DUPLICATE_q ;
 wire \inst4|Add0~10 ;
 wire \inst4|Add0~57_sumout ;
@@ -757,12 +757,12 @@ wire \inst13|Add5~21_sumout ;
 wire \inst13|ram_write_addr~9_combout ;
 wire \inst13|ram_write_addr~10_combout ;
 wire \inst13|ram_write_addr[0]~11_combout ;
-wire \inst13|reading_buffer[0]~4_combout ;
+wire \inst13|reading_buffer[0]~3_combout ;
 wire \SW[0]~input_o ;
 wire \inst7|B_DI[0]~feeder_combout ;
 wire \IO_DATA[0]~3_combout ;
 wire \inst13|ram_write_buffer~17_combout ;
-wire \inst13|reading_buffer[5]~5_combout ;
+wire \inst13|reading_buffer[5]~4_combout ;
 wire \IO_DATA[5]~4_combout ;
 wire \inst|Selector22~1_combout ;
 wire \inst|Selector22~2_combout ;
@@ -8814,9 +8814,9 @@ defparam \inst3|Equal6~1 .shared_arith = "off";
 // synopsys translate_on
 
 // Location: MLABCELL_X47_Y20_N51
-cyclonev_lcell_comb \inst13|reading_buffer[7]~3 (
+cyclonev_lcell_comb \inst13|ram_re~0 (
 // Equation(s):
-// \inst13|reading_buffer[7]~3_combout  = ( \inst3|Equal6~1_combout  & ( \inst11~0_combout  ) ) # ( !\inst3|Equal6~1_combout  & ( (\inst11~0_combout  & \inst13|wstate~10_combout ) ) )
+// \inst13|ram_re~0_combout  = ( \inst3|Equal6~1_combout  & ( \inst11~0_combout  ) ) # ( !\inst3|Equal6~1_combout  & ( (\inst11~0_combout  & \inst13|wstate~10_combout ) ) )
 
 	.dataa(gnd),
 	.datab(gnd),
@@ -8827,14 +8827,14 @@ cyclonev_lcell_comb \inst13|reading_buffer[7]~3 (
 	.datag(gnd),
 	.cin(gnd),
 	.sharein(gnd),
-	.combout(\inst13|reading_buffer[7]~3_combout ),
+	.combout(\inst13|ram_re~0_combout ),
 	.sumout(),
 	.cout(),
 	.shareout());
 // synopsys translate_off
-defparam \inst13|reading_buffer[7]~3 .extended_lut = "off";
-defparam \inst13|reading_buffer[7]~3 .lut_mask = 64'h000F000F0F0F0F0F;
-defparam \inst13|reading_buffer[7]~3 .shared_arith = "off";
+defparam \inst13|ram_re~0 .extended_lut = "off";
+defparam \inst13|ram_re~0 .lut_mask = 64'h000F000F0F0F0F0F;
+defparam \inst13|ram_re~0 .shared_arith = "off";
 // synopsys translate_on
 
 // Location: LABCELL_X45_Y20_N39
@@ -10801,9 +10801,9 @@ defparam \inst13|process_2~0 .shared_arith = "off";
 // synopsys translate_on
 
 // Location: LABCELL_X46_Y21_N27
-cyclonev_lcell_comb \inst13|ram_re~0 (
+cyclonev_lcell_comb \inst13|reading_buffer[8]~5 (
 // Equation(s):
-// \inst13|ram_re~0_combout  = ( \inst13|wstate~10_combout  & ( \inst11~0_combout  ) )
+// \inst13|reading_buffer[8]~5_combout  = ( \inst13|wstate~10_combout  & ( \inst11~0_combout  ) )
 
 	.dataa(gnd),
 	.datab(gnd),
@@ -10814,27 +10814,27 @@ cyclonev_lcell_comb \inst13|ram_re~0 (
 	.datag(gnd),
 	.cin(gnd),
 	.sharein(gnd),
-	.combout(\inst13|ram_re~0_combout ),
+	.combout(\inst13|reading_buffer[8]~5_combout ),
 	.sumout(),
 	.cout(),
 	.shareout());
 // synopsys translate_off
-defparam \inst13|ram_re~0 .extended_lut = "off";
-defparam \inst13|ram_re~0 .lut_mask = 64'h000000000F0F0F0F;
-defparam \inst13|ram_re~0 .shared_arith = "off";
+defparam \inst13|reading_buffer[8]~5 .extended_lut = "off";
+defparam \inst13|reading_buffer[8]~5 .lut_mask = 64'h000000000F0F0F0F;
+defparam \inst13|reading_buffer[8]~5 .shared_arith = "off";
 // synopsys translate_on
 
 // Location: LABCELL_X45_Y22_N9
 cyclonev_lcell_comb \inst13|reading_buffer[13] (
 // Equation(s):
-// \inst13|reading_buffer [13] = ( !\inst13|ram_re~0_combout  & ( (!\inst13|process_2~0_combout  & (\inst13|reading_buffer [13])) # (\inst13|process_2~0_combout  & ((\inst13|reading_buffer_all [13]))) ) )
+// \inst13|reading_buffer [13] = ( !\inst13|reading_buffer[8]~5_combout  & ( (!\inst13|process_2~0_combout  & (\inst13|reading_buffer [13])) # (\inst13|process_2~0_combout  & ((\inst13|reading_buffer_all [13]))) ) )
 
 	.dataa(gnd),
 	.datab(!\inst13|reading_buffer [13]),
 	.datac(!\inst13|reading_buffer_all [13]),
 	.datad(!\inst13|process_2~0_combout ),
 	.datae(gnd),
-	.dataf(!\inst13|ram_re~0_combout ),
+	.dataf(!\inst13|reading_buffer[8]~5_combout ),
 	.datag(gnd),
 	.cin(gnd),
 	.sharein(gnd),
@@ -12859,14 +12859,14 @@ defparam \inst13|ram_write_buffer[18]~2 .shared_arith = "off";
 // Location: LABCELL_X45_Y21_N54
 cyclonev_lcell_comb \inst13|reading_buffer[10] (
 // Equation(s):
-// \inst13|reading_buffer [10] = ( !\inst13|ram_re~0_combout  & ( (!\inst13|process_2~0_combout  & ((\inst13|reading_buffer [10]))) # (\inst13|process_2~0_combout  & (\inst13|reading_buffer_all [23])) ) )
+// \inst13|reading_buffer [10] = ( !\inst13|reading_buffer[8]~5_combout  & ( (!\inst13|process_2~0_combout  & ((\inst13|reading_buffer [10]))) # (\inst13|process_2~0_combout  & (\inst13|reading_buffer_all [23])) ) )
 
 	.dataa(gnd),
 	.datab(!\inst13|process_2~0_combout ),
 	.datac(!\inst13|reading_buffer_all [23]),
 	.datad(!\inst13|reading_buffer [10]),
 	.datae(gnd),
-	.dataf(!\inst13|ram_re~0_combout ),
+	.dataf(!\inst13|reading_buffer[8]~5_combout ),
 	.datag(gnd),
 	.cin(gnd),
 	.sharein(gnd),
@@ -13802,14 +13802,14 @@ defparam \inst13|ram_write_buffer[18] .power_up = "low";
 // Location: LABCELL_X45_Y22_N54
 cyclonev_lcell_comb \inst13|reading_buffer[15] (
 // Equation(s):
-// \inst13|reading_buffer [15] = ( !\inst13|ram_re~0_combout  & ( (!\inst13|process_2~0_combout  & ((\inst13|reading_buffer [15]))) # (\inst13|process_2~0_combout  & (\inst13|reading_buffer_all [15])) ) )
+// \inst13|reading_buffer [15] = ( !\inst13|reading_buffer[8]~5_combout  & ( (!\inst13|process_2~0_combout  & ((\inst13|reading_buffer [15]))) # (\inst13|process_2~0_combout  & (\inst13|reading_buffer_all [15])) ) )
 
 	.dataa(gnd),
 	.datab(!\inst13|reading_buffer_all [15]),
 	.datac(!\inst13|process_2~0_combout ),
 	.datad(!\inst13|reading_buffer [15]),
 	.datae(gnd),
-	.dataf(!\inst13|ram_re~0_combout ),
+	.dataf(!\inst13|reading_buffer[8]~5_combout ),
 	.datag(gnd),
 	.cin(gnd),
 	.sharein(gnd),
@@ -14079,11 +14079,11 @@ defparam \inst13|reading_buffer[4]~7 .shared_arith = "off";
 // Location: MLABCELL_X47_Y20_N27
 cyclonev_lcell_comb \inst13|reading_buffer[4] (
 // Equation(s):
-// \inst13|reading_buffer [4] = (!\inst13|reading_buffer[7]~3_combout  & ((\inst13|reading_buffer [4]))) # (\inst13|reading_buffer[7]~3_combout  & (\inst13|reading_buffer[4]~7_combout ))
+// \inst13|reading_buffer [4] = (!\inst13|ram_re~0_combout  & ((\inst13|reading_buffer [4]))) # (\inst13|ram_re~0_combout  & (\inst13|reading_buffer[4]~7_combout ))
 
 	.dataa(gnd),
 	.datab(!\inst13|reading_buffer[4]~7_combout ),
-	.datac(!\inst13|reading_buffer[7]~3_combout ),
+	.datac(!\inst13|ram_re~0_combout ),
 	.datad(!\inst13|reading_buffer [4]),
 	.datae(gnd),
 	.dataf(gnd),
@@ -14174,14 +14174,14 @@ defparam \inst13|ram_write_buffer[7] .power_up = "low";
 // Location: LABCELL_X46_Y20_N30
 cyclonev_lcell_comb \inst13|reading_buffer[9] (
 // Equation(s):
-// \inst13|reading_buffer [9] = ( !\inst13|ram_re~0_combout  & ( (!\inst13|process_2~0_combout  & (\inst13|reading_buffer [9])) # (\inst13|process_2~0_combout  & ((\inst13|reading_buffer_all [22]))) ) )
+// \inst13|reading_buffer [9] = ( !\inst13|reading_buffer[8]~5_combout  & ( (!\inst13|process_2~0_combout  & (\inst13|reading_buffer [9])) # (\inst13|process_2~0_combout  & ((\inst13|reading_buffer_all [22]))) ) )
 
 	.dataa(gnd),
 	.datab(!\inst13|reading_buffer [9]),
 	.datac(!\inst13|process_2~0_combout ),
 	.datad(!\inst13|reading_buffer_all [22]),
 	.datae(gnd),
-	.dataf(!\inst13|ram_re~0_combout ),
+	.dataf(!\inst13|reading_buffer[8]~5_combout ),
 	.datag(gnd),
 	.cin(gnd),
 	.sharein(gnd),
@@ -14508,11 +14508,11 @@ defparam \inst13|ram_write_addr[9]~7 .shared_arith = "off";
 // Location: LABCELL_X45_Y23_N6
 cyclonev_lcell_comb \inst13|reading_buffer[14] (
 // Equation(s):
-// \inst13|reading_buffer [14] = ( \inst13|reading_buffer [14] & ( \inst13|process_2~0_combout  & ( (!\inst13|ram_re~0_combout  & \inst13|reading_buffer_all [14]) ) ) ) # ( !\inst13|reading_buffer [14] & ( \inst13|process_2~0_combout  & ( 
-// (!\inst13|ram_re~0_combout  & \inst13|reading_buffer_all [14]) ) ) ) # ( \inst13|reading_buffer [14] & ( !\inst13|process_2~0_combout  & ( !\inst13|ram_re~0_combout  ) ) )
+// \inst13|reading_buffer [14] = ( \inst13|reading_buffer [14] & ( \inst13|process_2~0_combout  & ( (!\inst13|reading_buffer[8]~5_combout  & \inst13|reading_buffer_all [14]) ) ) ) # ( !\inst13|reading_buffer [14] & ( \inst13|process_2~0_combout  & ( 
+// (!\inst13|reading_buffer[8]~5_combout  & \inst13|reading_buffer_all [14]) ) ) ) # ( \inst13|reading_buffer [14] & ( !\inst13|process_2~0_combout  & ( !\inst13|reading_buffer[8]~5_combout  ) ) )
 
 	.dataa(gnd),
-	.datab(!\inst13|ram_re~0_combout ),
+	.datab(!\inst13|reading_buffer[8]~5_combout ),
 	.datac(!\inst13|reading_buffer_all [14]),
 	.datad(gnd),
 	.datae(!\inst13|reading_buffer [14]),
@@ -14808,14 +14808,14 @@ defparam \inst13|ram_write_buffer[10] .power_up = "low";
 // Location: LABCELL_X45_Y21_N36
 cyclonev_lcell_comb \inst13|reading_buffer[11] (
 // Equation(s):
-// \inst13|reading_buffer [11] = ( !\inst13|ram_re~0_combout  & ( (!\inst13|process_2~0_combout  & ((\inst13|reading_buffer [11]))) # (\inst13|process_2~0_combout  & (\inst13|reading_buffer_all [11])) ) )
+// \inst13|reading_buffer [11] = ( !\inst13|reading_buffer[8]~5_combout  & ( (!\inst13|process_2~0_combout  & ((\inst13|reading_buffer [11]))) # (\inst13|process_2~0_combout  & (\inst13|reading_buffer_all [11])) ) )
 
 	.dataa(gnd),
 	.datab(!\inst13|process_2~0_combout ),
 	.datac(!\inst13|reading_buffer_all [11]),
 	.datad(!\inst13|reading_buffer [11]),
 	.datae(gnd),
-	.dataf(!\inst13|ram_re~0_combout ),
+	.dataf(!\inst13|reading_buffer[8]~5_combout ),
 	.datag(gnd),
 	.cin(gnd),
 	.sharein(gnd),
@@ -15118,14 +15118,14 @@ defparam \inst13|reading_buffer[7]~6 .shared_arith = "off";
 // Location: LABCELL_X46_Y19_N15
 cyclonev_lcell_comb \inst13|reading_buffer[7] (
 // Equation(s):
-// \inst13|reading_buffer [7] = ( \inst13|reading_buffer[7]~3_combout  & ( \inst13|reading_buffer[7]~6_combout  ) ) # ( !\inst13|reading_buffer[7]~3_combout  & ( \inst13|reading_buffer[7]~6_combout  & ( \inst13|reading_buffer [7] ) ) ) # ( 
-// !\inst13|reading_buffer[7]~3_combout  & ( !\inst13|reading_buffer[7]~6_combout  & ( \inst13|reading_buffer [7] ) ) )
+// \inst13|reading_buffer [7] = ( \inst13|ram_re~0_combout  & ( \inst13|reading_buffer[7]~6_combout  ) ) # ( !\inst13|ram_re~0_combout  & ( \inst13|reading_buffer[7]~6_combout  & ( \inst13|reading_buffer [7] ) ) ) # ( !\inst13|ram_re~0_combout  & ( 
+// !\inst13|reading_buffer[7]~6_combout  & ( \inst13|reading_buffer [7] ) ) )
 
 	.dataa(gnd),
 	.datab(gnd),
 	.datac(!\inst13|reading_buffer [7]),
 	.datad(gnd),
-	.datae(!\inst13|reading_buffer[7]~3_combout ),
+	.datae(!\inst13|ram_re~0_combout ),
 	.dataf(!\inst13|reading_buffer[7]~6_combout ),
 	.datag(gnd),
 	.cin(gnd),
@@ -15302,10 +15302,9 @@ defparam \inst13|reading_buffer[6]~8 .shared_arith = "off";
 // Location: MLABCELL_X47_Y20_N9
 cyclonev_lcell_comb \inst13|reading_buffer[6] (
 // Equation(s):
-// \inst13|reading_buffer [6] = ( \inst13|reading_buffer[6]~8_combout  & ( (\inst13|reading_buffer [6]) # (\inst13|reading_buffer[7]~3_combout ) ) ) # ( !\inst13|reading_buffer[6]~8_combout  & ( (!\inst13|reading_buffer[7]~3_combout  & \inst13|reading_buffer 
-// [6]) ) )
+// \inst13|reading_buffer [6] = ( \inst13|reading_buffer[6]~8_combout  & ( (\inst13|reading_buffer [6]) # (\inst13|ram_re~0_combout ) ) ) # ( !\inst13|reading_buffer[6]~8_combout  & ( (!\inst13|ram_re~0_combout  & \inst13|reading_buffer [6]) ) )
 
-	.dataa(!\inst13|reading_buffer[7]~3_combout ),
+	.dataa(!\inst13|ram_re~0_combout ),
 	.datab(gnd),
 	.datac(!\inst13|reading_buffer [6]),
 	.datad(gnd),
@@ -15492,14 +15491,14 @@ defparam \inst13|ram_write_buffer[5] .power_up = "low";
 // Location: LABCELL_X45_Y22_N0
 cyclonev_lcell_comb \inst13|reading_buffer[12] (
 // Equation(s):
-// \inst13|reading_buffer [12] = ( !\inst13|ram_re~0_combout  & ( (!\inst13|process_2~0_combout  & ((\inst13|reading_buffer [12]))) # (\inst13|process_2~0_combout  & (\inst13|reading_buffer_all [12])) ) )
+// \inst13|reading_buffer [12] = ( !\inst13|reading_buffer[8]~5_combout  & ( (!\inst13|process_2~0_combout  & ((\inst13|reading_buffer [12]))) # (\inst13|process_2~0_combout  & (\inst13|reading_buffer_all [12])) ) )
 
 	.dataa(gnd),
 	.datab(!\inst13|reading_buffer_all [12]),
 	.datac(!\inst13|process_2~0_combout ),
 	.datad(!\inst13|reading_buffer [12]),
 	.datae(gnd),
-	.dataf(!\inst13|ram_re~0_combout ),
+	.dataf(!\inst13|reading_buffer[8]~5_combout ),
 	.datag(gnd),
 	.cin(gnd),
 	.sharein(gnd),
@@ -17780,10 +17779,9 @@ defparam \inst13|reading_buffer[3]~10 .shared_arith = "off";
 // Location: MLABCELL_X47_Y20_N12
 cyclonev_lcell_comb \inst13|reading_buffer[3] (
 // Equation(s):
-// \inst13|reading_buffer [3] = ( \inst13|reading_buffer[3]~10_combout  & ( (\inst13|reading_buffer [3]) # (\inst13|reading_buffer[7]~3_combout ) ) ) # ( !\inst13|reading_buffer[3]~10_combout  & ( (!\inst13|reading_buffer[7]~3_combout  & 
-// \inst13|reading_buffer [3]) ) )
+// \inst13|reading_buffer [3] = ( \inst13|reading_buffer[3]~10_combout  & ( (\inst13|reading_buffer [3]) # (\inst13|ram_re~0_combout ) ) ) # ( !\inst13|reading_buffer[3]~10_combout  & ( (!\inst13|ram_re~0_combout  & \inst13|reading_buffer [3]) ) )
 
-	.dataa(!\inst13|reading_buffer[7]~3_combout ),
+	.dataa(!\inst13|ram_re~0_combout ),
 	.datab(!\inst13|reading_buffer [3]),
 	.datac(gnd),
 	.datad(gnd),
@@ -18005,9 +18003,9 @@ defparam \inst13|ram_write_addr[0] .power_up = "low";
 // synopsys translate_on
 
 // Location: LABCELL_X46_Y19_N24
-cyclonev_lcell_comb \inst13|reading_buffer[0]~4 (
+cyclonev_lcell_comb \inst13|reading_buffer[0]~3 (
 // Equation(s):
-// \inst13|reading_buffer[0]~4_combout  = ( \inst13|reading_buffer_all [8] & ( \inst13|reading_buffer[6]~0_combout  & ( (!\inst13|reading_buffer[6]~1_combout  & (\inst13|reading_buffer_all [0])) # (\inst13|reading_buffer[6]~1_combout  & 
+// \inst13|reading_buffer[0]~3_combout  = ( \inst13|reading_buffer_all [8] & ( \inst13|reading_buffer[6]~0_combout  & ( (!\inst13|reading_buffer[6]~1_combout  & (\inst13|reading_buffer_all [0])) # (\inst13|reading_buffer[6]~1_combout  & 
 // ((\inst13|reading_buffer_all [16]))) ) ) ) # ( !\inst13|reading_buffer_all [8] & ( \inst13|reading_buffer[6]~0_combout  & ( (!\inst13|reading_buffer[6]~1_combout  & (\inst13|reading_buffer_all [0])) # (\inst13|reading_buffer[6]~1_combout  & 
 // ((\inst13|reading_buffer_all [16]))) ) ) ) # ( \inst13|reading_buffer_all [8] & ( !\inst13|reading_buffer[6]~0_combout  & ( (\inst13|reading_buffer[6]~1_combout ) # (\inst13|reading_buffer_all [3]) ) ) ) # ( !\inst13|reading_buffer_all [8] & ( 
 // !\inst13|reading_buffer[6]~0_combout  & ( (\inst13|reading_buffer_all [3] & !\inst13|reading_buffer[6]~1_combout ) ) ) )
@@ -18021,28 +18019,28 @@ cyclonev_lcell_comb \inst13|reading_buffer[0]~4 (
 	.datag(gnd),
 	.cin(gnd),
 	.sharein(gnd),
-	.combout(\inst13|reading_buffer[0]~4_combout ),
+	.combout(\inst13|reading_buffer[0]~3_combout ),
 	.sumout(),
 	.cout(),
 	.shareout());
 // synopsys translate_off
-defparam \inst13|reading_buffer[0]~4 .extended_lut = "off";
-defparam \inst13|reading_buffer[0]~4 .lut_mask = 64'h30303F3F505F505F;
-defparam \inst13|reading_buffer[0]~4 .shared_arith = "off";
+defparam \inst13|reading_buffer[0]~3 .extended_lut = "off";
+defparam \inst13|reading_buffer[0]~3 .lut_mask = 64'h30303F3F505F505F;
+defparam \inst13|reading_buffer[0]~3 .shared_arith = "off";
 // synopsys translate_on
 
 // Location: LABCELL_X46_Y19_N9
 cyclonev_lcell_comb \inst13|reading_buffer[0] (
 // Equation(s):
-// \inst13|reading_buffer [0] = ( \inst13|reading_buffer[7]~3_combout  & ( \inst13|reading_buffer[0]~4_combout  ) ) # ( !\inst13|reading_buffer[7]~3_combout  & ( \inst13|reading_buffer[0]~4_combout  & ( \inst13|reading_buffer [0] ) ) ) # ( 
-// !\inst13|reading_buffer[7]~3_combout  & ( !\inst13|reading_buffer[0]~4_combout  & ( \inst13|reading_buffer [0] ) ) )
+// \inst13|reading_buffer [0] = ( \inst13|ram_re~0_combout  & ( \inst13|reading_buffer[0]~3_combout  ) ) # ( !\inst13|ram_re~0_combout  & ( \inst13|reading_buffer[0]~3_combout  & ( \inst13|reading_buffer [0] ) ) ) # ( !\inst13|ram_re~0_combout  & ( 
+// !\inst13|reading_buffer[0]~3_combout  & ( \inst13|reading_buffer [0] ) ) )
 
 	.dataa(gnd),
 	.datab(gnd),
 	.datac(!\inst13|reading_buffer [0]),
 	.datad(gnd),
-	.datae(!\inst13|reading_buffer[7]~3_combout ),
-	.dataf(!\inst13|reading_buffer[0]~4_combout ),
+	.datae(!\inst13|ram_re~0_combout ),
+	.dataf(!\inst13|reading_buffer[0]~3_combout ),
 	.datag(gnd),
 	.cin(gnd),
 	.sharein(gnd),
@@ -18205,9 +18203,9 @@ defparam \inst13|ram_write_buffer[0] .power_up = "low";
 // synopsys translate_on
 
 // Location: LABCELL_X46_Y20_N42
-cyclonev_lcell_comb \inst13|reading_buffer[5]~5 (
+cyclonev_lcell_comb \inst13|reading_buffer[5]~4 (
 // Equation(s):
-// \inst13|reading_buffer[5]~5_combout  = ( \inst13|reading_buffer_all [18] & ( \inst13|reading_buffer[6]~1_combout  & ( (!\inst13|reading_buffer[6]~0_combout  & (\inst13|reading_buffer_all [13])) # (\inst13|reading_buffer[6]~0_combout  & 
+// \inst13|reading_buffer[5]~4_combout  = ( \inst13|reading_buffer_all [18] & ( \inst13|reading_buffer[6]~1_combout  & ( (!\inst13|reading_buffer[6]~0_combout  & (\inst13|reading_buffer_all [13])) # (\inst13|reading_buffer[6]~0_combout  & 
 // ((\inst13|reading_buffer_all [21]))) ) ) ) # ( !\inst13|reading_buffer_all [18] & ( \inst13|reading_buffer[6]~1_combout  & ( (!\inst13|reading_buffer[6]~0_combout  & (\inst13|reading_buffer_all [13])) # (\inst13|reading_buffer[6]~0_combout  & 
 // ((\inst13|reading_buffer_all [21]))) ) ) ) # ( \inst13|reading_buffer_all [18] & ( !\inst13|reading_buffer[6]~1_combout  & ( (!\inst13|reading_buffer[6]~0_combout ) # (\inst13|reading_buffer_all [5]) ) ) ) # ( !\inst13|reading_buffer_all [18] & ( 
 // !\inst13|reading_buffer[6]~1_combout  & ( (\inst13|reading_buffer[6]~0_combout  & \inst13|reading_buffer_all [5]) ) ) )
@@ -18221,23 +18219,23 @@ cyclonev_lcell_comb \inst13|reading_buffer[5]~5 (
 	.datag(gnd),
 	.cin(gnd),
 	.sharein(gnd),
-	.combout(\inst13|reading_buffer[5]~5_combout ),
+	.combout(\inst13|reading_buffer[5]~4_combout ),
 	.sumout(),
 	.cout(),
 	.shareout());
 // synopsys translate_off
-defparam \inst13|reading_buffer[5]~5 .extended_lut = "off";
-defparam \inst13|reading_buffer[5]~5 .lut_mask = 64'h0505AFAF22772277;
-defparam \inst13|reading_buffer[5]~5 .shared_arith = "off";
+defparam \inst13|reading_buffer[5]~4 .extended_lut = "off";
+defparam \inst13|reading_buffer[5]~4 .lut_mask = 64'h0505AFAF22772277;
+defparam \inst13|reading_buffer[5]~4 .shared_arith = "off";
 // synopsys translate_on
 
 // Location: LABCELL_X46_Y20_N18
 cyclonev_lcell_comb \inst13|reading_buffer[5] (
 // Equation(s):
-// \inst13|reading_buffer [5] = (!\inst13|reading_buffer[7]~3_combout  & ((\inst13|reading_buffer [5]))) # (\inst13|reading_buffer[7]~3_combout  & (\inst13|reading_buffer[5]~5_combout ))
+// \inst13|reading_buffer [5] = (!\inst13|ram_re~0_combout  & ((\inst13|reading_buffer [5]))) # (\inst13|ram_re~0_combout  & (\inst13|reading_buffer[5]~4_combout ))
 
-	.dataa(!\inst13|reading_buffer[7]~3_combout ),
-	.datab(!\inst13|reading_buffer[5]~5_combout ),
+	.dataa(!\inst13|ram_re~0_combout ),
+	.datab(!\inst13|reading_buffer[5]~4_combout ),
 	.datac(!\inst13|reading_buffer [5]),
 	.datad(gnd),
 	.datae(gnd),
@@ -18848,7 +18846,7 @@ defparam \inst|altsyncram_component|auto_generated|ram_block1a6 .mem_init4 = "00
 defparam \inst|altsyncram_component|auto_generated|ram_block1a6 .mem_init3 = "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
 defparam \inst|altsyncram_component|auto_generated|ram_block1a6 .mem_init2 = "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
 defparam \inst|altsyncram_component|auto_generated|ram_block1a6 .mem_init1 = "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
-defparam \inst|altsyncram_component|auto_generated|ram_block1a6 .mem_init0 = "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000C842004200000000420084000000000000000000000000000000000000000000000000";
+defparam \inst|altsyncram_component|auto_generated|ram_block1a6 .mem_init0 = "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001FF78000080118800000400002310000000631000310422000401004000422000211000010000100001000200800000400004000800000400004000800000400";
 // synopsys translate_on
 
 // Location: FF_X46_Y21_N32
@@ -20014,7 +20012,7 @@ defparam \inst|altsyncram_component|auto_generated|ram_block1a2 .mem_init4 = "00
 defparam \inst|altsyncram_component|auto_generated|ram_block1a2 .mem_init3 = "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
 defparam \inst|altsyncram_component|auto_generated|ram_block1a2 .mem_init2 = "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
 defparam \inst|altsyncram_component|auto_generated|ram_block1a2 .mem_init1 = "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
-defparam \inst|altsyncram_component|auto_generated|ram_block1a2 .mem_init0 = "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004DFFF062DC0E341C029C04B800F3F817FB81F3781EBB8177780EB780EBB8077780EB780";
+defparam \inst|altsyncram_component|auto_generated|ram_block1a2 .mem_init0 = "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001318F80003F406483A0E23A0E006900380E24290000903920F23A8EA01C03520E01690038AE0388E07CAE055C57B81F2381EAB8157780EA380EAB8057780EA380";
 // synopsys translate_on
 
 // Location: LABCELL_X36_Y21_N21
@@ -21160,14 +21158,14 @@ defparam \inst4|IO_COUNT[8] .shared_arith = "off";
 // Location: LABCELL_X45_Y21_N45
 cyclonev_lcell_comb \inst13|reading_buffer[8] (
 // Equation(s):
-// \inst13|reading_buffer [8] = ( !\inst13|ram_re~0_combout  & ( (!\inst13|process_2~0_combout  & ((\inst13|reading_buffer [8]))) # (\inst13|process_2~0_combout  & (\inst13|reading_buffer_all [21])) ) )
+// \inst13|reading_buffer [8] = ( !\inst13|reading_buffer[8]~5_combout  & ( (!\inst13|process_2~0_combout  & ((\inst13|reading_buffer [8]))) # (\inst13|process_2~0_combout  & (\inst13|reading_buffer_all [21])) ) )
 
 	.dataa(!\inst13|reading_buffer_all [21]),
 	.datab(gnd),
 	.datac(!\inst13|process_2~0_combout ),
 	.datad(!\inst13|reading_buffer [8]),
 	.datae(gnd),
-	.dataf(!\inst13|ram_re~0_combout ),
+	.dataf(!\inst13|reading_buffer[8]~5_combout ),
 	.datag(gnd),
 	.cin(gnd),
 	.sharein(gnd),
@@ -23660,7 +23658,7 @@ defparam \inst|altsyncram_component|auto_generated|ram_block1a1 .mem_init4 = "00
 defparam \inst|altsyncram_component|auto_generated|ram_block1a1 .mem_init3 = "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
 defparam \inst|altsyncram_component|auto_generated|ram_block1a1 .mem_init2 = "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
 defparam \inst|altsyncram_component|auto_generated|ram_block1a1 .mem_init1 = "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
-defparam \inst|altsyncram_component|auto_generated|ram_block1a1 .mem_init0 = "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008842058455B0EF7F005400AB7B0ADF252DEB0EDEB8EDE2D6DFB8ADFB8EDF2D6DEB8ADE";
+defparam \inst|altsyncram_component|auto_generated|ram_block1a1 .mem_init0 = "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001E080005DBE11D2DEB8EDEBF823ADEFEB8823ADDE3A0475B0EE2B8AF7F0074B7823ADEC3B7AC3B7EC3B7CB42D2DEB0EDEB8ADE256DFB8ADFB8ADF256DEB8ADE";
 // synopsys translate_on
 
 // Location: LABCELL_X40_Y20_N12
@@ -24017,10 +24015,9 @@ defparam \inst13|reading_buffer[2]~9 .shared_arith = "off";
 // Location: MLABCELL_X47_Y20_N54
 cyclonev_lcell_comb \inst13|reading_buffer[2] (
 // Equation(s):
-// \inst13|reading_buffer [2] = ( \inst13|reading_buffer[2]~9_combout  & ( (\inst13|reading_buffer [2]) # (\inst13|reading_buffer[7]~3_combout ) ) ) # ( !\inst13|reading_buffer[2]~9_combout  & ( (!\inst13|reading_buffer[7]~3_combout  & \inst13|reading_buffer 
-// [2]) ) )
+// \inst13|reading_buffer [2] = ( \inst13|reading_buffer[2]~9_combout  & ( (\inst13|reading_buffer [2]) # (\inst13|ram_re~0_combout ) ) ) # ( !\inst13|reading_buffer[2]~9_combout  & ( (!\inst13|ram_re~0_combout  & \inst13|reading_buffer [2]) ) )
 
-	.dataa(!\inst13|reading_buffer[7]~3_combout ),
+	.dataa(!\inst13|ram_re~0_combout ),
 	.datab(gnd),
 	.datac(gnd),
 	.datad(!\inst13|reading_buffer [2]),
@@ -24407,7 +24404,7 @@ defparam \inst|altsyncram_component|auto_generated|ram_block1a0 .mem_init4 = "00
 defparam \inst|altsyncram_component|auto_generated|ram_block1a0 .mem_init3 = "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
 defparam \inst|altsyncram_component|auto_generated|ram_block1a0 .mem_init2 = "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
 defparam \inst|altsyncram_component|auto_generated|ram_block1a0 .mem_init1 = "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
-defparam \inst|altsyncram_component|auto_generated|ram_block1a0 .mem_init0 = "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000200042008000084010802008000000000000100001084000840108001000000000100401";
+defparam \inst|altsyncram_component|auto_generated|ram_block1a0 .mem_init0 = "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000800008421084000802100401080200002100020000210000000020004010802000020000210002000400000210000100001084000840108001000000000100401";
 // synopsys translate_on
 
 // Location: FF_X48_Y21_N2
@@ -25144,12 +25141,11 @@ defparam \inst13|reading_buffer[1]~2 .shared_arith = "off";
 // Location: MLABCELL_X47_Y20_N6
 cyclonev_lcell_comb \inst13|reading_buffer[1] (
 // Equation(s):
-// \inst13|reading_buffer [1] = ( \inst13|reading_buffer [1] & ( (!\inst13|reading_buffer[7]~3_combout ) # (\inst13|reading_buffer[1]~2_combout ) ) ) # ( !\inst13|reading_buffer [1] & ( (\inst13|reading_buffer[1]~2_combout  & 
-// \inst13|reading_buffer[7]~3_combout ) ) )
+// \inst13|reading_buffer [1] = ( \inst13|reading_buffer [1] & ( (!\inst13|ram_re~0_combout ) # (\inst13|reading_buffer[1]~2_combout ) ) ) # ( !\inst13|reading_buffer [1] & ( (\inst13|reading_buffer[1]~2_combout  & \inst13|ram_re~0_combout ) ) )
 
 	.dataa(gnd),
 	.datab(!\inst13|reading_buffer[1]~2_combout ),
-	.datac(!\inst13|reading_buffer[7]~3_combout ),
+	.datac(!\inst13|ram_re~0_combout ),
 	.datad(gnd),
 	.datae(gnd),
 	.dataf(!\inst13|reading_buffer [1]),

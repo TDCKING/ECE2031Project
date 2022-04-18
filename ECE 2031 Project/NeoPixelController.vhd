@@ -390,7 +390,7 @@ begin
 			reading_buffer <= reading_buffer_all(15 downto 11) & reading_buffer_all(23 downto 18) & reading_buffer_all(7 downto 3);
 		end if;
 	
-		ram_re <= ((red_data AND NOT (io_write)) OR (green_data AND NOT (io_write)) OR (blue_data AND NOT (io_write)));
+		ram_re <= ((red_data AND NOT (io_write)) OR (green_data AND NOT (io_write)) OR (blue_data AND NOT (io_write)) OR (cs_data AND NOT (io_write)));
 	
 	end process;
 			
