@@ -2,21 +2,72 @@
 
 ORG 0
 
-LOADI 0
-OUT PXL_A
-LOAD RedStart
-OUT PXL_Red
-
-Loop1: IN PXL_Red
-	ADDI -8
-	STORE RedStore
 	LOADI 0
+	OUT PXL_A
+
+Cascade: 
+	IN PXL_D
+	STORE AllStore
+	LOADI 0
+	STORE CascadeA
+	LOADI 0
+	OUT PXL_A
+	IN Switches
+	AND SwitchMaskR
+	SHIFT -3
+	OUT PXL_Red
+	IN Switches
+	AND SwitchMaskG
+	OUT PXL_Green
+	IN Switches
+	AND SwitchMaskB
+	SHIFT 3
+	OUT PXL_Blue
+	
+	LOADI 0
+	OUT PXL_A
+	
+	IN PXL_D
+	SUB AllStore
+	JZERO Cascade
+	
+CascadeL: IN PXL_Red
+	STORE RedStore
+	IN PXL_Green
+	STORE GreenStore
+	IN PXL_Blue
+	STORE BlueStore
 	OUT PXL_Blue
 	LOAD RedStore
 	OUT PXL_Red
-	LOAD Counter
-	SUB End
-	JNEG Loop1
+	LOAD GreenStore
+	OUT PXL_Green
+	LOAD BlueStore
+	OUT PXL_Blue
+	
+	OUT Timer
+TimerL2: IN Timer
+	AND Bit0
+	JZERO TimerL2
+	
+	LOAD CascadeA
+	OUT PXL_A
+	ADDI 1
+	STORE CascadeA
+	LOAD CascadeA
+	SUB CascadeEnd
+	JNEG CascadeL
+	
+	JUMP Cascade
+	
+	
+	
+	
+	
+	
+	
+
+
 
 
 	
@@ -35,6 +86,10 @@ BlueStart: DW  &B0000000011111111
 RedStore:  DW  &B0000000000000000
 GreenStore: DW &B0000000000000000
 BlueStore: DW  &B0000000000000000
+AllStore:  DW  &B0000000000000000
+
+CascadeA:  DW  1
+CascadeEnd: DW 192
 
 Counter: DW 0
 End:      DW 33
@@ -49,6 +104,10 @@ Bit6:      DW  &B0000000001000000
 Bit7:      DW  &B0000000010000000
 Bit8:      DW  &B0000000100000000
 Bit9:      DW  &B0000001000000000
+
+SwitchMaskR: DW &B0000000111000000
+SwitchMaskG: DW &B0000000000111000
+SwitchMaskB: DW &B0000000000000111
 	
 ; IO address constants
 Switches:  EQU 000
