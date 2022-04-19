@@ -171,7 +171,7 @@ begin
 				elsif (refresh_mode = 1) then
 					if (data_in = "0000000000000000") then
 						refresh_mode := 0;
-					elsif (data_in = "0000000000000001") then
+					elsif (data_in = "0000000000000010") then
 						refresh_mode := 2;
 					end if;
 				end if;
@@ -338,6 +338,7 @@ begin
 				elsif (io_write = '1') and (ca_data='1') then
 					ram_write_buffer <= data_in(10 downto 5) & "00" & data_in(15 downto 11) & "000" & data_in(4 downto 0) & "000";
 					ram_we <= '1';
+					increment_en := 1;
 					wstate <= change_all;
 				elsif (io_write = '1') and (red_data = '1') then
 					ram_write_buffer <= reading_buffer_all(23 downto 16) & data_in(7 downto 0) & reading_buffer_all(7 downto 0);
