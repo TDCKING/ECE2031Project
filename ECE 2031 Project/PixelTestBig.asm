@@ -2,12 +2,12 @@
 
 ORG 0
 
-Red: LOADI 0
+Red: LOAD Red16Bit
 	OUT PXL_CA
 	
 	OUT Timer
 T1: IN Timer
-	AND Bit1
+	AND Bit0
 	JZERO T1
 
 	LOADI 0
@@ -26,34 +26,22 @@ Red1: LOAD Red24Bit
 	LOADI 0
 	STORE HalfCounter
 	
-Red2: LOAD Red16Bit
-	OUT PXL_D
-	
-	LOAD HalfCounter
-	ADDI 1
-	STORE HalfCounter
-	SUB Half
-	JNEG Red2
-	
-	LOADI 0
-	STORE HalfCounter
-	
 P1:	IN Switches
-	AND Bit1
+	AND Bit0
 	JPOS Blue
 	
 	IN Switches
-	AND Bit2
+	AND Bit1
 	JPOS Green
 	
 	JUMP P1
 	
-Blue: LOADI 0
+Blue: LOAD Blue16Bit
 	OUT PXL_CA
 	
 	OUT Timer
 T2: IN Timer
-	AND Bit1
+	AND Bit0
 	JZERO T2
 
 	LOADI 0
@@ -70,30 +58,18 @@ Blue1: LOAD Blue24Bit
 	LOADI 0
 	STORE HalfCounter
 	
-Blue2: LOAD Blue16Bit
-	OUT PXL_D
-	
-	LOAD HalfCounter
-	ADDI 1
-	STORE HalfCounter
-	SUB Half
-	JNEG Blue2
-	
-	LOADI 0
-	STORE HalfCounter
-	
 P2:	IN Switches
-	AND Bit1
+	AND Bit0
 	JZERO Red
 	
 	JUMP P2
 	
-Green: LOADI 0
+Green: LOAD Green16Bit
 	OUT PXL_CA
 	
 	OUT Timer
 T3: IN Timer
-	AND Bit1
+	AND Bit0
 	JZERO T3
 
 	LOADI 0
@@ -112,20 +88,8 @@ Green1: LOAD Green24Bit
 	LOADI 0
 	STORE HalfCounter
 	
-Green2: LOAD Green16Bit
-	OUT PXL_D
-	
-	LOAD HalfCounter
-	ADDI 1
-	STORE HalfCounter
-	SUB Half
-	JNEG Green2
-	
-	LOADI 0
-	STORE HalfCounter
-	
 P3:	IN Switches
-	AND Bit2
+	AND Bit1
 	JZERO Red
 	
 	JUMP P3	
@@ -139,10 +103,18 @@ Green16Bit: DW &B0000000000100000
 Blue24Bit: DW  &B0000000000000001
 Blue16Bit: DW  &B0000000000000001
 HalfCounter: DW 0
-Half:      DW 4
+Half:      DW 96
 
-Bit1:  	   DW  &B0000000000000001
-Bit2:      DW  &B0000000000000010
+Bit0:  	   DW  &B0000000000000001
+Bit1:      DW  &B0000000000000010
+Bit2:      DW  &B0000000000000100
+Bit3:      DW  &B0000000000001000
+Bit4:      DW  &B0000000000010000
+Bit5:      DW  &B0000000000100000
+Bit6:      DW  &B0000000001000000
+Bit7:      DW  &B0000000010000000
+Bit8:      DW  &B0000000100000000
+Bit9:      DW  &B0000001000000000
 	
 ; IO address constants
 Switches:  EQU 000
