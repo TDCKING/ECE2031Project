@@ -1,211 +1,149 @@
 ; Simple test for the NeoPixel peripheral
 
 ORG 0
-	LOADI 1
-	OUT PXL_A
-	LOAD RedTest
-	OUT PXL_Red
-	
-	LOADI 1
-	OUT PXL_A
-	
-	IN PXL_Red
-	STORE ReadDataR
-	
-	LOADI 2
-	OUT PXL_A
-	LOAD ReadDataR
-	OUT PXL_Red
-	
-	LOADI 3
-	OUT PXL_A
-	LOAD GreenTest
-	OUT PXL_Green
-	
-	LOADI 3
-	OUT PXL_A
-	
-	IN PXL_Green
-	STORE ReadDataG
-	
-	LOADI 4
-	OUT PXL_A
-	LOAD ReadDataG
-	OUT PXL_Green
-	
-	LOADI 5
-	OUT PXL_A
-	LOAD BlueTest
-	OUT PXL_Blue
-	
-	LOADI 5
-	OUT PXL_A
-	
-	IN PXL_Blue
-	STORE ReadDataB
-	
-	LOADI 6
-	OUT PXL_A
-	LOAD ReadDataB
-	OUT PXL_Blue
-	
-	LOADI 7
-	OUT PXL_A
-	LOAD BlueTest
-	OUT PXL_D
-	
-	LOADI 7
-	OUT PXL_A
-	
-	IN PXL_D
-	STORE ReadData
-	
-	LOADI 0
-	OUT PXL_A
-	LOAD ReadData
-	OUT PXL_D
-	
-	
-	
-	
+
+Red: LOADI 0
+	OUT PXL_CA
 	
 	OUT Timer
-Loop: IN Timer
-	AND TimerMask
-	JZERO Loop
-	
-	;LOAD ReadData
-	;OUT PXL_CA
+T1: IN Timer
+	AND Bit1
+	JZERO T1
+
 	LOADI 0
 	OUT PXL_A
+Red1: LOAD Red24Bit
+	OUT PXL_Red
+	LOADI 0
+	OUT PXL_Blue
+	
+	LOAD HalfCounter
+	ADDI 1
+	STORE HalfCounter
+	SUB Half
+	JNEG Red1
+	
+	LOADI 0
+	STORE HalfCounter
+	
+Red2: LOAD Red16Bit
+	OUT PXL_D
+	
+	LOAD HalfCounter
+	ADDI 1
+	STORE HalfCounter
+	SUB Half
+	JNEG Red2
+	
+	LOADI 0
+	STORE HalfCounter
 	
 P1:	IN Switches
-	AND SwitchMask
-	JZERO P1
+	AND Bit1
+	JPOS Blue
 	
-	LOADI 1
-	OUT PXL_R
+	IN Switches
+	AND Bit2
+	JPOS Green
 	
+	JUMP P1
+	
+Blue: LOADI 0
+	OUT PXL_CA
 	
 	OUT Timer
-Loop1: 
-	LOAD RedTest
-	OUT PXL_Red
-	LOAD GreenTest
-	OUT PXL_Green
-	LOAD BlueTest
+T2: IN Timer
+	AND Bit1
+	JZERO T2
+
+	LOADI 0
+	OUT PXL_A
+Blue1: LOAD Blue24Bit
 	OUT PXL_Blue
-	IN Timer
-	AND TimerMask
-	JZERO Loop1
 	
-	LOADI 1
-	OUT PXL_R
+	LOAD HalfCounter
+	ADDI 1
+	STORE HalfCounter
+	SUB Half
+	JNEG Blue1
+	
+	LOADI 0
+	STORE HalfCounter
+	
+Blue2: LOAD Blue16Bit
+	OUT PXL_D
+	
+	LOAD HalfCounter
+	ADDI 1
+	STORE HalfCounter
+	SUB Half
+	JNEG Blue2
+	
+	LOADI 0
+	STORE HalfCounter
 	
 P2:	IN Switches
-	AND SwitchMask
-	JPOS P2
+	AND Bit1
+	JZERO Red
 	
-	OUT Timer
-Loop3: IN Timer
-	AND TimerMask
-	JZERO Loop3
+	JUMP P2
 	
-	LOAD AllTest2
+Green: LOADI 0
 	OUT PXL_CA
 	
-	LOADI 1
-	OUT PXL_R
-	
 	OUT Timer
-Loop2: IN Timer
-	AND TimerMask
-	JZERO Loop2
-	
-	LOADI 0
-	OUT PXL_R
-	
-	LOADI 1
-	OUT PXL_S
-	
+T3: IN Timer
+	AND Bit1
+	JZERO T3
+
 	LOADI 0
 	OUT PXL_A
-	LOAD AllTest
-	OUT PXL_D
-	
-	LOAD AllTest
-	OUT PXL_CA
-	
-	LOADI 1
-	OUT PXL_L
-	
-	OUT Timer
-Loop4: IN Timer
-	AND TimerMask
-	JZERO Loop4
-	
-;P3: IN Switches
-;	AND SwitchMask
-;	JZERO P3
-	
-	LOADI 0
-	OUT PXL_A
-	LOAD AllTest3
-	OUT PXL_D
-	
-	LOADI 0
-	OUT PXL_A
-	
-	IN PXL_Red
-	STORE ReadDataR
-	IN PXL_Blue
-	STORE ReadDataB
-	IN PXL_Green
-	STORE ReadDataG
-	
-	LOADI 1
-	OUT PXL_A
-	
-	LOAD ReadDataR
-	OUT PXL_Red
-	
-	LOAD ReadDataG
+Green1: LOAD Green24Bit
 	OUT PXL_Green
-	
-	LOAD ReadDataB
+	LOADI 0
 	OUT PXL_Blue
 	
-P4: IN Switches
-	AND SwitchMask
-	JZERO P4
+	LOAD HalfCounter
+	ADDI 1
+	STORE HalfCounter
+	SUB Half
+	JNEG Green1
 	
-	LOADI 2
-	OUT PXL_L
+	LOADI 0
+	STORE HalfCounter
+	
+Green2: LOAD Green16Bit
+	OUT PXL_D
+	
+	LOAD HalfCounter
+	ADDI 1
+	STORE HalfCounter
+	SUB Half
+	JNEG Green2
+	
+	LOADI 0
+	STORE HalfCounter
+	
+P3:	IN Switches
+	AND Bit2
+	JZERO Red
+	
+	JUMP P3	
 	
 	
-Dead: Jump Dead
-	  
 	
+Red24Bit:  DW  &B0000000000000001
+Red16Bit:  DW  &B0000100000000000
+Green24Bit: DW &B0000000000000001
+Green16Bit: DW &B0000000000100000
+Blue24Bit: DW  &B0000000000000001
+Blue16Bit: DW  &B0000000000000001
+HalfCounter: DW 0
+Half:      DW 4
+
+Bit1:  	   DW  &B0000000000000001
+Bit2:      DW  &B0000000000000010
 	
-	
-
-GreenTest: DW &B0000000010000000
-RedTest:   DW &B0000000010000000
-BlueTest:  DW &B0000000010000000
-
-AllTest:   DW &B0000011111111111
-AllTest2:  DW &B1111111111100000
-AllTest3:  DW &B0000011111100000
-
-TimerMask: DW &B0000000000010000
-SwitchMask: DW &B0000000000000001
-
-ReadDataR:  DW &B0000000000000000
-ReadDataG: DW &B0000000000000000
-ReadDataB: DW &B0000000000000000
-
-ReadData:  DW &B0000000000000000
-
 ; IO address constants
 Switches:  EQU 000
 LEDs:      EQU 001
