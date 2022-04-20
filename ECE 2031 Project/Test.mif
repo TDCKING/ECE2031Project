@@ -1,0 +1,92 @@
+-- Altera Memory Initialization File (MIF)
+
+DEPTH = 2048;
+WIDTH = 16;
+
+ADDRESS_RADIX = HEX;
+DATA_RADIX = HEX;
+
+CONTENT
+  BEGIN
+    [000..7FF] : 0000;  -- Default to NOP
+
+           000 : B800;  -- 	LOADI 0
+           001 : 98B0;  -- 	OUT PXL_A
+           002 : 90B1;  -- 	IN PXL_D
+           003 : 103D;  -- 	STORE AllStore
+           004 : B800;  -- 	LOADI 0
+           005 : 103E;  -- 	STORE CascadeA
+           006 : B800;  -- 	LOADI 0
+           007 : 98B0;  -- 	OUT PXL_A
+           008 : 9000;  -- 	IN Switches
+           009 : 484C;  -- 	AND SwitchMaskR
+           00A : 6013;  -- 	SHIFT -3
+           00B : 98B6;  -- 	OUT PXL_Red
+           00C : 9000;  -- 	IN Switches
+           00D : 484D;  -- 	AND SwitchMaskG
+           00E : 98B7;  -- 	OUT PXL_Green
+           00F : 9000;  -- 	IN Switches
+           010 : 484E;  -- 	AND SwitchMaskB
+           011 : 6003;  -- 	SHIFT 3
+           012 : 98B8;  -- 	OUT PXL_Blue
+           013 : B800;  -- 	LOADI 0
+           014 : 98B0;  -- 	OUT PXL_A
+           015 : 90B1;  -- 	IN PXL_D
+           016 : 203D;  -- 	SUB AllStore
+           017 : 4002;  -- 	JZERO Cascade
+           018 : 90B6;  -- CascadeL: IN PXL_Red
+           019 : 103A;  -- 	STORE RedStore
+           01A : 90B7;  -- 	IN PXL_Green
+           01B : 103B;  -- 	STORE GreenStore
+           01C : 90B8;  -- 	IN PXL_Blue
+           01D : 103C;  -- 	STORE BlueStore
+           01E : 98B8;  -- 	OUT PXL_Blue
+           01F : 083A;  -- 	LOAD RedStore
+           020 : 98B6;  -- 	OUT PXL_Red
+           021 : 083B;  -- 	LOAD GreenStore
+           022 : 98B7;  -- 	OUT PXL_Green
+           023 : 083C;  -- 	LOAD BlueStore
+           024 : 98B8;  -- 	OUT PXL_Blue
+           025 : 9802;  -- 	OUT Timer
+           026 : 9002;  -- TimerL2: IN Timer
+           027 : 4842;  -- 	AND Bit0
+           028 : 4026;  -- 	JZERO TimerL2
+           029 : 083E;  -- 	LOAD CascadeA
+           02A : 98B0;  -- 	OUT PXL_A
+           02B : 6801;  -- 	ADDI 1
+           02C : 103E;  -- 	STORE CascadeA
+           02D : 083E;  -- 	LOAD CascadeA
+           02E : 203F;  -- 	SUB CascadeEnd
+           02F : 3018;  -- 	JNEG CascadeL
+           030 : 2802;  -- 	JUMP Cascade
+           031 : 0001;  -- Red24Bit:  DW  &B0000000000000001
+           032 : 0800;  -- Red16Bit:  DW  &B0000100000000000
+           033 : 0001;  -- Green24Bit: DW &B0000000000000001
+           034 : 0020;  -- Green16Bit: DW &B0000000000100000
+           035 : 0001;  -- Blue24Bit: DW  &B0000000000000001
+           036 : 0001;  -- Blue16Bit: DW  &B0000000000000001
+           037 : 00FF;  -- RedStart:  DW  &B0000000011111111
+           038 : 00FF;  -- GreenStart: DW &B0000000011111111
+           039 : 00FF;  -- BlueStart: DW  &B0000000011111111
+           03A : 0000;  -- RedStore:  DW  &B0000000000000000
+           03B : 0000;  -- GreenStore: DW &B0000000000000000
+           03C : 0000;  -- BlueStore: DW  &B0000000000000000
+           03D : 0000;  -- AllStore:  DW  &B0000000000000000
+           03E : 0001;  -- CascadeA:  DW  1
+           03F : 00C0;  -- CascadeEnd: DW 192
+           040 : 0000;  -- Counter: DW 0
+           041 : 0021;  -- End:      DW 33
+           042 : 0001;  -- Bit0:  	   DW  &B0000000000000001
+           043 : 0002;  -- Bit1:      DW  &B0000000000000010
+           044 : 0004;  -- Bit2:      DW  &B0000000000000100
+           045 : 0008;  -- Bit3:      DW  &B0000000000001000
+           046 : 0010;  -- Bit4:      DW  &B0000000000010000
+           047 : 0020;  -- Bit5:      DW  &B0000000000100000
+           048 : 0040;  -- Bit6:      DW  &B0000000001000000
+           049 : 0080;  -- Bit7:      DW  &B0000000010000000
+           04A : 0100;  -- Bit8:      DW  &B0000000100000000
+           04B : 0200;  -- Bit9:      DW  &B0000001000000000
+           04C : 01C0;  -- SwitchMaskR: DW &B0000000111000000
+           04D : 0038;  -- SwitchMaskG: DW &B0000000000111000
+           04E : 0007;  -- SwitchMaskB: DW &B0000000000000111
+  END;

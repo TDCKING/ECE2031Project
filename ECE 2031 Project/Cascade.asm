@@ -1,0 +1,124 @@
+; Simple test for the NeoPixel peripheral
+
+ORG 0
+
+	LOADI 0
+	OUT PXL_A
+
+Cascade: 
+	IN PXL_D
+	STORE AllStore
+	LOADI 0
+	STORE CascadeA
+	LOADI 0
+	OUT PXL_A
+	IN Switches
+	AND SwitchMaskR
+	SHIFT -3
+	OUT PXL_Red
+	IN Switches
+	AND SwitchMaskG
+	OUT PXL_Green
+	IN Switches
+	AND SwitchMaskB
+	SHIFT 3
+	OUT PXL_Blue
+	
+	LOADI 0
+	OUT PXL_A
+	
+	IN PXL_D
+	SUB AllStore
+	JZERO Cascade
+	
+CascadeL: IN PXL_Red
+	STORE RedStore
+	IN PXL_Green
+	STORE GreenStore
+	IN PXL_Blue
+	STORE BlueStore
+	OUT PXL_Blue
+	LOAD RedStore
+	OUT PXL_Red
+	LOAD GreenStore
+	OUT PXL_Green
+	LOAD BlueStore
+	OUT PXL_Blue
+	
+	OUT Timer
+TimerL2: IN Timer
+	AND Bit0
+	JZERO TimerL2
+	
+	LOAD CascadeA
+	OUT PXL_A
+	ADDI 1
+	STORE CascadeA
+	LOAD CascadeA
+	SUB CascadeEnd
+	JNEG CascadeL
+	
+	JUMP Cascade
+	
+	
+	
+	
+	
+	
+	
+
+
+
+
+	
+	
+	
+; Red24Bit:  DW  &B0000000000000001
+; Red16Bit:  DW  &B0000100000000000
+; Green24Bit: DW &B0000000000000001
+; Green16Bit: DW &B0000000000100000
+; Blue24Bit: DW  &B0000000000000001
+; Blue16Bit: DW  &B0000000000000001
+; RedStart:  DW  &B0000000011111111
+; GreenStart: DW &B0000000011111111
+; BlueStart: DW  &B0000000011111111
+
+RedStore:  DW  &B0000000000000000
+GreenStore: DW &B0000000000000000
+BlueStore: DW  &B0000000000000000
+AllStore:  DW  &B0000000000000000
+
+CascadeA:  DW  1
+CascadeEnd: DW 192
+
+
+Bit0:  	   DW  &B0000000000000001
+Bit1:      DW  &B0000000000000010
+Bit2:      DW  &B0000000000000100
+Bit3:      DW  &B0000000000001000
+Bit4:      DW  &B0000000000010000
+Bit5:      DW  &B0000000000100000
+Bit6:      DW  &B0000000001000000
+Bit7:      DW  &B0000000010000000
+Bit8:      DW  &B0000000100000000
+Bit9:      DW  &B0000001000000000
+
+SwitchMaskR: DW &B0000000111000000
+SwitchMaskG: DW &B0000000000111000
+SwitchMaskB: DW &B0000000000000111
+	
+; IO address constants
+Switches:  EQU 000
+LEDs:      EQU 001
+Timer:     EQU 002
+Hex0:      EQU 004
+Hex1:      EQU 005
+PXL_A:     EQU &H0B0
+PXL_D:     EQU &H0B1
+PXL_CA:	   EQU &H0B2
+PXL_R:	   EQU &H0B3
+PXL_S:	   EQU &H0B4
+PXL_L:	   EQU &H0B5
+PXL_Red:   EQU &H0B6
+PXL_Green: EQU &H0B7
+PXL_Blue:  EQU &H0B8

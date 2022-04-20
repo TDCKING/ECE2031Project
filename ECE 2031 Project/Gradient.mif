@@ -1,0 +1,100 @@
+-- Altera Memory Initialization File (MIF)
+
+DEPTH = 2048;
+WIDTH = 16;
+
+ADDRESS_RADIX = HEX;
+DATA_RADIX = HEX;
+
+CONTENT
+  BEGIN
+    [000..7FF] : 0000;  -- Default to NOP
+
+           000 : B800;  -- 	LOADI 0
+           001 : 98B0;  -- 	OUT PXL_A
+           002 : 0856;  -- 		Load RowCount
+           003 : 4038;  -- 		JZERO End
+           004 : 6FFF;  -- 		ADDI -1
+           005 : 1056;  -- 		STORE RowCount
+           006 : 084F;  -- 		Load RedInitial
+           007 : 1042;  -- 		Store RedStore
+           008 : 0850;  -- 		Load GreenInitial
+           009 : 1043;  -- 		Store GreenStore
+           00A : 0851;  -- 		Load BlueInitial
+           00B : 1044;  -- 		Store BlueStore
+           00C : B820;  -- 		LoadI 32
+           00D : 1055;  -- 		Store GradientCount
+           00E : 0855;  -- 			Load GradientCount
+           00F : 401F;  -- 			JZERO GradientRowReverse
+           010 : 6FFF;  -- 			ADDI -1
+           011 : 1055;  -- 			STORE GRADIENTCOUNT
+           012 : 0842;  -- 			LOAD RedStore
+           013 : 98B6;  -- 			OUT PXL_Red
+           014 : 6FFA;  -- 			ADDI -6
+           015 : 1042;  -- 			STORE RedStore
+           016 : 0843;  -- 			LOAD GreenStore
+           017 : 98B7;  -- 			OUT PXL_Green
+           018 : 6806;  -- 			ADDI 6
+           019 : 1043;  -- 			STORE GreenStore
+           01A : 0844;  -- 			LOAD BlueStore
+           01B : 98B8;  -- 			OUT PXL_blue
+           01C : 6804;  -- 			ADDI 4
+           01D : 1044;  -- 			STORE BlueStore
+           01E : 280E;  -- 		Jump GradientRow
+           01F : 0852;  -- 			Load RedFinal
+           020 : 1042;  -- 			Store RedStore
+           021 : 0853;  -- 			Load GreenFinal
+           022 : 1043;  -- 			Store GreenStore
+           023 : 0854;  -- 			Load BlueFinal
+           024 : 1044;  -- 			Store BlueStore
+           025 : B820;  -- 			LoadI 32
+           026 : 1055;  -- 			Store GradientCount
+           027 : 0855;  -- 				Load GradientCount
+           028 : 4002;  -- 				JZERO EachRow
+           029 : 6FFF;  -- 				ADDI -1
+           02A : 1055;  -- 				STORE GRADIENTCOUNT
+           02B : 0842;  -- 				LOAD RedStore
+           02C : 98B6;  -- 				OUT PXL_Red
+           02D : 6806;  -- 				ADDI 6
+           02E : 1042;  -- 				STORE RedStore
+           02F : 0843;  -- 				LOAD GreenStore
+           030 : 98B7;  -- 				OUT PXL_Green
+           031 : 6FFA;  -- 				ADDI -6
+           032 : 1043;  -- 				STORE GreenStore
+           033 : 0844;  -- 				LOAD BlueStore
+           034 : 98B8;  -- 				OUT PXL_blue
+           035 : 6FFC;  -- 				ADDI -4
+           036 : 1044;  -- 				STORE BlueStore
+           037 : 2827;  -- 			Jump GRRLoop
+           038 : 2838;  -- END: JUMP END	
+           039 : 0001;  -- Red24Bit:  DW  &B0000000000000001
+           03A : 0800;  -- Red16Bit:  DW  &B0000100000000000
+           03B : 0001;  -- Green24Bit: DW &B0000000000000001
+           03C : 0020;  -- Green16Bit: DW &B0000000000100000
+           03D : 0001;  -- Blue24Bit: DW  &B0000000000000001
+           03E : 0001;  -- Blue16Bit: DW  &B0000000000000001
+           03F : 00FF;  -- RedStart:  DW  &B0000000011111111
+           040 : 00FF;  -- GreenStart: DW &B0000000011111111
+           041 : 00FF;  -- BlueStart: DW  &B0000000011111111
+           042 : 0000;  -- RedStore:  DW  &B0000000000000000
+           043 : 0000;  -- GreenStore: DW &B0000000000000000
+           044 : 0000;  -- BlueStore: DW  &B0000000000000000
+           045 : 0001;  -- Bit0:  	   DW  &B0000000000000001
+           046 : 0002;  -- Bit1:      DW  &B0000000000000010
+           047 : 0004;  -- Bit2:      DW  &B0000000000000100
+           048 : 0008;  -- Bit3:      DW  &B0000000000001000
+           049 : 0010;  -- Bit4:      DW  &B0000000000010000
+           04A : 0020;  -- Bit5:      DW  &B0000000000100000
+           04B : 0040;  -- Bit6:      DW  &B0000000001000000
+           04C : 0080;  -- Bit7:      DW  &B0000000010000000
+           04D : 0100;  -- Bit8:      DW  &B0000000100000000
+           04E : 0200;  -- Bit9:      DW  &B0000001000000000
+           04F : 00FF;  -- RedInitial: DW 255
+           050 : 0033;  -- GreenInitial: DW 51
+           051 : 0099;  -- BlueInitial: DW 153
+           052 : 0045;  -- RedFinal: DW 69
+           053 : 00ED;  -- GreenFinal: DW 237
+           054 : 0115;  -- BlueFinal: DW 277
+           055 : 0020;  -- GradientCount: DW 32
+           056 : 0003;  -- RowCOunt: DW 3
+  END;

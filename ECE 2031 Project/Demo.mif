@@ -1,0 +1,490 @@
+-- Altera Memory Initialization File (MIF)
+
+DEPTH = 2048;
+WIDTH = 16;
+
+ADDRESS_RADIX = HEX;
+DATA_RADIX = HEX;
+
+CONTENT
+  BEGIN
+    [000..7FF] : 0000;  -- Default to NOP
+
+           000 : 81B3;  -- CALL PRELOADBUSSES
+           001 : B800;  -- 	LOADI 0
+           002 : 98B4;  -- 	OUT PXL_S
+           003 : 98B5;  -- 	OUT PXL_L
+           004 : B800;  -- 	LOADI 0
+           005 : 9801;  -- 	OUT LEDs
+           006 : 097D;  -- 	LOAD PINK
+           007 : 98B2;  -- 	OUT PXL_CA
+           008 : 9000;  -- 	IN Switches
+           009 : 497F;  -- 	AND SwitchZero
+           00A : 3824;  -- 	JPOS StateZero
+           00B : 9000;  -- 	IN Switches
+           00C : 4980;  -- 	AND SwitchOne
+           00D : 3861;  -- 	JPOS StateOne
+           00E : 9000;  -- 	IN Switches
+           00F : 4981;  -- 	AND SwitchTwo
+           010 : 3869;  -- 	JPOS StateTwo
+           011 : 9000;  -- 	IN Switches
+           012 : 4982;  -- 	AND SwitchThree
+           013 : 38BA;  -- 	JPOS StateThree
+           014 : 9000;  -- 	IN Switches
+           015 : 4983;  -- 	AND SwitchFour
+           016 : 38D1;  -- 	JPOS StateFour
+           017 : 9000;  -- 	IN Switches
+           018 : 4984;  -- 	AND SwitchFive
+           019 : 3910;  -- 	JPOS StateFive
+           01A : 9000;  -- 	IN Switches
+           01B : 4985;  -- 	AND SwitchSix
+           01C : 3959;  -- 	JPOS StateSix
+           01D : 9000;  -- 	IN Switches
+           01E : 4986;  -- 	AND SwitchSeven
+           01F : 395F;  -- 	JPOS StateSeven
+           020 : 9000;  -- 	IN Switches
+           021 : 4987;  -- 	AND SwitchEight
+           022 : 3965;  -- 	JPOS StateEight
+           023 : 2801;  -- 	JUMP InitState
+           024 : B801;  -- 	LOADI 1
+           025 : 9801;  -- 	OUT LEDs
+           026 : 9000;  -- 		IN Switches
+           027 : 4988;  -- 		AND SwitchNine
+           028 : 3801;  -- 		JPOS InitState
+           029 : 9000;  -- 			IN Switches
+           02A : 4987;  -- 			AND SwitchEight
+           02B : 6018;  -- 			SHIFT -8
+           02C : 98B3;  -- 			OUT PXL_R
+           02D : 9801;  -- 			OUT LEDs
+           02E : B800;  -- 			LOADI 0
+           02F : 98B0;  -- 			OUT PXL_A
+           030 : 097C;  -- 			LOAD WHITE
+           031 : 1189;  -- 			STORE COLOR
+           032 : 9000;  -- 			IN Switches
+           033 : 497F;  -- 			AND SwitchZero
+           034 : 4037;  -- 			JZERO FIRSTROW
+           035 : 097B;  -- 			LOAD PURPLE
+           036 : 1189;  -- 			STORE COLOR
+           037 : 816C;  -- 				CALL ROWWRITER
+           038 : 097C;  -- 			LOAD WHITE
+           039 : 1189;  -- 			STORE COLOR
+           03A : 9000;  -- 			IN Switches
+           03B : 4980;  -- 			AND SWITCHONE
+           03C : 403F;  -- 			JZERO SECONDROW
+           03D : 097A;  -- 			LOAD BLUE
+           03E : 1189;  -- 			STORE COLOR	
+           03F : 816C;  -- 				CALL ROWWRITER
+           040 : 097C;  -- 			LOAD WHITE
+           041 : 1189;  -- 			STORE COLOR
+           042 : 9000;  -- 			IN Switches
+           043 : 4981;  -- 			AND SWITCHTWO
+           044 : 4047;  -- 			JZERO THIRDROW
+           045 : 0979;  -- 			LOAD GREEN
+           046 : 1189;  -- 			STORE COLOR	
+           047 : 816C;  -- 				CALL ROWWRITER
+           048 : 097C;  -- 			LOAD WHITE
+           049 : 1189;  -- 			STORE COLOR
+           04A : 9000;  -- 			IN Switches
+           04B : 4982;  -- 			AND SWITCHTHREE
+           04C : 404F;  -- 			JZERO FOURTHROW
+           04D : 0978;  -- 			LOAD YELLOW
+           04E : 1189;  -- 			STORE COLOR	
+           04F : 816C;  -- 				CALL ROWWRITER
+           050 : 097C;  -- 			LOAD WHITE
+           051 : 1189;  -- 			STORE COLOR
+           052 : 9000;  -- 			IN Switches
+           053 : 4983;  -- 			AND SWITCHFOUR
+           054 : 4057;  -- 			JZERO FIFTHROW
+           055 : 0977;  -- 			LOAD ORANGE
+           056 : 1189;  -- 			STORE COLOR	
+           057 : 816C;  -- 				CALL ROWWRITER
+           058 : 097C;  -- 			LOAD WHITE
+           059 : 1189;  -- 			STORE COLOR
+           05A : 9000;  -- 			IN Switches
+           05B : 4984;  -- 			AND SWITCHFIVE
+           05C : 405F;  -- 			JZERO SIXTHROW
+           05D : 0976;  -- 			LOAD RED
+           05E : 1189;  -- 			STORE COLOR	
+           05F : 816C;  -- 				CALL ROWWRITER	
+           060 : 2826;  -- 	JUMP SateZeroLoop
+           061 : B802;  -- 	LOADI 2
+           062 : 9801;  -- 	OUT LEDs
+           063 : 9000;  -- 	IN Switches
+           064 : 4988;  -- 	AND SwitchNine
+           065 : 3801;  -- 	JPOS InitState
+           066 : 097E;  -- 		LOAD TEAL
+           067 : 98B2;  -- 		OUT PXL_CA
+           068 : 2861;  -- 	JUMP StateOne
+           069 : B804;  -- 	LOADI 4
+           06A : 9801;  -- 	OUT LEDs
+           06B : 098E;  -- 			LOAD Red16Bit
+           06C : 98B2;  -- 			OUT PXL_CA
+           06D : 9802;  -- 			OUT Timer
+           06E : 9002;  -- 		T1: IN Timer
+           06F : 4995;  -- 			AND Bit0
+           070 : 406E;  -- 			JZERO T1
+           071 : B800;  -- 			LOADI 0
+           072 : 98B0;  -- 			OUT PXL_A
+           073 : 098D;  -- 		Red1: LOAD Red24Bit
+           074 : 98B6;  -- 			OUT PXL_Red
+           075 : B800;  -- 			LOADI 0
+           076 : 98B8;  -- 			OUT PXL_Blue
+           077 : 0993;  -- 			LOAD HalfCounter
+           078 : 6801;  -- 			ADDI 1
+           079 : 1193;  -- 			STORE HalfCounter
+           07A : 2194;  -- 			SUB Half
+           07B : 3073;  -- 			JNEG Red1
+           07C : B800;  -- 			LOADI 0
+           07D : 1193;  -- 			STORE HalfCounter
+           07E : 9000;  -- 		P1:	IN Switches
+           07F : 4995;  -- 			AND Bit0
+           080 : 3888;  -- 			JPOS BlueLoop
+           081 : 9000;  -- 			IN Switches
+           082 : 4996;  -- 			AND Bit1
+           083 : 38A0;  -- 			JPOS GreenLoop
+           084 : 9000;  -- 			IN Switches
+           085 : 4988;  -- 			AND SwitchNine
+           086 : 3801;  -- 			JPOS InitState
+           087 : 287E;  -- 			JUMP P1
+           088 : 0992;  -- 			LOAD Blue16Bit
+           089 : 98B2;  -- 			OUT PXL_CA
+           08A : 9802;  -- 			OUT Timer
+           08B : 9002;  -- 		T2: IN Timer
+           08C : 4995;  -- 			AND Bit0
+           08D : 408B;  -- 			JZERO T2
+           08E : B800;  -- 			LOADI 0
+           08F : 98B0;  -- 			OUT PXL_A
+           090 : 0991;  -- 		Blue1: LOAD Blue24Bit
+           091 : 98B8;  -- 			OUT PXL_Blue
+           092 : 0993;  -- 			LOAD HalfCounter
+           093 : 6801;  -- 			ADDI 1
+           094 : 1193;  -- 			STORE HalfCounter
+           095 : 2194;  -- 			SUB Half
+           096 : 3090;  -- 			JNEG Blue1
+           097 : B800;  -- 			LOADI 0
+           098 : 1193;  -- 			STORE HalfCounter
+           099 : 9000;  -- 		P2:	IN Switches
+           09A : 4995;  -- 			AND Bit0
+           09B : 406B;  -- 			JZERO RedLoop
+           09C : 9000;  -- 			IN Switches
+           09D : 4988;  -- 			AND SwitchNine
+           09E : 3801;  -- 			JPOS InitState
+           09F : 2899;  -- 			JUMP P2
+           0A0 : 0990;  -- 		GreenLoop: LOAD Green16Bit
+           0A1 : 98B2;  -- 			OUT PXL_CA
+           0A2 : 9802;  -- 			OUT Timer
+           0A3 : 9002;  -- 		T3: IN Timer
+           0A4 : 4995;  -- 			AND Bit0
+           0A5 : 40A3;  -- 			JZERO T3
+           0A6 : B800;  -- 			LOADI 0
+           0A7 : 98B0;  -- 			OUT PXL_A
+           0A8 : 098F;  -- 		Green1: LOAD Green24Bit
+           0A9 : 98B7;  -- 			OUT PXL_Green
+           0AA : B800;  -- 			LOADI 0
+           0AB : 98B8;  -- 			OUT PXL_Blue
+           0AC : 0993;  -- 			LOAD HalfCounter
+           0AD : 6801;  -- 			ADDI 1
+           0AE : 1193;  -- 			STORE HalfCounter
+           0AF : 2194;  -- 			SUB Half
+           0B0 : 30A8;  -- 			JNEG Green1
+           0B1 : B800;  -- 			LOADI 0
+           0B2 : 1193;  -- 			STORE HalfCounter
+           0B3 : 9000;  -- 		P3:	IN Switches
+           0B4 : 4996;  -- 			AND Bit1
+           0B5 : 406B;  -- 			JZERO RedLoop
+           0B6 : 9000;  -- 			IN Switches
+           0B7 : 4988;  -- 			AND SwitchNine
+           0B8 : 3801;  -- 			JPOS InitState
+           0B9 : 28B3;  -- 			JUMP P3	
+           0BA : B808;  -- 	LOADI 8
+           0BB : 9801;  -- 	OUT LEDs
+           0BC : 9000;  -- 		IN Switches
+           0BD : 4988;  -- 		AND SwitchNine
+           0BE : 3801;  -- 		JPOS InitState
+           0BF : B804;  -- 			LOADI 4
+           0C0 : 9801;  -- 			OUT LEDs
+           0C1 : 9000;  -- 			IN Switches
+           0C2 : 497F;  -- 			AND SwitchZero
+           0C3 : 38C8;  -- 			JPOS TWO
+           0C4 : 9000;  -- 			IN Switches
+           0C5 : 4980;  -- 			AND SwitchOne
+           0C6 : 38CC;  -- 			JPOS THREE
+           0C7 : 28BC;  -- 			JUMP STATETHREELOOP
+           0C8 : B802;  -- 			LOADI 2
+           0C9 : 98B5;  -- 			OUT PXL_L
+           0CA : 9801;  -- 			OUT LEDs
+           0CB : 28BC;  -- 			JUMP STATETHREELOOP
+           0CC : B803;  -- 			LOADI 3
+           0CD : 98B5;  -- 			OUT PXL_L
+           0CE : 9801;  -- 			OUT LEDs
+           0CF : 28BC;  -- 			JUMP STATETHREELOOP
+           0D0 : 28BC;  -- 	JUMP STATETHREELOOP
+           0D1 : B810;  -- 	LOADI 16
+           0D2 : 9801;  -- 	OUT LEDs
+           0D3 : B800;  -- 	LOADI 0
+           0D4 : 98B0;  -- 	OUT PXL_A
+           0D5 : 9000;  -- 			IN Switches
+           0D6 : 4988;  -- 			AND SwitchNine
+           0D7 : 3801;  -- 			JPOS InitState
+           0D8 : 90B1;  -- 			IN PXL_D
+           0D9 : 11A7;  -- 			STORE AllStore
+           0DA : B800;  -- 			LOADI 0
+           0DB : 119F;  -- 			STORE CascadeA
+           0DC : B800;  -- 			LOADI 0
+           0DD : 98B0;  -- 			OUT PXL_A
+           0DE : 9000;  -- 			IN Switches
+           0DF : 49A1;  -- 			AND SwitchMaskR
+           0E0 : 6013;  -- 			SHIFT -3
+           0E1 : 98B6;  -- 			OUT PXL_Red
+           0E2 : 9000;  -- 			IN Switches
+           0E3 : 49A2;  -- 			AND SwitchMaskG
+           0E4 : 98B7;  -- 			OUT PXL_Green
+           0E5 : 9000;  -- 			IN Switches
+           0E6 : 49A3;  -- 			AND SwitchMaskB
+           0E7 : 6003;  -- 			SHIFT 3
+           0E8 : 98B8;  -- 			OUT PXL_Blue
+           0E9 : B800;  -- 			LOADI 0
+           0EA : 98B0;  -- 			OUT PXL_A
+           0EB : 90B1;  -- 			IN PXL_D
+           0EC : 21A7;  -- 			SUB AllStore
+           0ED : 40D5;  -- 			JZERO Cascade
+           0EE : 9000;  -- 			IN Switches
+           0EF : 4988;  -- 			AND SwitchNine
+           0F0 : 3801;  -- 			JPOS InitState
+           0F1 : 90B6;  -- 		CascadeL: IN PXL_Red
+           0F2 : 11A4;  -- 			STORE RedStore
+           0F3 : 90B7;  -- 			IN PXL_Green
+           0F4 : 11A5;  -- 			STORE GreenStore
+           0F5 : 90B8;  -- 			IN PXL_Blue
+           0F6 : 11A6;  -- 			STORE BlueStore
+           0F7 : 98B8;  -- 			OUT PXL_Blue
+           0F8 : 09A4;  -- 			LOAD RedStore
+           0F9 : 98B6;  -- 			OUT PXL_Red
+           0FA : 09A5;  -- 			LOAD GreenStore
+           0FB : 98B7;  -- 			OUT PXL_Green
+           0FC : 09A6;  -- 			LOAD BlueStore
+           0FD : 98B8;  -- 			OUT PXL_Blue
+           0FE : 9802;  -- 			OUT Timer
+           0FF : 9002;  -- 		TimerL2: IN Timer
+           100 : 4995;  -- 			AND Bit0
+           101 : 40FF;  -- 			JZERO TimerL2
+           102 : 099F;  -- 			LOAD CascadeA
+           103 : 98B0;  -- 			OUT PXL_A
+           104 : 6801;  -- 			ADDI 1
+           105 : 119F;  -- 			STORE CascadeA
+           106 : 9000;  -- 			IN Switches
+           107 : 4988;  -- 			AND SwitchNine
+           108 : 3801;  -- 			JPOS InitState
+           109 : 099F;  -- 			LOAD CascadeA
+           10A : 21A0;  -- 			SUB CascadeEnd
+           10B : 30F1;  -- 			JNEG CascadeL
+           10C : 9000;  -- 			IN Switches
+           10D : 4988;  -- 			AND SwitchNine
+           10E : 3801;  -- 			JPOS InitState
+           10F : 28D5;  -- 			JUMP Cascade
+           110 : B820;  -- 	LOADI 32
+           111 : 9801;  -- 	OUT LEDs
+           112 : B800;  -- 	LOADI 0
+           113 : 98B0;  -- 	OUT PXL_A
+           114 : B803;  -- 	LOADI 3
+           115 : 11AF;  -- 	STORE RowCount
+           116 : 9000;  -- 				IN Switches
+           117 : 4988;  -- 				AND SwitchNine
+           118 : 3801;  -- 				JPOS InitState
+           119 : 09AF;  -- 				Load RowCount
+           11A : 4155;  -- 				JZERO End
+           11B : 6FFF;  -- 				ADDI -1
+           11C : 11AF;  -- 				STORE RowCount
+           11D : 09A8;  -- 				Load RedInitial
+           11E : 11B0;  -- 				Store RedStoreGrad
+           11F : 09A9;  -- 				Load GreenInitial
+           120 : 11B1;  -- 				Store GreenStoreGrad
+           121 : 09AA;  -- 				Load BlueInitial
+           122 : 11B2;  -- 				Store BlueStoreGrad
+           123 : B820;  -- 				LoadI 32
+           124 : 11AE;  -- 				Store GradientCount
+           125 : 9000;  -- 					IN Switches
+           126 : 4988;  -- 					AND SwitchNine
+           127 : 3801;  -- 					JPOS InitState
+           128 : 09AE;  -- 					Load GradientCount
+           129 : 4139;  -- 					JZERO GradientRowReverse
+           12A : 6FFF;  -- 					ADDI -1
+           12B : 11AE;  -- 					STORE GRADIENTCOUNT
+           12C : 09B0;  -- 					LOAD RedStoreGrad
+           12D : 98B6;  -- 					OUT PXL_Red
+           12E : 6FFA;  -- 					ADDI -6
+           12F : 11B0;  -- 					STORE RedStoreGrad
+           130 : 09B1;  -- 					LOAD GreenStoreGrad
+           131 : 98B7;  -- 					OUT PXL_Green
+           132 : 6806;  -- 					ADDI 6
+           133 : 11B1;  -- 					STORE GreenStoreGrad
+           134 : 09B2;  -- 					LOAD BlueStoreGrad
+           135 : 98B8;  -- 					OUT PXL_blue
+           136 : 6804;  -- 					ADDI 4
+           137 : 11B2;  -- 					STORE BlueStoreGrad
+           138 : 2925;  -- 				Jump GradientRow
+           139 : 9000;  -- 					IN Switches
+           13A : 4988;  -- 					AND SwitchNine
+           13B : 3801;  -- 					JPOS InitState
+           13C : 09AB;  -- 					Load RedFinal
+           13D : 11B0;  -- 					Store RedStoreGrad
+           13E : 09AC;  -- 					Load GreenFinal
+           13F : 11B1;  -- 					Store GreenStoreGrad
+           140 : 09AD;  -- 					Load BlueFinal
+           141 : 11B2;  -- 					Store BlueStoreGrad
+           142 : B820;  -- 					LoadI 32
+           143 : 11AE;  -- 					Store GradientCount
+           144 : 09AE;  -- 						Load GradientCount
+           145 : 4116;  -- 						JZERO EachRow
+           146 : 6FFF;  -- 						ADDI -1
+           147 : 11AE;  -- 						STORE GRADIENTCOUNT
+           148 : 09B0;  -- 						LOAD RedStoreGrad
+           149 : 98B6;  -- 						OUT PXL_Red
+           14A : 6806;  -- 						ADDI 6
+           14B : 11B0;  -- 						STORE RedStoreGrad
+           14C : 09B1;  -- 						LOAD GreenStoreGrad
+           14D : 98B7;  -- 						OUT PXL_Green
+           14E : 6FFA;  -- 						ADDI -6
+           14F : 11B1;  -- 						STORE GreenStoreGrad
+           150 : 09B2;  -- 						LOAD BlueStoreGrad
+           151 : 98B8;  -- 						OUT PXL_blue
+           152 : 6FFC;  -- 						ADDI -4
+           153 : 11B2;  -- 						STORE BlueStoreGrad
+           154 : 2944;  -- 					Jump GRRLoop
+           155 : 9000;  -- 					IN Switches
+           156 : 4988;  -- 					AND SwitchNine
+           157 : 3801;  -- 					JPOS InitState
+           158 : 2955;  -- 		JUMP END	
+           159 : B840;  -- 	LOADI 64
+           15A : 9801;  -- 	OUT LEDs
+           15B : 9000;  -- 	IN Switches
+           15C : 4988;  -- 	AND SwitchNine
+           15D : 3801;  -- 	JPOS InitState
+           15E : 2959;  -- 	JUMP StateSix
+           15F : B880;  -- 	LOADI 128
+           160 : 9801;  -- 	OUT LEDs
+           161 : 9000;  -- 	IN Switches
+           162 : 4988;  -- 	AND SwitchNine
+           163 : 3801;  -- 	JPOS InitState
+           164 : 295F;  -- 	JUMP StateSeven
+           165 : B900;  -- 	LOADI 256
+           166 : 9801;  -- 	OUT LEDs
+           167 : 9000;  -- 	IN Switches
+           168 : 4988;  -- 	AND SwitchNine
+           169 : 3801;  -- 	JPOS InitState
+           16A : 2965;  -- 	JUMP StateEight
+           16B : 296B;  --  Dead: JUMP Dead
+           16C : B820;  -- 	LOADI 32
+           16D : 118A;  -- 	STORE COUNTER
+           16E : 098A;  -- 		LOAD COUNTER
+           16F : 4175;  -- 		JZERO  ENDWRITE
+           170 : 6FFF;  -- 		ADDI -1
+           171 : 118A;  -- 		STORE COUNTER
+           172 : 0989;  -- 		LOAD COLOR
+           173 : 98B1;  -- 		OUT PXL_D
+           174 : 296E;  -- 		JUMP WRITELOOP
+           175 : 8800;  -- 		RETURN
+           176 : F800;  -- 	RED: DW &HF800  
+           177 : FB40;  -- 	ORANGE: DW &HFB40
+           178 : FFE5;  -- 	YELLOW: DW &HFFE5
+           179 : 17E0;  -- 	GREEN: DW &H17E0
+           17A : 297F;  -- 	BLUE: DW &H297F
+           17B : 981F;  -- 	PURPLE: DW &H981F
+           17C : FFFF;  -- 	WHITE: DW  &HFFFF
+           17D : F97C;  -- 	PINK: DW &HF97C
+           17E : 2F9F;  -- 	TEAL: DW &H2F9F
+           17F : 0001;  -- SwitchZero: DW  &B0000000000000001
+           180 : 0002;  -- SwitchOne: DW 	&B0000000000000010
+           181 : 0004;  -- SwitchTwo: DW 	&B0000000000000100
+           182 : 0008;  -- SwitchThree: DW &B0000000000001000
+           183 : 0010;  -- SwitchFour: DW 	&B0000000000010000
+           184 : 0020;  -- SwitchFive: DW 	&B0000000000100000
+           185 : 0040;  -- SwitchSix: DW 	&B0000000001000000
+           186 : 0080;  -- SwitchSeven: DW &B0000000010000000
+           187 : 0100;  -- SwitchEight: DW &B0000000100000000
+           188 : 0200;  -- SwitchNine: DW 	&B0000001000000000
+           189 : 0000;  -- COLOR: DW 0
+           18A : 0020;  -- COUNTER: DW 32
+           18B : 0020;  -- RainbowRoad: DW 32
+           18C : 0060;  -- TropicalBreeze: DW 96
+           18D : 0001;  -- Red24Bit:  DW  &B0000000000000001
+           18E : 0800;  -- Red16Bit:  DW  &B0000100000000000
+           18F : 0001;  -- Green24Bit: DW &B0000000000000001
+           190 : 0020;  -- Green16Bit: DW &B0000000000100000
+           191 : 0001;  -- Blue24Bit: DW  &B0000000000000001
+           192 : 0001;  -- Blue16Bit: DW  &B0000000000000001
+           193 : 0000;  -- HalfCounter: DW 0
+           194 : 0060;  -- Half:      DW 96
+           195 : 0001;  -- Bit0:  	   DW  &B0000000000000001
+           196 : 0002;  -- Bit1:      DW  &B0000000000000010
+           197 : 0004;  -- Bit2:      DW  &B0000000000000100
+           198 : 0008;  -- Bit3:      DW  &B0000000000001000
+           199 : 0010;  -- Bit4:      DW  &B0000000000010000
+           19A : 0020;  -- Bit5:      DW  &B0000000000100000
+           19B : 0040;  -- Bit6:      DW  &B0000000001000000
+           19C : 0080;  -- Bit7:      DW  &B0000000010000000
+           19D : 0100;  -- Bit8:      DW  &B0000000100000000
+           19E : 0200;  -- Bit9:      DW  &B0000001000000000
+           19F : 0001;  -- CascadeA:  DW  1
+           1A0 : 00C0;  -- CascadeEnd: DW 192
+           1A1 : 01C0;  -- SwitchMaskR: DW &B0000000111000000
+           1A2 : 0038;  -- SwitchMaskG: DW &B0000000000111000
+           1A3 : 0007;  -- SwitchMaskB: DW &B0000000000000111
+           1A4 : 0000;  -- RedStore:  DW  &B0000000000000000
+           1A5 : 0000;  -- GreenStore: DW &B0000000000000000
+           1A6 : 0000;  -- BlueStore: DW  &B0000000000000000
+           1A7 : 0000;  -- AllStore:  DW  &B0000000000000000
+           1A8 : 00FF;  -- RedInitial: DW 255
+           1A9 : 0033;  -- GreenInitial: DW 51
+           1AA : 0099;  -- BlueInitial: DW 153
+           1AB : 0045;  -- RedFinal: DW 69
+           1AC : 00ED;  -- GreenFinal: DW 237
+           1AD : 0115;  -- BlueFinal: DW 277
+           1AE : 0020;  -- GradientCount: DW 32
+           1AF : 0003;  -- RowCOunt: DW 3
+           1B0 : 0000;  -- RedStoreGrad:  DW  &B0000000000000000
+           1B1 : 0000;  -- GreenStoreGrad: DW &B0000000000000000
+           1B2 : 0000;  -- BlueStoreGrad: DW  &B0000000000000000
+           1B3 : B802;  -- 			LOADI 2
+           1B4 : 98B4;  -- 			OUT PXL_S
+           1B5 : B800;  -- 			LOADI 0
+           1B6 : 98B0;  -- 			OUT PXL_A
+           1B7 : B801;  -- 			LOADI 1
+           1B8 : 9801;  -- 			OUT LEDs
+           1B9 : 0976;  -- 			LOAD RED
+           1BA : 98B1;  -- 			OUT PXL_D
+           1BB : 0977;  -- 			LOAD ORANGE
+           1BC : 98B1;  -- 			OUT PXL_D
+           1BD : 0978;  -- 			LOAD YELLOW
+           1BE : 98B1;  -- 			OUT PXL_D
+           1BF : 0979;  -- 			LOAD GREEN
+           1C0 : 98B1;  -- 			OUT PXL_D		  
+           1C1 : 097A;  -- 			LOAD BLUE
+           1C2 : 98B1;  -- 			OUT PXL_D
+           1C3 : 097B;  -- 			LOAD PURPLE
+           1C4 : 98B1;  -- 			OUT PXL_D
+           1C5 : 098B;  -- 			LOAD RAINBOwROAD
+           1C6 : 6FFF;  -- 			ADDI -1
+           1C7 : 118B;  -- 			STORE RAINBOwROAD
+           1C8 : 41CA;  -- 			JZERO NEXT
+           1C9 : 29B7;  -- 			JUMP LOOP
+           1CA : B803;  -- 			LOADI 3
+           1CB : 98B4;  -- 			Out PXL_S
+           1CC : B800;  -- 			LOADI 0
+           1CD : 98B0;  -- 			OUT PXL_A
+           1CE : B802;  -- 			LOADI 2
+           1CF : 9801;  -- 			OUT LEDs
+           1D0 : 097D;  -- 			LOAD PINK
+           1D1 : 98B1;  -- 			OUT PXL_D
+           1D2 : 097E;  -- 			LOAD TEAL
+           1D3 : 98B1;  -- 			OUT PXL_D
+           1D4 : 098C;  -- 			LOAD TropicalBreeze
+           1D5 : 6FFF;  -- 			ADDI -1
+           1D6 : 118C;  -- 			STORE TropicalBreeze
+           1D7 : 41D9;  -- 			JZERO ENDPRELOAD
+           1D8 : 29CE;  -- 			Jump LOOpTWO
+           1D9 : B800;  -- 			LOADI 0
+           1DA : 98B4;  -- 			OUT PXL_S
+           1DB : 98B5;  -- 			OUT PXL_L
+           1DC : 8800;  -- 			RETURN
+  END;

@@ -171,7 +171,7 @@ begin
 				elsif (refresh_mode = 1) then
 					if (data_in = "0000000000000000") then
 						refresh_mode := 0;
-					elsif (data_in = "0000000000000001") then
+					elsif (data_in = "0000000000000010") then
 						refresh_mode := 2;
 					end if;
 				end if;
@@ -277,12 +277,12 @@ begin
 			ram_write_addr <= write_port & x"00";
 		elsif rising_edge(clk_10M) then
 			-- If SCOMP is writing to the address register...
-			if (io_write = '1') and (cs_addr='1') then
+			if (wstate = change_all) then
+				ram_write_addr <= ram_write_addr + 1;
+			elsif (io_write = '1') and (cs_addr='1') then
 				ram_write_addr <= write_port & data_in(7 downto 0);
 			elsif (io_write = '1') and (ca_data='1') then
 				ram_write_addr <= write_port & x"00";
-			elsif (wstate = change_all) then
-				ram_write_addr <= ram_write_addr + 1;
 			elsif ((wstate = storing) and (increment_en = 1)) then
 				if (ram_write_addr(7 downto 0) /= "11111111") then
 					ram_write_addr <= ram_write_addr + 1;
@@ -334,6 +334,7 @@ begin
 					-- won't be stored until next clock cycle.
 					ram_we <= '1';
 					-- Change state
+					increment_en := 1;
 					wstate <= storing;
 				elsif (io_write = '1') and (ca_data='1') then
 					ram_write_buffer <= data_in(10 downto 5) & "00" & data_in(15 downto 11) & "000" & data_in(4 downto 0) & "000";

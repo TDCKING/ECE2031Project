@@ -1,0 +1,102 @@
+-- Altera Memory Initialization File (MIF)
+
+DEPTH = 2048;
+WIDTH = 16;
+
+ADDRESS_RADIX = HEX;
+DATA_RADIX = HEX;
+
+CONTENT
+  BEGIN
+    [000..7FF] : 0000;  -- Default to NOP
+
+           000 : 0844;  -- LOAD RED
+           001 : 98B2;  -- OUT PXL_CA
+           002 : 9000;  -- 	IN Switches
+           003 : 4855;  -- 	AND SwitchEight
+           004 : 6018;  -- 	SHIFT -8
+           005 : 98B3;  -- 	OUT PXL_R
+           006 : 9801;  -- 	OUT LEDs
+           007 : B800;  -- 	LOADI 0
+           008 : 98B0;  -- 	OUT PXL_A
+           009 : 084A;  -- 	LOAD WHITE
+           00A : 1057;  -- 	STORE COLOR
+           00B : 9000;  -- 	IN Switches
+           00C : 484D;  -- 	AND SwitchZero
+           00D : 4010;  -- 	JZERO FIRSTROW
+           00E : 0849;  -- 	LOAD PURPLE
+           00F : 1057;  -- 	STORE COLOR
+           010 : 803A;  -- 		CALL ROWWRITER
+           011 : 084A;  -- 	LOAD WHITE
+           012 : 1057;  -- 	STORE COLOR
+           013 : 9000;  -- 	IN Switches
+           014 : 484E;  -- 	AND SWITCHONE
+           015 : 4018;  -- 	JZERO SECONDROW
+           016 : 0848;  -- 	LOAD BLUE
+           017 : 1057;  -- 	STORE COLOR	
+           018 : 803A;  -- 		CALL ROWWRITER
+           019 : 084A;  -- 	LOAD WHITE
+           01A : 1057;  -- 	STORE COLOR
+           01B : 9000;  -- 	IN Switches
+           01C : 484F;  -- 	AND SWITCHTWO
+           01D : 4020;  -- 	JZERO THIRDROW
+           01E : 0847;  -- 	LOAD GREEN
+           01F : 1057;  -- 	STORE COLOR	
+           020 : 803A;  -- 		CALL ROWWRITER
+           021 : 084A;  -- 	LOAD WHITE
+           022 : 1057;  -- 	STORE COLOR
+           023 : 9000;  -- 	IN Switches
+           024 : 4850;  -- 	AND SWITCHTHREE
+           025 : 4028;  -- 	JZERO FOURTHROW
+           026 : 0846;  -- 	LOAD YELLOW
+           027 : 1057;  -- 	STORE COLOR	
+           028 : 803A;  -- 		CALL ROWWRITER
+           029 : 084A;  -- 	LOAD WHITE
+           02A : 1057;  -- 	STORE COLOR
+           02B : 9000;  -- 	IN Switches
+           02C : 4851;  -- 	AND SWITCHFOUR
+           02D : 4030;  -- 	JZERO FIFTHROW
+           02E : 0845;  -- 	LOAD ORANGE
+           02F : 1057;  -- 	STORE COLOR	
+           030 : 803A;  -- 		CALL ROWWRITER
+           031 : 084A;  -- 	LOAD WHITE
+           032 : 1057;  -- 	STORE COLOR
+           033 : 9000;  -- 	IN Switches
+           034 : 4852;  -- 	AND SWITCHFIVE
+           035 : 4038;  -- 	JZERO SIXTHROW
+           036 : 0844;  -- 	LOAD RED
+           037 : 1057;  -- 	STORE COLOR	
+           038 : 803A;  -- 		CALL ROWWRITER	
+           039 : 2802;  -- JUMP LOOP	
+           03A : B820;  -- 	LOADI 32
+           03B : 1058;  -- 	STORE COUNTER
+           03C : 0858;  -- 		LOAD COUNTER
+           03D : 4043;  -- 		JZERO  ENDWRITE
+           03E : 6FFF;  -- 		ADDI -1
+           03F : 1058;  -- 		STORE COUNTER
+           040 : 0857;  -- 		LOAD COLOR
+           041 : 98B1;  -- 		OUT PXL_D
+           042 : 283C;  -- 		JUMP WRITELOOP
+           043 : 8800;  -- 		RETURN
+           044 : F800;  -- 	RED: DW &HF800  
+           045 : FB40;  -- 	ORANGE: DW &HFB40
+           046 : FFE5;  -- 	YELLOW: DW &HFFE5
+           047 : 17E0;  -- 	GREEN: DW &H17E0
+           048 : 297F;  -- 	BLUE: DW &H297F
+           049 : 981F;  -- 	PURPLE: DW &H981F
+           04A : FFFF;  -- 	WHITE: DW  &HFFFF
+           04B : F97C;  -- 	PINK: DW &HF97C
+           04C : 2F9F;  -- 	TEAL: DW &H2F9F
+           04D : 0001;  -- SwitchZero: DW  &B0000000000000001
+           04E : 0002;  -- SwitchOne: DW 	&B0000000000000010
+           04F : 0004;  -- SwitchTwo: DW 	&B0000000000000100
+           050 : 0008;  -- SwitchThree: DW &B0000000000001000
+           051 : 0010;  -- SwitchFour: DW 	&B0000000000010000
+           052 : 0020;  -- SwitchFive: DW 	&B0000000000100000
+           053 : 0040;  -- SwitchSix: DW 	&B0000000001000000
+           054 : 0080;  -- SwitchSeven: DW &B0000000010000000
+           055 : 0100;  -- SwitchEight: DW &B0000000100000000
+           056 : 0200;  -- SwitchNine: DW 	&B0000001000000000
+           057 : 0000;  -- COLOR: DW 0
+           058 : 0020;  -- COUNTER: DW 32
+  END;

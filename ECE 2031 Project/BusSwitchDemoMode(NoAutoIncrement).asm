@@ -1,0 +1,161 @@
+ORG 0
+
+;Load Rainbow onto BUS 2	
+	LOADI 2
+	OUT PXL_S
+	
+	LOADI 0
+	OUT PXL_A
+	STORE ADDR
+	
+LOOP: 
+	LOADI 1
+	OUT LEDs
+	
+	
+
+	LOAD RED
+	OUT PXL_D
+		
+	
+	
+	LOAD ORANGE
+	OUT PXL_D
+		
+	
+		
+	
+	
+	LOAD YELLOW
+	OUT PXL_D
+		  
+	
+	
+		
+	LOAD GREEN
+	OUT PXL_D
+		  
+	
+		
+		
+		
+	LOAD BLUE
+	OUT PXL_D
+		  
+	
+		
+		
+	LOAD PURPLE
+	OUT PXL_D
+		
+	LOAD RAINBOwROAD
+	ADDI -1
+	STORE RAINBOwROAD
+	JZERO NEXT
+	JUMP LOOP
+		  
+NEXT:	
+;Load Teal/Pink Alternating onto Bus 3	
+	LOADI 3
+	Out PXL_S
+	  
+	LOADI 0
+	OUT PXL_A
+	STORE ADDR
+	 
+LOOPTWO:
+	LOADI 2
+	OUT LEDs
+	  
+	
+	
+
+	LOAD PINK
+	OUT PXL_D
+	  
+	
+	
+	LOAD TEAL
+	OUT PXL_D
+	
+	LOAD TropicalBreeze
+	ADDI -1
+	STORE TropicalBreeze
+	JZERO LoopThree
+	Jump LOOpTWO
+	  
+	
+ LoopThree:
+ ;Switch Between the Two Busses
+	LOADI 4
+	OUT LEDs
+	IN Switches
+	AND SwitchZero
+	JPOS TWO
+	
+	IN Switches
+	AND SwitchOne
+	JPOS THREE
+	
+	JUMP LoopTHree
+	
+TWO:
+	LOADI 2
+	OUT PXL_L
+	OUT LEDs
+	JUMP LoopThree
+	
+THREE:
+	LOADI 3
+	OUT PXL_L
+	OUT LEDs
+	JUMP LOOPTHREE
+	
+	
+
+	
+	  
+RED: DW &HF800  
+ORANGE: DW &HFB40
+YELLOW: DW &HFFE5
+GREEN: DW &H17E0
+BLUE: DW &H297F
+PURPLE: DW &H981F
+	
+PINK: DW &HF97C
+TEAL: DW &H2F9F
+	
+PXL_A:     EQU &H0B0
+PXL_D:     EQU &H0B1
+PXL_CA:	   EQU &H0B2
+PXL_R:	   EQU &H0B3
+PXL_S:	   EQU &H0B4
+PXL_L:	   EQU &H0B5
+PXL_Red:   EQU &H0B6
+PXL_Green: EQU &H0B7
+PXL_Blue:  EQU &H0B8
+	
+Switches:  EQU 000
+LEDs:      EQU 001
+Timer:     EQU 002
+
+SwitchZero: DW  &B0000000000000001
+SwitchOne: DW 	&B0000000000000010
+SwitchTwo: DW 	&B0000000000000100
+SwitchThree: DW &B0000000000001000
+SwitchFour: DW 	&B0000000000010000
+SwitchFive: DW 	&B0000000000100000
+SwitchSix: DW 	&B0000000001000000
+SwitchSeven: DW &B0000000010000000
+SwitchEight: DW &B0000000100000000
+SwitchNine: DW 	&B0000001000000000
+ 
+RainbowRoad: DW 32
+TropicalBreeze: DW 96
+ 
+ADDR: DW 1
+	
+
+	
+
+	
